@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainMenuFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="296dp"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <Button
+            android:id="@+id/bTests"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/main_tests"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.18" />
+
+        <Button
+            android:id="@+id/bQuizzes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_quizzes"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@+id/bTests"
+            app:layout_constraintStart_toStartOf="@+id/bTests"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.31" />
+
+        <Button
+            android:id="@+id/bPhrase"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_phrase_of_the_day"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toEndOf="@+id/bQuizzes"
+            app:layout_constraintStart_toStartOf="@+id/bQuizzes"
+            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.44" />
+
+        <Button
+            android:id="@+id/bHelpDev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_help_developer"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toEndOf="@+id/bPhrase"
+            app:layout_constraintStart_toStartOf="@+id/bPhrase"
+            app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.57" />
+
+        <Button
+            android:id="@+id/bSettings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_settings"
+            app:layout_constraintBottom_toTopOf="@+id/guideline7"
+            app:layout_constraintEnd_toEndOf="@+id/bHelpDev"
+            app:layout_constraintStart_toStartOf="@+id/bHelpDev"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <Button
+            android:id="@+id/bExit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_exit"
+            app:layout_constraintBottom_toTopOf="@+id/guideline8"
+            app:layout_constraintEnd_toEndOf="@+id/bSettings"
+            app:layout_constraintStart_toStartOf="@+id/bSettings"
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="424dp"
+            app:layout_constraintGuide_percent="0.82" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
