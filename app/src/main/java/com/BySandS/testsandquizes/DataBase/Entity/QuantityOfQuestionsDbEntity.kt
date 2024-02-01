@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "quantity_of_questions")
-data class QuantityOfQuestions(
+data class QuantityOfQuestionsDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "easy_quantity") val easyQuantity: Int,
     @ColumnInfo(name = "norm_quantity") val normQuantity: Int,

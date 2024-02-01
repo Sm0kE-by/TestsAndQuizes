@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
-import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 
-class DefficultyFragment : Fragment() {
+class DifficultyFragment : Fragment() {
 
     private lateinit var binding: DefficultyFragmentBinding
-
     //подключаем VM фрагмента
     private val testListViewModel: TestsListViewModel by lazy {
         ViewModelProvider(this).get(TestsListViewModel::class.java)
@@ -33,12 +31,14 @@ class DefficultyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = DefficultyFragment()
+        fun newInstance() = DifficultyFragment()
     }
 
     private fun updateUI() = with(binding) {
+
         val difficultyModel = testListViewModel.difficultyNameModel
         val categoryModel = testListViewModel.categoryModel
+
         tvDiffenetlyNameEasy.text = difficultyModel?.difficulty
         tvDiffenetlyNameNorm.text = difficultyModel?.difficulty
         tvDiffenetlyNameHard.text = difficultyModel?.difficulty

@@ -8,23 +8,23 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "result",
     foreignKeys = [
         ForeignKey(
-            entity = Difficulty::class,
+            entity = DifficultyDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["difficulty_id"]
         ),
         ForeignKey(
-            entity = Subcategory::class,
+            entity = SubcategoryDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["subcategory_id"]
         ),
         ForeignKey(
-            entity = QuestionText::class,
+            entity = QuestionTextDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["question_text_id"]
         ),
     ]
 )
-data class Question(
+data class QuestionDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "difficulty_id") val resultText: Long,
     @ColumnInfo(name = "subcategory_id") val testResult:  Long,

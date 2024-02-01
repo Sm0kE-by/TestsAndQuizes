@@ -4,11 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DefficultyFragment">
+    tools:context=".DifficultyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvNameCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="serif"
+            android:text="Name Category"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="184dp"
+            app:layout_constraintGuide_percent="0.10" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -19,7 +43,7 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/guideline9">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -117,7 +141,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="184dp"
-            app:layout_constraintGuide_percent="0.20" />
+            app:layout_constraintGuide_percent="0.30" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -228,7 +252,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="184dp"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
@@ -337,6 +361,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="184dp"
-            app:layout_constraintGuide_percent="0.6" />
+            app:layout_constraintGuide_percent="0.7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

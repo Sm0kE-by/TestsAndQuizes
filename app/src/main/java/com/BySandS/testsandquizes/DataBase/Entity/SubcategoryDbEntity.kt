@@ -8,28 +8,28 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "subcategory",
     foreignKeys = [
         ForeignKey(
-            entity = Statistics::class,
+            entity = StatisticsDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["statistic_id"]
         ),
         ForeignKey(
-            entity = Category::class,
+            entity = CategoryDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["category_id"]
         ),
         ForeignKey(
-            entity = QuantityOfQuestions::class,
+            entity = QuantityOfQuestionsDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["quantity_of_questions_id"]
         ),
         ForeignKey(
-            entity = TestResults::class,
+            entity = ResultsTestDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["test_result_id"]
         ),
     ]
 )
-data class Subcategory(
+data class SubcategoryDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "subcategory_name_ru") val subcategoryNameRu: String,
     @ColumnInfo(name = "subcategory_name_eng") val subcategoryNameEng: String,

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "result_text")
-data class ResultText(
+data class ResultTextDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "result_text_33_ru") val resultText33Ru: String,
     @ColumnInfo(name = "result_text_66_ru") val resultText66Ru: String,

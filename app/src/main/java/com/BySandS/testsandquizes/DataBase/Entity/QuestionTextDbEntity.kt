@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "question_text")
-data class QuestionText(
+data class QuestionTextDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "question_text_ru") val questionTextRu: String,
     @ColumnInfo(name = "correct_answer_ru") val correctAnswerRu: String,

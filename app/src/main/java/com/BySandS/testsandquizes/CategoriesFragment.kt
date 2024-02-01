@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.BySandS.testsandquizes.databinding.CategoriesFragmentBinding
 import com.BySandS.testsandquizes.databinding.CategoryItemFragmentBinding
 import com.BySandS.testsandquizes.models.mainActivityModels.CategoryModel
 import com.BySandS.testsandquizes.models.mainActivityModels.DifficultyNameModel
@@ -21,7 +21,6 @@ class CategoriesFragment() : Fragment() {
 
     private lateinit var testsRecyclerView: RecyclerView
     private var adapter: CategoryAdapter? = null
-
     //подключаем VM фрагмента
     private val testListViewModel: TestsListViewModel by lazy {
         ViewModelProvider(this).get(TestsListViewModel::class.java)
@@ -59,7 +58,6 @@ class CategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     companion object {
@@ -82,23 +80,26 @@ class CategoriesFragment() : Fragment() {
         fun bind(
             categoryModel: CategoryModel,
             difficultyNameModel: DifficultyNameModel,
-            // listener: Listener
         ) = with(binding) {
             category = categoryModel
+            val easyPercent = ": ${categoryModel.easyPercent}%"
+            val normPercent = ": ${categoryModel.normPercent}%"
+            val hardPercent = ": ${categoryModel.hardPercent}%"
             tvNameCategory.text = categoryModel.name
             tvEasy.text = difficultyNameModel.easy
             tvNorm.text = difficultyNameModel.norm
             tvHard.text = difficultyNameModel.hard
-            tvPercentEasy.text = categoryModel.easyPercent.toString()
-            tvPercentNorm.text = categoryModel.normPercent.toString()
-            tvPercentHard.text = categoryModel.hardPercent.toString()
-
+            tvPercentEasy.text = easyPercent
+            tvPercentNorm.text = normPercent
+            tvPercentHard.text = hardPercent
         }
 
         /**
          * Обработка нажатия на фрагмент категории
          */
         override fun onClick(v: View?) {
+            (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.holder, DifficultyFragment.newInstance()).commit()
             Toast.makeText(context, "${category.name} pressed!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -111,7 +112,6 @@ class CategoriesFragment() : Fragment() {
         var difficultyNameModel: DifficultyNameModel
     ) :
         RecyclerView.Adapter<CategoryHolder>() {
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.category_item_fragment, parent, false)
