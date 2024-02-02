@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.DataBase.Entity
+package com.BySandS.testsandquizes.DataBase.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

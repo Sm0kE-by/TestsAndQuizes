@@ -1,18 +1,23 @@
-package com.BySandS.testsandquizes
+package com.BySandS.testsandquizes.presentation
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.BySandS.testsandquizes.DataBase.models.SubcategoryModel
+import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.CategoryItemFragmentBinding
-import com.BySandS.testsandquizes.models.mainActivityModels.CategoryModel
-import com.BySandS.testsandquizes.models.mainActivityModels.DifficultyNameModel
+import com.BySandS.testsandquizes.presentation.mainActivityModels.CategoryModel
+import com.BySandS.testsandquizes.presentation.mainActivityModels.DifficultyNameModel
 
 /**
  * Фрагмент для показа категорий тестов
@@ -20,11 +25,13 @@ import com.BySandS.testsandquizes.models.mainActivityModels.DifficultyNameModel
 class CategoriesFragment() : Fragment() {
 
     private lateinit var testsRecyclerView: RecyclerView
-    private var adapter: CategoryAdapter? = null
+
     //подключаем VM фрагмента
     private val testListViewModel: TestsListViewModel by lazy {
         ViewModelProvider(this).get(TestsListViewModel::class.java)
     }
+    private var difficultyNameModel = testListViewModel.difficultyNameModel
+    private var adapter: CategoryAdapter? = CategoryAdapter(emptyList(), difficultyNameModel!!)
 
     /**
      * Надуваем Фрагмент
@@ -39,8 +46,21 @@ class CategoriesFragment() : Fragment() {
         val view = inflater.inflate(R.layout.categories_fragment, container, false)
         testsRecyclerView = view.findViewById(R.id.test_recycler_view)
         testsRecyclerView.layoutManager = LinearLayoutManager(context)
-        apdateUI()
+        testsRecyclerView.adapter = adapter
         return view
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        testListViewModel.listCategoryModel.observe(
+            viewLifecycleOwner,
+            Observer { crimes ->
+                crimes?.let {
+                    Log.i(TAG, "Got crimes ${crimes.size}")
+                    updateUI(crimes)
+                }
+            })
     }
 
     /**
@@ -48,16 +68,11 @@ class CategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    private fun apdateUI() {
-        val categories = testListViewModel.listCategoryModel
+    fun updateUI(subcategory: List<SubcategoryModel>) {
         val difficulty = testListViewModel.difficultyNameModel
         // -> !! Непонятно
-        adapter = CategoryAdapter(categories, difficulty!!)
+        adapter = CategoryAdapter(subcategory, difficulty!!)
         testsRecyclerView.adapter = adapter
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {

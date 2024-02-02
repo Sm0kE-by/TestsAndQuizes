@@ -1,8 +1,8 @@
-package com.BySandS.testsandquizes
+package com.BySandS.testsandquizes.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.BySandS.testsandquizes.models.mainActivityModels.CategoryModel
+import com.BySandS.testsandquizes.R
 
 
 class MainActivity : AppCompatActivity() {

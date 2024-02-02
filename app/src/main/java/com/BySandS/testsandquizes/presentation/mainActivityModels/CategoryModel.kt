@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.models.mainActivityModels
+package com.BySandS.testsandquizes.presentation.mainActivityModels
 
 data class CategoryModel(
     val type: String,

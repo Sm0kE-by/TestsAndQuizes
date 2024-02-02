@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes
+package com.BySandS.testsandquizes.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 
 class MainMenuFragment : Fragment(), View.OnClickListener {

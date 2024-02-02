@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.models.mainActivityModels
+package com.BySandS.testsandquizes.presentation.mainActivityModels
 
 class DifficultyNameModel(
     val difficulty: String,

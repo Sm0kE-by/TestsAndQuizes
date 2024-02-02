@@ -1,14 +1,17 @@
-package com.BySandS.testsandquizes
+package com.BySandS.testsandquizes.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.BySandS.testsandquizes.models.mainActivityModels.CategoryModel
-import com.BySandS.testsandquizes.models.mainActivityModels.DifficultyNameModel
+import com.BySandS.testsandquizes.DataBase.TestsRepository
+import com.BySandS.testsandquizes.DataBase.models.SubcategoryModel
+import com.BySandS.testsandquizes.presentation.mainActivityModels.CategoryModel
+import com.BySandS.testsandquizes.presentation.mainActivityModels.DifficultyNameModel
 
 class TestsListViewModel : ViewModel() {
 
     var difficultyNameModel: DifficultyNameModel? = null
     var categoryModel: CategoryModel? = null
-    var listCategoryModel = ArrayList<CategoryModel>()
+    var listCategoryModel : LiveData<List<SubcategoryModel>>
 
     init {
         difficultyNameModel = addDifficultyName()
@@ -16,18 +19,17 @@ class TestsListViewModel : ViewModel() {
         listCategoryModel = addCategories()
     }
 
+    private val testRepository = TestsRepository.get()
+
     /**
      * Создаем список категорий
      */
-    private fun addCategories(): ArrayList<CategoryModel> {
-        val list = ArrayList<CategoryModel>()
-        for (i in 1..10) {
-            list.add(CategoryModel("Тест", "Название$i", 33, 66, 100))
-        }
-        return list
+    private fun addCategories(): LiveData<List<SubcategoryModel>> {
+          val listTestsLiveData = testRepository.getAllSubcategories()
+        return listTestsLiveData
     }
 
-    private fun addCategory(): CategoryModel{
+    private fun addCategory(): CategoryModel {
         return CategoryModel("Тест", "Название", 35, 65, 95)
     }
 
