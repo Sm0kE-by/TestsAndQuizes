@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.DataBase
 
 import android.app.Application
+import androidx.room.Room
 
 /**
  * Инициализируем репозиторий
@@ -10,5 +11,6 @@ class TestsApplication:Application() {
     override fun onCreate() {
         super.onCreate()
         TestsRepository.initialize(this)
+
     }
 }

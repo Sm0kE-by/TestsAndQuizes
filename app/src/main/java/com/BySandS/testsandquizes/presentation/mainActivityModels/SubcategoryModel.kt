@@ -1,6 +1,6 @@
 package com.BySandS.testsandquizes.presentation.mainActivityModels
 
-data class CategoryModel(
+data class SubcategoryModel(
     val type: String,
     val name: String,
     val easyPercent: Int,

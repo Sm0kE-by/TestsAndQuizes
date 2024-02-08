@@ -1,34 +1,49 @@
 package com.BySandS.testsandquizes.presentation
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.BySandS.testsandquizes.DataBase.TestsRepository
-import com.BySandS.testsandquizes.DataBase.entity.SubcategoryDbEntity
+import com.BySandS.testsandquizes.presentation.mainActivityModels.SubcategoryModel
 
-class CategoriesFragmentViewModel : ViewModel() {
+class SubcategoriesFragmentViewModel : ViewModel() {
     private val testsRepository = TestsRepository.get()
-//    private lateinit var listCategoryModel: ArrayList<SubcategoryDbEntity>
+    private val listSubcategoryDbEntityLiveData = testsRepository.getAllSubcategories()
+    lateinit var listSubcategoryModel: MutableLiveData<ArrayList<SubcategoryModel>>
 
-//    init {
+    init {
+        listSubcategoryModel = getCategories()
 //        private val crimeRepository = TestsRepository.get()
 //        val crimes = crimeRepository.getCrimes()
 //        listCategoryModel = addCategories()
-//    }
+    }
 
     /**
      * Создаем список категорий
      */
-//    private fun addCategories(): List<SubcategoryDbEntity> {
-//        //        for (i in 0..10) {
-////            listTestsLiveData.add(i, CategoryModel("tests", "name$i", 33, 66, 100))
-////        }
-//        return crimeRepository.getAllSubcategories()
-//    }
+    private fun addSubcategories(): MutableLiveData<ArrayList<SubcategoryModel>> {
+for (i in 0..10){
+            listSubcategoryModel.value?.add(
+                i, SubcategoryModel(
+                    "test",
+                    listSubcategoryDbEntityLiveData.value?.get(i)!!.subcategoryNameRu,
+                    33, 66, 100
+                )
+            )
+        }
+//        for (i in 0..10) {
+//            listTestsLiveData.add(i, CategoryModel("tests", "name$i", 33, 66, 100))
+//        }
+        return listSubcategoryModel
+    }
 
 //    private fun addCategory(): CategoryModel {
 //        return CategoryModel("Тест", "Название", 35, 65, 95)
 //    }
 
-    fun getCategories(): List<SubcategoryDbEntity> {
-        return testsRepository.getAllSubcategories()
+    fun getCategories(): MutableLiveData<ArrayList<SubcategoryModel>> {
+        listSubcategoryModel = addSubcategories()
+        return listSubcategoryModel
     }
 }

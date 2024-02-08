@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "result",
+@Entity(tableName = "question",
     foreignKeys = [
         ForeignKey(
             entity = DifficultyDbEntity::class,

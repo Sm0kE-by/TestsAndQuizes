@@ -41,7 +41,7 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
             bTests.id -> (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.holder, CategoriesFragment.newInstance()).commit()
+                .replace(R.id.holder, SubcategoriesFragment.newInstance()).commit()
 
             bQuizzes.id -> Toast.makeText(
                 activity?.applicationContext,
@@ -74,4 +74,5 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
 
         }
     }
+
 }

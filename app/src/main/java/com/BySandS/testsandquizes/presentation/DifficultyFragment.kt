@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 
 class DifficultyFragment : Fragment() {
 
     private lateinit var binding: DefficultyFragmentBinding
+
     //подключаем VM фрагмента
-    private val testListViewModel: TestsListViewModel by lazy {
-        ViewModelProvider(this).get(TestsListViewModel::class.java)
+    private val difficulty: DifficultyFragmentViewModel by lazy {
+        ViewModelProvider(this).get(DifficultyFragmentViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -36,27 +38,16 @@ class DifficultyFragment : Fragment() {
 
     private fun updateUI() = with(binding) {
 
-        val difficultyModel = testListViewModel.difficultyNameModel
-        val categoryModel = testListViewModel.categoryModel
-
-        tvDiffenetlyNameEasy.text = difficultyModel?.difficulty
-        tvDiffenetlyNameNorm.text = difficultyModel?.difficulty
-        tvDiffenetlyNameHard.text = difficultyModel?.difficulty
-        tvQuantityEasy.text = difficultyModel?.quantityQuestion
-        tvQuantityNorm.text = difficultyModel?.quantityQuestion
-        tvQuantityHard.text = difficultyModel?.quantityQuestion
-        tvBestResultEasy.text = difficultyModel?.bestResult
-        tvBestResultNorm.text = difficultyModel?.bestResult
-        tvBestResultHard.text = difficultyModel?.bestResult
-        tvEasy.text = difficultyModel?.easy
-        tvNorm.text = difficultyModel?.norm
-        tvHard.text = difficultyModel?.hard
-        tvQuantityQuestionEasy.text = difficultyModel?.quantityQuestionEasy.toString()
-        tvQuantityQuestionNorm.text = difficultyModel?.quantityQuestionNorm.toString()
-        tvQuantityQuestionHard.text = difficultyModel?.quantityQuestionHard.toString()
-        tvBestResultEasyNamber.text = categoryModel?.easyPercent.toString()
-        tvBestResultNormNamber.text = categoryModel?.normPercent.toString()
-        tvBestResultHardNamber.text = categoryModel?.hardPercent.toString()
-        tvNameCategory.text = categoryModel?.name
+        val categoryModel = difficulty.getCategory()
+        val quantityOfQuestion = difficulty.getQuantityOfQuestion()
+        //получаю из БД кол-во вопросов
+        tvQuantityQuestionEasy.text = quantityOfQuestion.easyQuantity.toString()
+        tvQuantityQuestionNorm.text = quantityOfQuestion.normQuantity.toString()
+        tvQuantityQuestionHard.text = quantityOfQuestion.hardQuantity.toString()
+        // получаю из БД статистика
+        tvBestResultEasyNamber.text = categoryModel.easyPercent.toString()
+        tvBestResultNormNamber.text = categoryModel.normPercent.toString()
+        tvBestResultHardNamber.text = categoryModel.hardPercent.toString()
+        tvNameCategory.text = categoryModel.name
     }
 }

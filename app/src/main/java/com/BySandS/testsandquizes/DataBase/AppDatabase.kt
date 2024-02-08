@@ -25,7 +25,7 @@ import com.BySandS.testsandquizes.DataBase.entity.SubcategoryDbEntity
         ResultTextDbEntity::class,
         StatisticsDbEntity::class,
         SubcategoryDbEntity::class
-    ], version = 1
+    ], version = 2
 )
 abstract class AppDatabase: RoomDatabase() {
 

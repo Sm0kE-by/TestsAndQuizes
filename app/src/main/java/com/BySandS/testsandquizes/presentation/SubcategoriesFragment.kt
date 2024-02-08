@@ -1,31 +1,35 @@
 package com.BySandS.testsandquizes.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
-import com.BySandS.testsandquizes.databinding.CategoryItemFragmentBinding
-import com.BySandS.testsandquizes.presentation.mainActivityModels.CategoryModel
+import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
+import com.BySandS.testsandquizes.presentation.mainActivityModels.SubcategoryModel
+
+private const val TAG = "TestsListFragment"
 
 /**
  * Фрагмент для показа категорий тестов
  */
-class CategoriesFragment() : Fragment() {
+class SubcategoriesFragment() : Fragment() {
 
     private lateinit var testsRecyclerView: RecyclerView
 
     //подключаем VM фрагмента
-    private val category: CategoriesFragmentViewModel by lazy {
-        ViewModelProvider(this).get(CategoriesFragmentViewModel::class.java)
+    private val subcategory: SubcategoriesFragmentViewModel by lazy {
+        ViewModelProvider(this).get(SubcategoriesFragmentViewModel::class.java)
     }
-    private var adapter: CategoryAdapter? = CategoryAdapter(emptyList())
+    private var adapter: SubcategoryAdapter? = SubcategoryAdapter(emptyList())
 
     /**
      * Надуваем Фрагмент
@@ -37,7 +41,7 @@ class CategoriesFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.categories_fragment, container, false)
+        val view = inflater.inflate(R.layout.subcategories_fragment, container, false)
         testsRecyclerView = view.findViewById(R.id.test_recycler_view)
         testsRecyclerView.layoutManager = LinearLayoutManager(context)
         testsRecyclerView.adapter = adapter
@@ -47,51 +51,51 @@ class CategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        testListViewModel.listCategoryModel.observe(
-//            viewLifecycleOwner,
-//            Observer { crimes ->
-//                crimes?.let {
-//                    Log.i(TAG, "Got crimes ${crimes.size}")
-        updateUI(category.getCategories())
+        subcategory.listSubcategoryModel.observe(
+            viewLifecycleOwner,
+            Observer { crimes ->
+                crimes?.let {
+                    Log.i(TAG, "Got crimes ${crimes.size}")
+                    updateUI(crimes)
+                }
+            })
     }
-    // })
-    // }
 
     /**
      * Подключаем лист категорий из VM
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<CategoryModel>) {
-        adapter = CategoryAdapter(subcategory)
+    fun updateUI(subcategory: ArrayList<SubcategoryModel>) {
+        adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = CategoriesFragment()
+        fun newInstance() = SubcategoriesFragment()
     }
 
     /**
      * class Holder
      */
-    private inner class CategoryHolder(item: View) : RecyclerView.ViewHolder(item),
+    private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
-        val binding = CategoryItemFragmentBinding.bind(item)
-        lateinit var category: CategoryModel
+        val binding = SubcategoryItemFragmentBinding.bind(item)
+        lateinit var subcategory: SubcategoryModel
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            categoryModel: CategoryModel
+            subcategoryModel: SubcategoryModel
         ) = with(binding) {
-            category = categoryModel
-            val easyPercent = ": ${categoryModel.easyPercent}%"
-            val normPercent = ": ${categoryModel.normPercent}%"
-            val hardPercent = ": ${categoryModel.hardPercent}%"
-            tvNameCategory.text = categoryModel.name
+            subcategory = subcategoryModel
+            val easyPercent = ": ${subcategoryModel.easyPercent}%"
+            val normPercent = ": ${subcategoryModel.normPercent}%"
+            val hardPercent = ": ${subcategoryModel.hardPercent}%"
+            tvNameCategory.text = subcategoryModel.name
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
             tvPercentHard.text = hardPercent
@@ -103,27 +107,27 @@ class CategoriesFragment() : Fragment() {
         override fun onClick(v: View?) {
             (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.holder, DifficultyFragment.newInstance()).commit()
-            Toast.makeText(context, "${category.name} pressed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "${subcategory.name} pressed!", Toast.LENGTH_SHORT).show()
         }
     }
 
     /**
      * class Adapter
      */
-    private inner class CategoryAdapter(
-        var categories: List<CategoryModel>,
+    private inner class SubcategoryAdapter(
+        var subcategories: List<SubcategoryModel>,
     ) :
-        RecyclerView.Adapter<CategoryHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
+        RecyclerView.Adapter<SubcategoryHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.category_item_fragment, parent, false)
-            return CategoryHolder(view)
+                .inflate(R.layout.subcategory_item_fragment, parent, false)
+            return SubcategoryHolder(view)
         }
 
-        override fun getItemCount(): Int = categories.size
+        override fun getItemCount(): Int = subcategories.size
 
-        override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
-            holder.bind(categories[position])
+        override fun onBindViewHolder(holder: SubcategoryHolder, position: Int) {
+            holder.bind(subcategories[position])
         }
     }
 }

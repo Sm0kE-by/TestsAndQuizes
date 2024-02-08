@@ -7,7 +7,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "difficulty_level")
 data class DifficultyDbEntity(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "easy_level") val easyLevel: Int,
-    @ColumnInfo(name = "norm_level") val normLevel: Int,
-    @ColumnInfo(name = "hard_level") val hardLevel: Int,
+    @ColumnInfo(name = "name_level") val easyLevel: String,
 )
