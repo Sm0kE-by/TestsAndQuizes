@@ -1,23 +1,18 @@
 package com.BySandS.testsandquizes.presentation
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.BySandS.testsandquizes.DataBase.models.SubcategoryModel
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.CategoryItemFragmentBinding
 import com.BySandS.testsandquizes.presentation.mainActivityModels.CategoryModel
-import com.BySandS.testsandquizes.presentation.mainActivityModels.DifficultyNameModel
 
 /**
  * Фрагмент для показа категорий тестов
@@ -27,11 +22,10 @@ class CategoriesFragment() : Fragment() {
     private lateinit var testsRecyclerView: RecyclerView
 
     //подключаем VM фрагмента
-    private val testListViewModel: TestsListViewModel by lazy {
-        ViewModelProvider(this).get(TestsListViewModel::class.java)
+    private val category: CategoriesFragmentViewModel by lazy {
+        ViewModelProvider(this).get(CategoriesFragmentViewModel::class.java)
     }
-    private var difficultyNameModel = testListViewModel.difficultyNameModel
-    private var adapter: CategoryAdapter? = CategoryAdapter(emptyList(), difficultyNameModel!!)
+    private var adapter: CategoryAdapter? = CategoryAdapter(emptyList())
 
     /**
      * Надуваем Фрагмент
@@ -53,25 +47,23 @@ class CategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        testListViewModel.listCategoryModel.observe(
-            viewLifecycleOwner,
-            Observer { crimes ->
-                crimes?.let {
-                    Log.i(TAG, "Got crimes ${crimes.size}")
-                    updateUI(crimes)
-                }
-            })
+//        testListViewModel.listCategoryModel.observe(
+//            viewLifecycleOwner,
+//            Observer { crimes ->
+//                crimes?.let {
+//                    Log.i(TAG, "Got crimes ${crimes.size}")
+        updateUI(category.getCategories())
     }
+    // })
+    // }
 
     /**
      * Подключаем лист категорий из VM
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<SubcategoryModel>) {
-        val difficulty = testListViewModel.difficultyNameModel
-        // -> !! Непонятно
-        adapter = CategoryAdapter(subcategory, difficulty!!)
+    fun updateUI(subcategory: List<CategoryModel>) {
+        adapter = CategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
 
@@ -93,17 +85,13 @@ class CategoriesFragment() : Fragment() {
         }
 
         fun bind(
-            categoryModel: CategoryModel,
-            difficultyNameModel: DifficultyNameModel,
+            categoryModel: CategoryModel
         ) = with(binding) {
             category = categoryModel
             val easyPercent = ": ${categoryModel.easyPercent}%"
             val normPercent = ": ${categoryModel.normPercent}%"
             val hardPercent = ": ${categoryModel.hardPercent}%"
             tvNameCategory.text = categoryModel.name
-            tvEasy.text = difficultyNameModel.easy
-            tvNorm.text = difficultyNameModel.norm
-            tvHard.text = difficultyNameModel.hard
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
             tvPercentHard.text = hardPercent
@@ -124,7 +112,6 @@ class CategoriesFragment() : Fragment() {
      */
     private inner class CategoryAdapter(
         var categories: List<CategoryModel>,
-        var difficultyNameModel: DifficultyNameModel
     ) :
         RecyclerView.Adapter<CategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -136,7 +123,7 @@ class CategoriesFragment() : Fragment() {
         override fun getItemCount(): Int = categories.size
 
         override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
-            holder.bind(categories[position], difficultyNameModel)
+            holder.bind(categories[position])
         }
     }
 }
