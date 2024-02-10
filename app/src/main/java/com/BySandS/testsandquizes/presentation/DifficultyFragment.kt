@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 
 class DifficultyFragment : Fragment() {
@@ -38,16 +37,16 @@ class DifficultyFragment : Fragment() {
 
     private fun updateUI() = with(binding) {
 
-        val categoryModel = difficulty.getCategory()
+        val subcategoryModel = difficulty.getCategory()
         val quantityOfQuestion = difficulty.getQuantityOfQuestion()
         //получаю из БД кол-во вопросов
         tvQuantityQuestionEasy.text = quantityOfQuestion.easyQuantity.toString()
         tvQuantityQuestionNorm.text = quantityOfQuestion.normQuantity.toString()
         tvQuantityQuestionHard.text = quantityOfQuestion.hardQuantity.toString()
         // получаю из БД статистика
-        tvBestResultEasyNamber.text = categoryModel.easyPercent.toString()
-        tvBestResultNormNamber.text = categoryModel.normPercent.toString()
-        tvBestResultHardNamber.text = categoryModel.hardPercent.toString()
-        tvNameCategory.text = categoryModel.name
+        tvBestResultEasyNamber.text = subcategoryModel.statisticEasy.toString()
+        tvBestResultNormNamber.text = subcategoryModel.statisticNorm.toString()
+        tvBestResultHardNamber.text = subcategoryModel.statisticHard.toString()
+        tvNameSubcategory.text = subcategoryModel.subcategoryName
     }
 }

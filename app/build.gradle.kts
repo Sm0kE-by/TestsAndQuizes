@@ -44,6 +44,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation ("androidx.room:room-runtime:2.6.1") // Библиотека "Room"
 
     ksp("androidx.room:room-compiler:2.6.1") // Кодогенератор

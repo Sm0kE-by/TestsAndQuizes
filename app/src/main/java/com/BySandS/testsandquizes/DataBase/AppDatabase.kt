@@ -25,10 +25,10 @@ import com.BySandS.testsandquizes.DataBase.entity.SubcategoryDbEntity
         ResultTextDbEntity::class,
         StatisticsDbEntity::class,
         SubcategoryDbEntity::class
-    ], version = 2
+    ], version = 3, exportSchema = true
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun testsDaoRu() : TestsDaoRu
+    abstract fun testsDaoRu(): TestsDaoRu
 
 }

@@ -1,20 +1,20 @@
 package com.BySandS.testsandquizes.presentation
 
 import androidx.lifecycle.ViewModel
-import com.BySandS.testsandquizes.presentation.mainActivityModels.SubcategoryModel
+import com.BySandS.testsandquizes.DataBase.models.SubcategoryModelDB
 import com.BySandS.testsandquizes.presentation.mainActivityModels.QuantityOfQuestionModel
 
 class DifficultyFragmentViewModel : ViewModel() {
 
-    private var subcategoryModel: SubcategoryModel? = null
+    private var subcategoryModel: SubcategoryModelDB? = null
     private var quantityOfQuestions: QuantityOfQuestionModel? = null
 
     init {
-        subcategoryModel = SubcategoryModel("Тест", "Название", 35, 65, 95)
+        subcategoryModel = SubcategoryModelDB(1,"Тест", "Название", 35, 65, 95)
         quantityOfQuestions = QuantityOfQuestionModel(7, 10, 15)
     }
 
-    fun getCategory(): SubcategoryModel {
+    fun getCategory(): SubcategoryModelDB {
         return subcategoryModel!!
     }
 
