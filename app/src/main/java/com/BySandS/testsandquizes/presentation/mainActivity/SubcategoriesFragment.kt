@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.data.test.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+
 
 private const val TAG = "TestsListFragment"
+
 /**
  * Фрагмент для показа категорий тестов
  */
@@ -47,10 +50,10 @@ class SubcategoriesFragment() : Fragment() {
         return view
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subcategory.listSubcategoryModelLiveData.observe(
+        //возможно надо вместо метода следить за объектом
+        subcategory.getListLiveData().observe(
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {
@@ -65,7 +68,7 @@ class SubcategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory:List<SubcategoryModelDb>) {
+    fun updateUI(subcategory: List<SubcategoryModel>) {
         adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
@@ -81,19 +84,19 @@ class SubcategoriesFragment() : Fragment() {
     private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
         val binding = SubcategoryItemFragmentBinding.bind(item)
-        lateinit var subcategory: SubcategoryModelDb
+        lateinit var subcategory: SubcategoryModel
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            subcategoryModel: SubcategoryModelDb
+            subcategoryModel: SubcategoryModel
         ) = with(binding) {
             subcategory = subcategoryModel
-            val easyPercent = ": ${subcategoryModel.statisticEasy}%"
-            val normPercent = ": ${subcategoryModel.statisticNorm}%"
-            val hardPercent = ": ${subcategoryModel.statisticHard}%"
+            val easyPercent = ": ${subcategoryModel.statisticEasyPercent}%"
+            val normPercent = ": ${subcategoryModel.statisticNormPercent}%"
+            val hardPercent = ": ${subcategoryModel.statisticHardPercent}%"
             tvNameSubcategory.text = subcategoryModel.subcategoryName
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
@@ -106,7 +109,8 @@ class SubcategoriesFragment() : Fragment() {
         override fun onClick(v: View?) {
             (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.holder, DifficultyFragment.newInstance()).commit()
-            Toast.makeText(context, "${subcategory.subcategoryName} pressed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "${subcategory.subcategoryName} pressed!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -114,7 +118,7 @@ class SubcategoriesFragment() : Fragment() {
      * class Adapter
      */
     private inner class SubcategoryAdapter(
-        var subcategories: List<SubcategoryModelDb>,
+        var subcategories: List<SubcategoryModel>,
     ) :
         RecyclerView.Adapter<SubcategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {
@@ -124,7 +128,6 @@ class SubcategoriesFragment() : Fragment() {
         }
 
         override fun getItemCount(): Int = subcategories.size
-
         override fun onBindViewHolder(holder: SubcategoryHolder, position: Int) {
             holder.bind(subcategories[position])
         }

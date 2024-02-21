@@ -9,7 +9,7 @@ import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
 //private const val DATABASE_NAME = "tests-database"
-class TestSubcategoryRepositoryImpl private constructor(context: Context): TestSubcategoryRepository {
+class TestSubcategoryRepositoryImpl (context: Context): TestSubcategoryRepository {
 //
 //    private val database: AppDatabase = Room.databaseBuilder(
 //        context.applicationContext,

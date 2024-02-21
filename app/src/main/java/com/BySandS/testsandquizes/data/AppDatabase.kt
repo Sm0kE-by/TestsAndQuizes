@@ -31,7 +31,7 @@ import com.BySandS.testsandquizes.data.test.dao.TestSubcategoryDaoRu
         StatisticsDbEntity::class,
         SubcategoryDbEntity::class
     ], version = 4, exportSchema = true,
-    autoMigrations = [AutoMigration(from = 2, to = 4)]
+    autoMigrations = [AutoMigration(from = 3, to = 4)]
 )
 abstract class AppDatabase : RoomDatabase() {
 
