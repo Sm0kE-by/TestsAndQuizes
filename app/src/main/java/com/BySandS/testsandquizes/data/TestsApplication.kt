@@ -1,7 +1,7 @@
 package com.BySandS.testsandquizes.data
 
 import android.app.Application
-import com.BySandS.testsandquizes.data.test.subcategory.TestSubcategoryRepositoryImpl
+import com.BySandS.testsandquizes.data.test.repository.TestSubcategoryRepositoryImpl
 
 /**
  * Инициализируем репозиторий
@@ -10,7 +10,7 @@ import com.BySandS.testsandquizes.data.test.subcategory.TestSubcategoryRepositor
 class TestsApplication:Application() {
     override fun onCreate() {
         super.onCreate()
-        TestSubcategoryRepositoryImpl.initialize(this)
+        AppDatabase.getInstance(this)
 
     }
 }

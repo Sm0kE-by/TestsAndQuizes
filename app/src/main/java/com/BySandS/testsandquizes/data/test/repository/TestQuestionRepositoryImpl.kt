@@ -1,9 +1,10 @@
-package com.BySandS.testsandquizes.data.test.question
+package com.BySandS.testsandquizes.data.test.repository
 
 import android.content.Context
 import androidx.room.Room
 import com.BySandS.testsandquizes.data.AppDatabase
-import com.BySandS.testsandquizes.domain.TestQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.models.GetQuestionListParam
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
@@ -20,22 +21,8 @@ class TestQuestionRepositoryImpl private constructor(context: Context): TestQues
         .build()
 
     private val testsDaoRu = database.testsQuestionDaoRu()
-    override fun getQuestionsListByDifficulty(
-        difficultyId: Int,
-        quantityOfQuestions: Int
-    ): QuestionModel {
+    override fun getQuestionsList(getQuestionListParam: GetQuestionListParam): List<QuestionModel> {
         TODO("Not yet implemented")
     }
 
-    override fun getStatistic(idSubcategory: Int): StatisticModel {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveStatistic(statisticModel: StatisticModel): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun getResult(testResultId: Int, difficultyId: Int): ResultTestModel {
-        TODO("Not yet implemented")
-    }
 }

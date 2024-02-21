@@ -44,9 +44,9 @@ class DifficultyFragment : Fragment() {
         tvQuantityQuestionNorm.text = quantityOfQuestion.normQuantity.toString()
         tvQuantityQuestionHard.text = quantityOfQuestion.hardQuantity.toString()
         // получаю из БД статистика
-        tvBestResultEasyNamber.text = subcategoryModel.statisticEasy.toString()
-        tvBestResultNormNamber.text = subcategoryModel.statisticNorm.toString()
-        tvBestResultHardNamber.text = subcategoryModel.statisticHard.toString()
+        tvBestResultEasyNamber.text = subcategoryModel.statisticEasyPercent.toString()
+        tvBestResultNormNamber.text = subcategoryModel.statisticNormPercent.toString()
+        tvBestResultHardNamber.text = subcategoryModel.statisticHardPercent.toString()
         tvNameSubcategory.text = subcategoryModel.subcategoryName
     }
 }
