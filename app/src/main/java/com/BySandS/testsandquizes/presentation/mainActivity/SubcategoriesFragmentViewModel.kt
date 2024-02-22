@@ -22,9 +22,6 @@ class SubcategoriesFragmentViewModel(application: Application) : AndroidViewMode
     private val param = GetCategoryParam(1)
     private var listSubcategoryModelLiveData = MutableLiveData<List<SubcategoryModel>>()
 
-
-
-
     private fun initList() {
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {

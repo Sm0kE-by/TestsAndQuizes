@@ -8,18 +8,9 @@ import com.BySandS.testsandquizes.R
 
 class MainActivity : AppCompatActivity() {
 
-    private var list = emptyList<SubcategoryDbEntity>()
-    override fun onCreate(savedInstanceState: Bundle?) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        GlobalScope.launch {
-//            val testRepository = TestsRepository.get()
-//            val list1 = testRepository.getAllSubcategories2()
-//
-//        }
-
-
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.holder)
         if (currentFragment == null) {

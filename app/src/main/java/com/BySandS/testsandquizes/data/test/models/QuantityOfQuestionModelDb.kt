@@ -1,8 +1,11 @@
 package com.BySandS.testsandquizes.data.test.models
 
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
+
 class QuantityOfQuestionModelDb(
-    val id: Long,
-    val easyQuantity: Int,
-    val normQuantity: Int,
-    val hardQuantity: Int
+    @PrimaryKey val id: Long,
+    @ColumnInfo(name = "easy_quantity")val easyQuantity: Int,
+    @ColumnInfo(name = "norm_quantity")val normQuantity: Int,
+    @ColumnInfo(name = "hard_quantity")val hardQuantity: Int
 )

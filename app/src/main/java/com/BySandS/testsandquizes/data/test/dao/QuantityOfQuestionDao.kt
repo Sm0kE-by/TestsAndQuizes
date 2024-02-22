@@ -10,6 +10,7 @@ import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 @Dao
 interface QuantityOfQuestionDao {
 
-//    @Query("")
-//    fun getQuantityOfQuestion(idSubcategory: GetQuantityOfQuestionParam): QuantityOfQuestionModelDb
+    @Query("SELECT * FROM quantity_of_questions, subcategory " +
+            "WHERE subcategory.quantity_of_questions_id = :idSubcategory")
+    fun getQuantityOfQuestion(idSubcategory: Long): QuantityOfQuestionModelDb
 }
