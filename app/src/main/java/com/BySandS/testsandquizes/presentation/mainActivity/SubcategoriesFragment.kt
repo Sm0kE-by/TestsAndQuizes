@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.data.test.models.SubcategoryModelDb
@@ -52,9 +53,9 @@ class SubcategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e(TAG, "${subcategory.listSubcategoryModelLiveData}")
+        Log.e(TAG, "${subcategory.getList()}")
         //возможно надо вместо метода следить за объектом
-        subcategory.listSubcategoryModelLiveData.observe(
+        subcategory.getList().observe(
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {

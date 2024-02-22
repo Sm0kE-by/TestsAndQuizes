@@ -6,7 +6,9 @@ import com.BySandS.testsandquizes.data.AppDatabase
 import com.BySandS.testsandquizes.domain.tests.models.GetCategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
+
 private const val TAG = "AAA"
+
 //private const val DATABASE_NAME = "tests-database"
 class TestSubcategoryRepositoryImpl(context: Context) : TestSubcategoryRepository {
 //
@@ -27,19 +29,32 @@ class TestSubcategoryRepositoryImpl(context: Context) : TestSubcategoryRepositor
         Log.e(TAG, "$list1\n")
         var listSubcategoryModel = ArrayList<SubcategoryModel>()
         Log.e(TAG, "$listSubcategoryModel")
-        list1.forEach{ it->
-            listSubcategoryModel.add(SubcategoryModel(
-                id = it.id,
-                typeName = it.typeName,
-                subcategoryName = it.subcategoryName,
-                statisticEasyPercent = it.statisticEasy,
-                statisticNormPercent = it.statisticNorm,
-                statisticHardPercent = it.statisticHard))
+        list1.forEach { it ->
+//            val id = it.id
+//            Log.e(TAG, "$id\n")
+//            val subcategoryName = it.subcategoryName
+//            Log.e(TAG, "$subcategoryName\n")
+//            val statisticEasyPercent = it.statisticEasy
+//            Log.e(TAG, "$statisticEasyPercent\n")
+//            val statisticNormPercent = it.statisticNorm
+//            Log.e(TAG, "$statisticNormPercent\n")
+//            val statisticHardPercent = it.statisticHard
+//            Log.e(TAG, "$statisticHardPercent\n")
+            listSubcategoryModel.add(
+                SubcategoryModel(
+                    id = it.id,
+                    typeName = it.subcategoryName,
+                    subcategoryName = it.subcategoryName,
+                    statisticEasyPercent = it.statisticEasy,
+                    statisticNormPercent = it.statisticNorm,
+                    statisticHardPercent = it.statisticHard
+                )
+            )
         }
         Log.e(TAG, "$listSubcategoryModel")
-        val list2:List<SubcategoryModel> = listSubcategoryModel
-        Log.e(TAG, "$list2")
-        return listSubcategoryModel
+        val list2: List<SubcategoryModel> = listSubcategoryModel
+        Log.e(TAG, "${list2.size}")
+        return list2
     }
 
 //    companion object {

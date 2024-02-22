@@ -12,6 +12,7 @@ import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+private const val TAG = "AAA"
 
 class SubcategoriesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -19,15 +20,24 @@ class SubcategoriesFragmentViewModel(application: Application) : AndroidViewMode
     private val testSubcategoryRepository = TestSubcategoryRepositoryImpl(application)
     private val getTestSubcategoryUseCase = GetTestSubcategoryUseCase(testSubcategoryRepository)
     private val param = GetCategoryParam(1)
-    var listSubcategoryModelLiveData: LiveData<List<SubcategoryModel>> =
-        MutableLiveData()
+    private var listSubcategoryModelLiveData = MutableLiveData<List<SubcategoryModel>>()
 
-    init {
+
+
+
+    private fun initList() {
+        // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
-            listSubcategoryModelLiveData = MutableLiveData(getTestSubcategoryUseCase.execute(param))
+            val list = getTestSubcategoryUseCase.execute(param)
+            listSubcategoryModelLiveData.postValue(list)
         }
     }
 
+    //Проверить перезапись и автообновление
+     fun getList(): LiveData<List<SubcategoryModel>> {
+        initList()
+        return listSubcategoryModelLiveData
+    }
 }
 
 
