@@ -18,7 +18,7 @@ import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 
 
-private const val TAG = "TestsListFragment"
+private const val TAG = "AAA"
 
 /**
  * Фрагмент для показа категорий тестов
@@ -52,8 +52,9 @@ class SubcategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(TAG, "${subcategory.listSubcategoryModelLiveData}")
         //возможно надо вместо метода следить за объектом
-        subcategory.getListLiveData().observe(
+        subcategory.listSubcategoryModelLiveData.observe(
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {

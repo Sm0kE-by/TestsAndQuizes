@@ -19,15 +19,15 @@ class SubcategoriesFragmentViewModel(application: Application) : AndroidViewMode
     private val testSubcategoryRepository = TestSubcategoryRepositoryImpl(application)
     private val getTestSubcategoryUseCase = GetTestSubcategoryUseCase(testSubcategoryRepository)
     private val param = GetCategoryParam(1)
-    private var listSubcategoryModelLiveData: LiveData<List<SubcategoryModel>> =
+    var listSubcategoryModelLiveData: LiveData<List<SubcategoryModel>> =
         MutableLiveData()
 
-    fun getListLiveData(): LiveData<List<SubcategoryModel>> {
+    init {
         viewModelScope.launch(Dispatchers.IO) {
-           listSubcategoryModelLiveData = MutableLiveData(getTestSubcategoryUseCase.execute(param))
+            listSubcategoryModelLiveData = MutableLiveData(getTestSubcategoryUseCase.execute(param))
         }
-        return listSubcategoryModelLiveData
     }
+
 }
 
 
