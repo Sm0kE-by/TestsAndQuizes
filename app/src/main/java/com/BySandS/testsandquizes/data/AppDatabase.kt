@@ -17,6 +17,8 @@ import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
 import com.BySandS.testsandquizes.data.test.dao.QuantityOfQuestionDao
 import com.BySandS.testsandquizes.data.test.dao.TestQuestionDaoRu
+import com.BySandS.testsandquizes.data.test.dao.TestResultDao
+import com.BySandS.testsandquizes.data.test.dao.TestStatisticDao
 import com.BySandS.testsandquizes.data.test.dao.TestSubcategoryDaoRu
 
 @Database(
@@ -39,6 +41,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun testsSubcategoryDaoRu(): TestSubcategoryDaoRu
     abstract fun testsQuestionDaoRu(): TestQuestionDaoRu
     abstract fun testsQuantityOfQuestion(): QuantityOfQuestionDao
+    abstract fun testsResult(): TestResultDao
+    abstract fun testStatistic(): TestStatisticDao
 
     companion object {
         private const val DATABASE_NAME = "tests-database"
