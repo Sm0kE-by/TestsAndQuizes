@@ -13,8 +13,8 @@ class TestQuantityOfQuestionRepositoryImpl(context: Context): QuantityOfQuestion
     private val testsQuantityDaoRu = AppDatabase.getInstance(context).testsQuantityOfQuestion()
 
     override fun getQuantity(param: GetQuantityOfQuestionParam): QuantityOfQuestionModel {
-        val quantity = testsQuantityDaoRu.getQuantityOfQuestion(idSubcategory = param.idSubcategory)
-        Log.e(TAG, "$quantity")
+        val quantity = testsQuantityDaoRu.getQuantityOfQuestion(idQuantity = param.idQuantity)
+        Log.e(TAG, " ${quantity.id} ${quantity.easyQuantity} ${quantity.normQuantity} ${quantity.hardQuantity} Проверка1")
         return QuantityOfQuestionModel(
             id = quantity.id,
             easyQuantity = quantity.easyQuantity,

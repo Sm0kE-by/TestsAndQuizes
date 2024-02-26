@@ -8,9 +8,9 @@ import com.BySandS.testsandquizes.data.test.models.StatisticModelDb
 @Dao
 interface TestStatisticDao {
 
-    @Query("SELECT * FROM statistic_subcategory WHERE id = :idSubcategory")
-    fun getStatistic(idSubcategory: Int): StatisticModelDb
+    @Query("SELECT * FROM statistic_subcategory WHERE name_subcategory = :nameSubcategory")
+    fun getStatistic(nameSubcategory: String): StatisticModelDb
 
-        @Update
-    fun saveStatistic(statisticModel: StatisticModelDb): Boolean
+//        @Update
+//    fun saveStatistic(statisticModel: StatisticModelDb): Boolean
 }

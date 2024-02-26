@@ -8,6 +8,6 @@ import com.BySandS.testsandquizes.domain.tests.repository.QuantityOfQuestionRepo
 class SelectTestDifficultyLevelUseCase(private val quantityOfQuestionRepository: QuantityOfQuestionRepository) {
 
     fun execute(param: GetQuantityOfQuestionParam): QuantityOfQuestionModel {
-        return quantityOfQuestionRepository.getQuantity(idSubcategory = param)
+        return quantityOfQuestionRepository.getQuantity(idQuantity = param)
     }
 }

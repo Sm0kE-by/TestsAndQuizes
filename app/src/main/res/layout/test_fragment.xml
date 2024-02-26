@@ -62,7 +62,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvHelp"
+            android:id="@+id/tvHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvHelpNumber"
+            android:id="@+id/tvHintNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
@@ -84,7 +84,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="0 из 3"
-            app:layout_constraintStart_toEndOf="@+id/tvHelp"
+            app:layout_constraintStart_toEndOf="@+id/tvHint"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -131,22 +131,13 @@
             app:layout_constraintTop_toTopOf="@+id/guideline13">
 
             <Button
-                android:id="@+id/btAnswer4"
+                android:id="@+id/btAnswer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:text="Answer4" />
-
-            <Button
-                android:id="@+id/btAnswer3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:text="Answer 3" />
+                android:text="Answer 1" />
 
             <Button
                 android:id="@+id/btAnswer2"
@@ -158,13 +149,22 @@
                 android:text="Answer 2" />
 
             <Button
-                android:id="@+id/btAnswer1"
+                android:id="@+id/btAnswer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:text="Answer 1" />
+                android:text="Answer 3" />
+
+            <Button
+                android:id="@+id/btAnswer4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="Answer 4" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

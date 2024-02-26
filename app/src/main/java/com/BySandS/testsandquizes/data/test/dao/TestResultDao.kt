@@ -2,7 +2,7 @@ package com.BySandS.testsandquizes.data.test.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.BySandS.testsandquizes.data.test.models.ResultModelDb
+import com.BySandS.testsandquizes.data.test.models.ResultTextModelDb
 
 @Dao
 interface TestResultDao {
@@ -14,6 +14,6 @@ interface TestResultDao {
             "WHERE result.result_text_id = result_text.id " +
             "AND result.difficulty_id = :difficultyId " +
             "AND result.test_result_id = :testResultId")
-    fun getResult(testResultId: Long, difficultyId: Long): ResultModelDb
+    fun getResult(testResultId: Long, difficultyId: Long): ResultTextModelDb
 
 }
