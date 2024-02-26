@@ -73,6 +73,7 @@ class TestFragment : Fragment(), View.OnClickListener {
                 "Test Completed\n Correct - ${testVM.quantityCorrectAnswer}\n Incorrect - ${testVM.quantityIncorrectAnswer}",
                 Toast.LENGTH_LONG
             ).show()
+            testVM.calculateTheResult()
         }
     }
 

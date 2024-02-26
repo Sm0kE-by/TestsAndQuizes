@@ -41,15 +41,6 @@ class DifficultyFragmentViewModel(application: Application) : AndroidViewModel(a
     }
 
     fun getQuantityOfQuestion(): QuantityOfQuestionModel {
-        Log.e(
-            TAG,
-            "${quantityOfQuestions?.id} ${quantityOfQuestions?.easyQuantity} ${quantityOfQuestions?.normQuantity} ${quantityOfQuestions?.hardQuantity} Проверка2"
-        )
-        getQuantity()
-        Log.e(
-            TAG,
-            "${quantityOfQuestions?.id} ${quantityOfQuestions?.easyQuantity} ${quantityOfQuestions?.normQuantity} ${quantityOfQuestions?.hardQuantity} Проверка3"
-        )
         return quantityOfQuestions
     }
 }

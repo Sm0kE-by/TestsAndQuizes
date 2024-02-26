@@ -1,6 +1,8 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.BySandS.testsandquizes.data.test.repository.TestResultRepositoryImpl
@@ -12,7 +14,9 @@ import com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionTextUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase
 import com.BySandS.testsandquizes.presentation.model.TestModelPresentation
+import kotlin.time.times
 
+private const val TAG = "AAA"
 class TestFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     private val testResultRepository = TestResultRepositoryImpl(application)
@@ -92,5 +96,12 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
     var quantityCorrectAnswer = 0
     var quantityIncorrectAnswer = 0
     var quantityOfQuestion = 0
+
+    fun calculateTheResult(){
+        Log.e(TAG, "quantityCorrectAnswer - $quantityCorrectAnswer")
+        val result = (quantityCorrectAnswer/listQuestions.size)*100
+        Log.e(TAG, "result $result% ${quantityCorrectAnswer}/${quantityCorrectAnswer/listQuestions.size}")
+        Toast.makeText(getApplication(), "result $result%", Toast.LENGTH_LONG).show()
+    }
 
 }
