@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Tests and Quizes"
 include(":app")
- 
+include(":data")
+include(":domain")

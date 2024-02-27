@@ -7,11 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.BySandS.testsandquizes.R
-import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.databinding.TestFragmentBinding
-import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
-import com.BySandS.testsandquizes.presentation.mainActivity.DifficultyFragmentViewModel
 
 class TestFragment : Fragment(), View.OnClickListener {
 
@@ -46,7 +42,7 @@ class TestFragment : Fragment(), View.OnClickListener {
     private fun startTest() = with(binding) {
         if (testVM.quantityOfQuestion != testVM.listQuestions.size) {
             val quantityOfQuestion = testVM.quantityOfQuestion
-            val question: QuestionModel = testVM.listQuestions[quantityOfQuestion]
+            val question: com.BySandS.testsandquizes.domain.tests.models.QuestionModel = testVM.listQuestions[quantityOfQuestion]
 
             val quantityQuestionsNumbers = quantityOfQuestion + 1
             //Возможно надо обернуть в LiveData!!!

@@ -2,7 +2,6 @@ package com.BySandS.testsandquizes.presentation.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
 import com.BySandS.testsandquizes.R
 
 

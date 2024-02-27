@@ -10,13 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 
 
 private const val TAG = "AAA"
@@ -70,7 +67,7 @@ class SubcategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<SubcategoryModel>) {
+    fun updateUI(subcategory: List<com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel>) {
         adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
@@ -86,14 +83,14 @@ class SubcategoriesFragment() : Fragment() {
     private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
         val binding = SubcategoryItemFragmentBinding.bind(item)
-        lateinit var subcategory: SubcategoryModel
+        lateinit var subcategory: com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            subcategoryModel: SubcategoryModel
+            subcategoryModel: com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
         ) = with(binding) {
             subcategory = subcategoryModel
             val easyPercent = ": ${subcategoryModel.statisticEasyPercent}%"
@@ -120,7 +117,7 @@ class SubcategoriesFragment() : Fragment() {
      * class Adapter
      */
     private inner class SubcategoryAdapter(
-        var subcategories: List<SubcategoryModel>,
+        var subcategories: List<com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel>,
     ) :
         RecyclerView.Adapter<SubcategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {

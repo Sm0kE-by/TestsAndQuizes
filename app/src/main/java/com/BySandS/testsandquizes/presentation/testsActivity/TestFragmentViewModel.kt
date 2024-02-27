@@ -4,17 +4,9 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.BySandS.testsandquizes.data.test.repository.TestResultRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestStatisticRepositoryImpl
-import com.BySandS.testsandquizes.data.test.repository.TestSubcategoryRepositoryImpl
-import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
-import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
-import com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionTextUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase
 import com.BySandS.testsandquizes.presentation.model.TestModelPresentation
-import kotlin.time.times
 
 private const val TAG = "AAA"
 class TestFragmentViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,17 +14,21 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
     private val testResultRepository = TestResultRepositoryImpl(application)
     private val testStatisticRepository = TestStatisticRepositoryImpl(application)
 
-    var getTestResultUseCase = GetTestResultUseCase(testResultRepository = testResultRepository)
-    var getQuestionTextUseCase = GetQuestionTextUseCase()
+    var getTestResultUseCase =
+        com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase(testResultRepository = testResultRepository)
+    var getQuestionTextUseCase =
+        com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionTextUseCase()
     var saveTestStatisticUseCase =
-        SaveTestStatisticUseCase(testStatisticRepository = testStatisticRepository)
+        com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase(
+            testStatisticRepository = testStatisticRepository
+        )
 
     //Пока вручную, потом буду принимать его на вход
     val testModelPresentation =
         TestModelPresentation(nameSubcategoryId = 1, difficultyId = 1, quantityOfQuestion = 7)
 
-    val listQuestions: List<QuestionModel> = listOf(
-        QuestionModel(
+    val listQuestions: List<com.BySandS.testsandquizes.domain.tests.models.QuestionModel> = listOf(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             1,
             "QuestionText 1",
             "Correct Answer 1",
@@ -40,7 +36,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 1 - 2",
             "Incorrect Answer 1 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             2,
             "QuestionText 2",
             "Correct Answer 2",
@@ -48,7 +44,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 2 - 2",
             "Incorrect Answer 2 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             3,
             "QuestionText 3",
             "Correct Answer 3",
@@ -56,7 +52,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 3 - 2",
             "Incorrect Answer 3 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             4,
             "QuestionText 4",
             "Correct Answer 4",
@@ -64,7 +60,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 4 - 2",
             "Incorrect Answer 4 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             5,
             "QuestionText 5",
             "Correct Answer 5",
@@ -72,7 +68,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 5 - 2",
             "Incorrect Answer 5 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             6,
             "QuestionText 6",
             "Correct Answer 6",
@@ -80,7 +76,7 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
             "Incorrect Answer 6 - 2",
             "Incorrect Answer 6 - 3"
         ),
-        QuestionModel(
+        com.BySandS.testsandquizes.domain.tests.models.QuestionModel(
             7,
             "QuestionText 7",
             "Correct Answer 7",
@@ -90,7 +86,8 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
         ),
     )
     //Или подгружать новый, или принимать на вход выбранный, пока руками написал
-    var statisticModel = StatisticModel(1, "Cosmos",30,60,90)
+    var statisticModel =
+        com.BySandS.testsandquizes.domain.tests.models.StatisticModel(1, "Cosmos", 30, 60, 90)
     //количество подсказок пока руками, модельки еще нет
     var quantityOfHint = 2
     var quantityCorrectAnswer = 0

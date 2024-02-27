@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
 
