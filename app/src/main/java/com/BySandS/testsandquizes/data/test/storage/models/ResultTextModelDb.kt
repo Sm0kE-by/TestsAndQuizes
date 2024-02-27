@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.data.test.models
+package com.BySandS.testsandquizes.data.test.storage.models
 
 import androidx.room.ColumnInfo
 

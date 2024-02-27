@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.BySandS.testsandquizes.data.test.models.SubcategoryModelDb
+import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel

@@ -1,8 +1,8 @@
-package com.BySandS.testsandquizes.data.test.dao
+package com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.BySandS.testsandquizes.data.test.models.ResultTextModelDb
+import com.BySandS.testsandquizes.data.test.storage.models.ResultTextModelDb
 
 @Dao
 interface TestResultDao {

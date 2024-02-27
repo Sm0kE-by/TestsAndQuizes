@@ -1,9 +1,9 @@
-package com.BySandS.testsandquizes.data.test.dao
+package com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
-import com.BySandS.testsandquizes.data.test.models.StatisticModelDb
+import com.BySandS.testsandquizes.data.test.storage.models.StatisticModelDb
 
 @Dao
 interface TestStatisticDao {

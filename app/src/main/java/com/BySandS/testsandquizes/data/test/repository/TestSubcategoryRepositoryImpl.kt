@@ -3,22 +3,29 @@ package com.BySandS.testsandquizes.data.test.repository
 import android.content.Context
 import android.util.Log
 import com.BySandS.testsandquizes.data.AppDatabase
+import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
+import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
 import com.BySandS.testsandquizes.domain.tests.models.GetCategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
-private const val TAG = "AAA"
-
-class TestSubcategoryRepositoryImpl(context: Context) : TestSubcategoryRepository {
-
-    private val testsDaoRu = AppDatabase.getInstance(context).testsSubcategoryDaoRu()
+/**
+ * Вместо маперов лучше сделать Extantion
+ */
+class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryStorage) :
+    TestSubcategoryRepository {
 
     override fun getAllSubcategories(param: GetCategoryParam): List<SubcategoryModel> {
-        val list1 = testsDaoRu.getSubcategoriesAndStatistics(idCategory = param.idCategory)
-        Log.e(TAG, "$list1\n")
+        return mapToDomain(
+            subcategoryStorage.getSubcategoriesAndStatistics(
+                mapToStorage(param)
+            )
+        )
+    }
+
+    private fun mapToDomain(subcategoryModelDb: List<SubcategoryModelDb>): List<SubcategoryModel> {
         var listSubcategoryModel = ArrayList<SubcategoryModel>()
-        Log.e(TAG, "$listSubcategoryModel")
-        list1.forEach { it ->
+        subcategoryModelDb.forEach { it ->
             listSubcategoryModel.add(
                 SubcategoryModel(
                     id = it.id,
@@ -30,9 +37,9 @@ class TestSubcategoryRepositoryImpl(context: Context) : TestSubcategoryRepositor
                 )
             )
         }
-        Log.e(TAG, "$listSubcategoryModel")
-//        val list2: List<SubcategoryModel> = listSubcategoryModel
-//        Log.e(TAG, "${list2.size}")
         return listSubcategoryModel
+    }
+    private fun mapToStorage(param: GetCategoryParam): Long{
+        return param.idCategory
     }
 }

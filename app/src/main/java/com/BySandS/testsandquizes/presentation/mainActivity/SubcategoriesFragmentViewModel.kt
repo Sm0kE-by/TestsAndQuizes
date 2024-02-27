@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.data.test.repository.TestSubcategoryRepositoryImpl
+import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoSubcategoryStorage
 import com.BySandS.testsandquizes.domain.tests.models.GetCategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryUseCase
@@ -16,8 +18,8 @@ private const val TAG = "AAA"
 
 class SubcategoriesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
-
-    private val testSubcategoryRepository = TestSubcategoryRepositoryImpl(application)
+    private val subcategoryStorage = DaoSubcategoryStorage(application)
+    private val testSubcategoryRepository = TestSubcategoryRepositoryImpl(subcategoryStorage)
     private val getTestSubcategoryUseCase = GetTestSubcategoryUseCase(testSubcategoryRepository)
     private val param = GetCategoryParam(1)
     private var listSubcategoryModelLiveData = MutableLiveData<List<SubcategoryModel>>()
@@ -31,7 +33,7 @@ class SubcategoriesFragmentViewModel(application: Application) : AndroidViewMode
     }
 
     //Проверить перезапись и автообновление
-     fun getList(): LiveData<List<SubcategoryModel>> {
+    fun getList(): LiveData<List<SubcategoryModel>> {
         initList()
         return listSubcategoryModelLiveData
     }
