@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.BySandS.testsandquizes.data.test.storage.models.StatisticModelDb
 
 @Dao
-interface TestStatisticDao {
+interface DaoStatistic {
 
     @Query("SELECT * FROM statistic_subcategory WHERE name_subcategory = :nameSubcategory")
     fun getStatistic(nameSubcategory: String): StatisticModelDb
