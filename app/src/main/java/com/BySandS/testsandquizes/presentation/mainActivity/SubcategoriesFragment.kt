@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 private const val TAG = "AAA"
@@ -27,10 +28,7 @@ class SubcategoriesFragment() : Fragment() {
 
     //подключаем VM фрагмента
 
-    private lateinit var subcategoryVM: SubcategoriesViewModel
-    //ViewModelProvider - отвечает за то, чтобы ВМ не пересоздавалась, возвращает уже имеющуюся ВМ
-    //Добавляем сюда фабрику
-
+    private val subcategoryVM by viewModel<SubcategoriesViewModel>()
 
     private var adapter: SubcategoryAdapter? = SubcategoryAdapter(emptyList())
 
@@ -53,19 +51,14 @@ class SubcategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subcategoryVM =
-            //activity?.application!! под ????
-            ViewModelProvider(this, SubcategoriesViewModelFactory(activity?.application!!)).get(
-                SubcategoriesViewModel::class.java
-            )
 //Пример. Как только listLiveData измениться, у нас отработает кусок кода в Observer
 //        subcategoryVM.listLiveData.observe(viewLifecycleOwner, Observer{
 //            testsRecyclerView = it
 //        })
 
-        Log.e(TAG, "${subcategoryVM.getList()}")
+        Log.e(TAG, "${subcategoryVM.listLiveData}")
         //возможно надо вместо метода следить за объектом
-        subcategoryVM.getList().observe(
+        subcategoryVM.listLiveData.observe(
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {

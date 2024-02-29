@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.BySandS.testsandquizes.data.test.storage.models.QuestionModelDb
 
 @Dao
-interface TestQuestionDaoRu {
+interface DaoQuestionRu {
     @Query("SELECT question_text.id, question_text.question_text_ru, question_text.correct_answer_ru," +
             "question_text.incorrect_answer_1_ru, question_text.incorrect_answer_2_ru," +
             "question_text.incorrect_answer_3_ru " +

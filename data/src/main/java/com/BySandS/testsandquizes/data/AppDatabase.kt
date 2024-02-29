@@ -15,9 +15,9 @@ import com.BySandS.testsandquizes.data.entity.ResultTextDbEntity
 import com.BySandS.testsandquizes.data.entity.ResultsTestDbEntity
 import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
-import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.QuantityOfQuestionDao
-import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.TestQuestionDaoRu
-import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.TestResultDao
+import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoQuantityOfQuestion
+import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoQuestionRu
+import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoResult
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoStatistic
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcategory
 
@@ -39,9 +39,9 @@ import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcateg
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun testsSubcategoryDaoRu(): DaoSubcategory
-    abstract fun testsQuestionDaoRu(): TestQuestionDaoRu
-    abstract fun testsQuantityOfQuestion(): QuantityOfQuestionDao
-    abstract fun testsResult(): TestResultDao
+    abstract fun testsQuestionDaoRu(): DaoQuestionRu
+    abstract fun testsQuantityOfQuestion(): DaoQuantityOfQuestion
+    abstract fun testsResult(): DaoResult
     abstract fun testStatistic(): DaoStatistic
 
     companion object {

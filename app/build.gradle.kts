@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 
-                  }
+    }
 
     buildTypes {
         release {
@@ -33,11 +33,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-            }
+    }
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -46,16 +46,22 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
 
-    implementation (project (":domain"))
-    implementation (project (":data"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     //viewModel точно
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
-    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    //Koin for kotlin app
+    implementation("io.insert-koin:koin-core:3.1.2")
+    implementation("io.insert-koin:koin-android:3.1.2") // для VM
+    //testing
+    implementation("io.insert-koin:koin-test:3.1.2")
+
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")// Библиотека "Room"???
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")// Библиотека "Room"???
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

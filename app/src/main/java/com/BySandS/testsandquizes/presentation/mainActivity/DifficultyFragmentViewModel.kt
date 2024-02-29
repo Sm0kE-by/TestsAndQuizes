@@ -31,10 +31,6 @@ class DifficultyFragmentViewModel(application: Application) : AndroidViewModel(a
         com.BySandS.testsandquizes.domain.tests.models.GetQuantityOfQuestionParam(idQuantity = 1)
 
     init {
-        getQuantity()
-    }
-
-    private fun getQuantity() {
         viewModelScope.launch(Dispatchers.IO) {
             val quantity =
                 selectTestDifficultyLevelUseCase.execute(param = quantityOfQuestionParam)

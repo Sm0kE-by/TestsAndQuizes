@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.BySandS.testsandquizes.data.test.storage.models.ResultTextModelDb
 
 @Dao
-interface TestResultDao {
+interface DaoResult {
 
     @Query("SELECT result_text.id, result_text.result_text_33_ru , " +
             "result_text.result_text_66_ru , result_text.result_text_99_ru , " +

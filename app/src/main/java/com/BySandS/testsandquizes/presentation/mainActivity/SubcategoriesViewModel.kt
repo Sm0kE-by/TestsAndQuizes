@@ -24,32 +24,21 @@ private const val TAG = "AAA"
  * Из LiveData не надо отписываться, одписка происходит автоматически. Важно!!! - если в Активити вы подписались в onCreate - отписка произойдет в onDestroy,
  *      если подписались в  onResum ->  отписка в onPause!!!
  */
-class SubcategoriesViewModel(private val getTestSubcategoryUseCase: GetTestSubcategoryUseCase) : ViewModel() {
+class SubcategoriesViewModel(private val getTestSubcategoryUseCase: GetTestSubcategoryUseCase) :
+    ViewModel() {
 
 
     private val param = GetCategoryParam(1)
     private var listSubcategoryModelLiveData =
         MutableLiveData<List<SubcategoryModel>>()
-     var listLiveData:LiveData<List<SubcategoryModel>>  =listSubcategoryModelLiveData
-
-
+    var listLiveData: LiveData<List<SubcategoryModel>> = listSubcategoryModelLiveData
 
     init {
-
-    }
-
-    private fun initList() {
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
             val list = getTestSubcategoryUseCase.execute(param)
             listSubcategoryModelLiveData.postValue(list)
         }
-    }
-
-    //Проверить перезапись и автообновление
-    fun getList(): LiveData<List<SubcategoryModel>> {
-        initList()
-        return listSubcategoryModelLiveData
     }
 
     /**
