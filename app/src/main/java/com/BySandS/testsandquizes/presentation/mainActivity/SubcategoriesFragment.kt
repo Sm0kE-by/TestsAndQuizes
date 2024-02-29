@@ -26,9 +26,12 @@ class SubcategoriesFragment() : Fragment() {
     private lateinit var testsRecyclerView: RecyclerView
 
     //подключаем VM фрагмента
-    private val subcategory: SubcategoriesFragmentViewModel by lazy {
-        ViewModelProvider(this).get(SubcategoriesFragmentViewModel::class.java)
-    }
+
+    private lateinit var subcategoryVM: SubcategoriesViewModel
+    //ViewModelProvider - отвечает за то, чтобы ВМ не пересоздавалась, возвращает уже имеющуюся ВМ
+    //Добавляем сюда фабрику
+
+
     private var adapter: SubcategoryAdapter? = SubcategoryAdapter(emptyList())
 
     /**
@@ -50,9 +53,19 @@ class SubcategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e(TAG, "${subcategory.getList()}")
+        subcategoryVM =
+            //activity?.application!! под ????
+            ViewModelProvider(this, SubcategoriesViewModelFactory(activity?.application!!)).get(
+                SubcategoriesViewModel::class.java
+            )
+//Пример. Как только listLiveData измениться, у нас отработает кусок кода в Observer
+//        subcategoryVM.listLiveData.observe(viewLifecycleOwner, Observer{
+//            testsRecyclerView = it
+//        })
+
+        Log.e(TAG, "${subcategoryVM.getList()}")
         //возможно надо вместо метода следить за объектом
-        subcategory.getList().observe(
+        subcategoryVM.getList().observe(
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {

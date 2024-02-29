@@ -40,7 +40,9 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1") // Кодогенератор
     implementation ("androidx.room:room-ktx:2.6.1") // Дополнительно для Kotlin Coroutines, Kotlin Flows
+
     implementation (project (":domain"))
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     //espresso тоже можно удалить
