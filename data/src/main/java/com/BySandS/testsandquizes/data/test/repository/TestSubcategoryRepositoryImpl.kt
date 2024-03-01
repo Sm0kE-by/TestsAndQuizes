@@ -2,7 +2,7 @@ package com.BySandS.testsandquizes.data.test.repository
 
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
-import com.BySandS.testsandquizes.domain.tests.models.GetCategoryParam
+import com.BySandS.testsandquizes.domain.tests.models.param.GetCategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
@@ -15,7 +15,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
     override fun getAllSubcategories(param: GetCategoryParam): List<SubcategoryModel> {
         return mapToDomain(
             subcategoryStorage.getSubcategoriesAndStatistics(
-                mapToStorage(param)
+                idCategory = mapToStorage(param = param)
             )
         )
     }
@@ -36,7 +36,8 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         }
         return listSubcategoryModel
     }
-    private fun mapToStorage(param: GetCategoryParam): Long{
+
+    private fun mapToStorage(param: GetCategoryParam): Long {
         return param.idCategory
     }
 }

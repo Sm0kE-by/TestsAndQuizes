@@ -1,5 +1,6 @@
 package com.BySandS.testsandquizes.di
 
+import com.BySandS.testsandquizes.domain.tests.usecase.GetQuantityOfQuestionUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryUseCase
 import org.koin.dsl.module
 
@@ -11,6 +12,12 @@ val domainModule = module {
     factory<GetTestSubcategoryUseCase> {
         GetTestSubcategoryUseCase(
             testSubcategoryRepository = get()
+        )
+    }
+
+    factory<GetQuantityOfQuestionUseCase> {
+        GetQuantityOfQuestionUseCase(
+            quantityOfQuestionRepository = get()
         )
     }
 }

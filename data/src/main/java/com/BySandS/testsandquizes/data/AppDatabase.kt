@@ -38,11 +38,11 @@ import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcateg
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun testsSubcategoryDaoRu(): DaoSubcategory
-    abstract fun testsQuestionDaoRu(): DaoQuestionRu
-    abstract fun testsQuantityOfQuestion(): DaoQuantityOfQuestion
-    abstract fun testsResult(): DaoResult
-    abstract fun testStatistic(): DaoStatistic
+    abstract fun subcategoryDao(): DaoSubcategory
+    abstract fun questionDao(): DaoQuestionRu
+    abstract fun quantityOfQuestionDao(): DaoQuantityOfQuestion
+    abstract fun resultDao(): DaoResult
+    abstract fun statisticDao(): DaoStatistic
 
     companion object {
         private const val DATABASE_NAME = "tests-database"

@@ -5,6 +5,5 @@ import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
 
 interface StatisticStorage {
     fun getStatistic(nameSubcategory: String): StatisticModelDb
-
-     fun updateStatistic(statisticModel: StatisticModel): Boolean
+    fun updateStatistic(statisticModel: StatisticModel): Boolean
 }

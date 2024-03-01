@@ -8,7 +8,7 @@ import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
 
 class DaoStatisticStorage(context: Context): StatisticStorage {
 
-    private val testsDaoRu = AppDatabase.getInstance(context).testStatistic()
+    private val testsDaoRu = AppDatabase.getInstance(context).statisticDao()
     override fun getStatistic(nameSubcategory: String): StatisticModelDb {
        return testsDaoRu.getStatistic(nameSubcategory = nameSubcategory)
     }

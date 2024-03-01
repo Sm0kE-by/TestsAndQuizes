@@ -7,7 +7,7 @@ import com.BySandS.testsandquizes.data.test.storage.models.QuestionModelDb
 
 class DaoQuestionStorage(context: Context) : QuestionStorage {
 
-    private val testDao = AppDatabase.getInstance(context).testsQuestionDaoRu()
+    private val testDao = AppDatabase.getInstance(context).questionDao()
     override fun getQuestionsList(
         difficultyId: Long,
         quantityOfQuestions: Int

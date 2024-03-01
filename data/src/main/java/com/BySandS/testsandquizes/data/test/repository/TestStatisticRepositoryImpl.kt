@@ -1,7 +1,7 @@
 package com.BySandS.testsandquizes.data.test.repository
 
 import android.content.Context
-import com.BySandS.testsandquizes.domain.tests.models.GetStatisticParam
+import com.BySandS.testsandquizes.domain.tests.models.param.GetStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
 import com.BySandS.testsandquizes.domain.tests.repository.TestStatisticRepository
 

@@ -1,10 +1,14 @@
 package com.BySandS.testsandquizes.domain.tests.usecase
 
+import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
+import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
+import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
 
-class GetTestResultUseCase(private val testResultRepository: com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository) {
 
-    fun execute(param: com.BySandS.testsandquizes.domain.tests.models.GetResultParam){
-        testResultRepository.getResult(param = param)
+class GetTestResultUseCase(private val testResultRepository: TestResultRepository) {
+
+    fun execute(param: GetResultParam): ResultTestModel{
+       return testResultRepository.getResult(param = param)
     }
 
 }

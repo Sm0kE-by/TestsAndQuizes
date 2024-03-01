@@ -7,7 +7,7 @@ import com.BySandS.testsandquizes.data.test.storage.models.QuantityOfQuestionMod
 
 class DaoQuantityOfQuestionStorage(context: Context): QuantityOfQuestionStorage {
 
-    private val testDao = AppDatabase.getInstance(context).testsQuantityOfQuestion()
+    private val testDao = AppDatabase.getInstance(context).quantityOfQuestionDao()
     override fun getQuantity(idQuantity: Long): QuantityOfQuestionModelDb {
        return testDao.getQuantityOfQuestion(idQuantity = idQuantity)
     }

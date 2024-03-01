@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val TAG = "AAA"
 
@@ -18,9 +19,7 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: DefficultyFragmentBinding
 
     //подключаем VM фрагмента
-    private val difficulty: DifficultyFragmentViewModel by lazy {
-        ViewModelProvider(this).get(DifficultyFragmentViewModel::class.java)
-    }
+    private val difficultyVM by viewModel<DifficultyFragmentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,8 +46,8 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
 
     private fun updateUI() = with(binding) {
 
-        val subcategoryModel = difficulty.getCategory()
-        val quantityOfQuestion = difficulty.getQuantityOfQuestion()
+        val subcategoryModel = difficultyVM.getCategory()
+        val quantityOfQuestion = difficultyVM.getQuantityOfQuestion()
         Log.e(TAG, "${quantityOfQuestion.id} ${quantityOfQuestion.easyQuantity} ${quantityOfQuestion.normQuantity} ${quantityOfQuestion.hardQuantity} Проверка4")
 
         //получаю из БД кол-во вопросов

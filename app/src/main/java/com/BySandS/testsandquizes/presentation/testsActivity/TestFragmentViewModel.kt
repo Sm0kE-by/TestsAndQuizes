@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import com.BySandS.testsandquizes.data.test.repository.TestQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestResultRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestStatisticRepositoryImpl
 import com.BySandS.testsandquizes.presentation.model.TestModelPresentation
@@ -13,11 +14,12 @@ class TestFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private val testResultRepository = TestResultRepositoryImpl(application)
     private val testStatisticRepository = TestStatisticRepositoryImpl(application)
+    private val testQuestionRepository = TestQuestionRepositoryImpl(application)
 
     var getTestResultUseCase =
         com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase(testResultRepository = testResultRepository)
-    var getQuestionTextUseCase =
-        com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionTextUseCase()
+    var getQuestionListUseCase =
+        com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionListUseCase()
     var saveTestStatisticUseCase =
         com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase(
             testStatisticRepository = testStatisticRepository

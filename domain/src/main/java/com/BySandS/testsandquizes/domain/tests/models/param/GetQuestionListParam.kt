@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.domain.tests.models
+package com.BySandS.testsandquizes.domain.tests.models.param
 
 class GetQuestionListParam (
     val difficultyId: Long,
