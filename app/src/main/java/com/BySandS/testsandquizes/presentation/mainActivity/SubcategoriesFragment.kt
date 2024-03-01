@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -73,7 +74,7 @@ class SubcategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel>) {
+    fun updateUI(subcategory: List<SubcategoryModel>) {
         adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
@@ -89,14 +90,14 @@ class SubcategoriesFragment() : Fragment() {
     private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
         val binding = SubcategoryItemFragmentBinding.bind(item)
-        lateinit var subcategory: com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+        lateinit var subcategory: SubcategoryModel
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            subcategoryModel: com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+            subcategoryModel: SubcategoryModel
         ) = with(binding) {
             subcategory = subcategoryModel
             val easyPercent = ": ${subcategoryModel.statisticEasyPercent}%"
@@ -123,7 +124,7 @@ class SubcategoriesFragment() : Fragment() {
      * class Adapter
      */
     private inner class SubcategoryAdapter(
-        var subcategories: List<com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel>,
+        var subcategories: List<SubcategoryModel>,
     ) :
         RecyclerView.Adapter<SubcategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {

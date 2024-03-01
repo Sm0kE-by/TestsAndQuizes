@@ -1,7 +1,11 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestionParam
 import com.BySandS.testsandquizes.domain.tests.usecase.GetQuantityOfQuestionUseCase
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +17,8 @@ class DifficultyFragmentViewModel(
     private val getQuantityOfQuestionUseCase: GetQuantityOfQuestionUseCase
 ) : ViewModel() {
 
-    private var subcategoryModel: com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel? =
-        com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel(
+    private var subcategoryModel: SubcategoryModel? =
+        SubcategoryModel(
             1,
             "test",
             "Cosmosss",
@@ -22,8 +26,8 @@ class DifficultyFragmentViewModel(
             66,
             100
         )
-    private var quantityOfQuestions: com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel =
-        com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel(2, 8, 11, 16)
+    private lateinit var quantityOfQuestionsMutable: MutableLiveData<QuantityOfQuestionModel>
+    var quantityOfQuestions: LiveData<QuantityOfQuestionModel> = quantityOfQuestionsMutable
     private val quantityOfQuestionParam =
         GetQuantityOfQuestionParam(idQuantity = 1)
 
@@ -31,15 +35,11 @@ class DifficultyFragmentViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val quantity =
                 getQuantityOfQuestionUseCase.execute(param = quantityOfQuestionParam)
-            quantityOfQuestions = quantity
+            quantityOfQuestionsMutable.value = quantity
         }
     }
 
-    fun getCategory(): com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel {
+    fun getCategory(): SubcategoryModel {
         return subcategoryModel!!
-    }
-
-    fun getQuantityOfQuestion(): com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel {
-        return quantityOfQuestions
     }
 }

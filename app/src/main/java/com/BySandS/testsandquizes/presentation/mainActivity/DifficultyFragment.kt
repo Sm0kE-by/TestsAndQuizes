@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
+import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,10 +35,14 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateUI()
         binding.cardView1.setOnClickListener(this@DifficultyFragment)
         binding.cardView2.setOnClickListener(this@DifficultyFragment)
         binding.cardView3.setOnClickListener(this@DifficultyFragment)
+        difficultyVM.quantityOfQuestions.observe(
+            viewLifecycleOwner, Observer {
+                it?.let { updateUI() }
+            }
+        )
     }
 
     companion object {
@@ -47,13 +53,18 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     private fun updateUI() = with(binding) {
 
         val subcategoryModel = difficultyVM.getCategory()
-        val quantityOfQuestion = difficultyVM.getQuantityOfQuestion()
-        Log.e(TAG, "${quantityOfQuestion.id} ${quantityOfQuestion.easyQuantity} ${quantityOfQuestion.normQuantity} ${quantityOfQuestion.hardQuantity} Проверка4")
+        //        Log.e(
+//            TAG,
+//            "${quantityOfQuestion.id} ${quantityOfQuestion.easyQuantity} ${quantityOfQuestion.normQuantity} ${quantityOfQuestion.hardQuantity} Проверка4"
+//        )
 
         //получаю из БД кол-во вопросов
-        tvQuantityQuestionEasy.text = quantityOfQuestion.easyQuantity.toString()
-        tvQuantityQuestionNorm.text = quantityOfQuestion.normQuantity.toString()
-        tvQuantityQuestionHard.text = quantityOfQuestion.hardQuantity.toString()
+        tvQuantityQuestionEasy.text =
+            difficultyVM.quantityOfQuestions.value?.easyQuantity.toString()
+        tvQuantityQuestionNorm.text =
+            difficultyVM.quantityOfQuestions.value?.normQuantity.toString()
+        tvQuantityQuestionHard.text =
+            difficultyVM.quantityOfQuestions.value?.hardQuantity.toString()
         // получаю из БД статистика
         tvBestResultEasyNamber.text = subcategoryModel.statisticEasyPercent.toString()
         tvBestResultNormNamber.text = subcategoryModel.statisticNormPercent.toString()
@@ -61,17 +72,18 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         tvNameSubcategory.text = subcategoryModel.subcategoryName
     }
 
-    override fun onClick(v: View?): Unit = with(binding){
-       when(v?.id){
-           cardView1.id -> startActivityTest()
-           cardView2.id -> startActivityTest()
-           cardView3.id -> startActivityTest()
+    override fun onClick(v: View?): Unit = with(binding) {
+        when (v?.id) {
+            cardView1.id -> startActivityTest()
+            cardView2.id -> startActivityTest()
+            cardView3.id -> startActivityTest()
 
 
-           else -> {}
-       }
+            else -> {}
+        }
     }
-    private fun startActivityTest(){
+
+    private fun startActivityTest() {
         val testActivity = Intent(activity, TestActivity::class.java)
         startActivity(testActivity)
     }
