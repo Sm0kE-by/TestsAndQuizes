@@ -2,9 +2,9 @@ package com.BySandS.testsandquizes.data.test.storage.dao
 
 import android.content.Context
 import com.BySandS.testsandquizes.data.AppDatabase
+import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.test.storage.StatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.models.StatisticModelDb
-import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
 
 class DaoStatisticStorage(context: Context): StatisticStorage {
 
@@ -13,7 +13,7 @@ class DaoStatisticStorage(context: Context): StatisticStorage {
        return testsDaoRu.getStatistic(nameSubcategory = nameSubcategory)
     }
 
-    override fun updateStatistic(statisticModel: StatisticModel): Boolean {
-        TODO("Not yet implemented")
+    override fun updateStatistic(statisticModel: StatisticsDbEntity) {
+       return testsDaoRu.saveStatistic(statisticModel = statisticModel)
     }
 }

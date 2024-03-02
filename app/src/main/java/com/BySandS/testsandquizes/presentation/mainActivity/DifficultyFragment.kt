@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,8 +20,6 @@ private const val TAG = "AAA"
 class DifficultyFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: DefficultyFragmentBinding
-
-    //подключаем VM фрагмента
     private val difficultyVM by viewModel<DifficultyFragmentViewModel>()
 
     override fun onCreateView(
@@ -29,8 +28,6 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     ): View {
         binding = DefficultyFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,8 +36,14 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         binding.cardView2.setOnClickListener(this@DifficultyFragment)
         binding.cardView3.setOnClickListener(this@DifficultyFragment)
         difficultyVM.quantityOfQuestions.observe(
-            viewLifecycleOwner, Observer {
-                it?.let { updateUI() }
+            viewLifecycleOwner, Observer { quantity ->
+                quantity?.let {
+                    difficultyVM.subcategoryModel.observe(
+                        viewLifecycleOwner,
+                        Observer { subcategory ->
+                            subcategory?.let { updateUI(quantity, subcategory) }
+                        })
+                }
             }
         )
     }
@@ -50,21 +53,12 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         fun newInstance() = DifficultyFragment()
     }
 
-    private fun updateUI() = with(binding) {
-
-        val subcategoryModel = difficultyVM.getCategory()
-        //        Log.e(
-//            TAG,
-//            "${quantityOfQuestion.id} ${quantityOfQuestion.easyQuantity} ${quantityOfQuestion.normQuantity} ${quantityOfQuestion.hardQuantity} Проверка4"
-//        )
+    private fun updateUI(quantityOfQuestions: QuantityOfQuestionModel, subcategoryModel: SubcategoryModel) = with(binding) {
 
         //получаю из БД кол-во вопросов
-        tvQuantityQuestionEasy.text =
-            difficultyVM.quantityOfQuestions.value?.easyQuantity.toString()
-        tvQuantityQuestionNorm.text =
-            difficultyVM.quantityOfQuestions.value?.normQuantity.toString()
-        tvQuantityQuestionHard.text =
-            difficultyVM.quantityOfQuestions.value?.hardQuantity.toString()
+        tvQuantityQuestionEasy.text = quantityOfQuestions.easyQuantity.toString()
+        tvQuantityQuestionNorm.text = quantityOfQuestions.normQuantity.toString()
+        tvQuantityQuestionHard.text = quantityOfQuestions.hardQuantity.toString()
         // получаю из БД статистика
         tvBestResultEasyNamber.text = subcategoryModel.statisticEasyPercent.toString()
         tvBestResultNormNamber.text = subcategoryModel.statisticNormPercent.toString()
@@ -74,12 +68,10 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
+            //Убрать метод вызова активити в ВМ
             cardView1.id -> startActivityTest()
             cardView2.id -> startActivityTest()
             cardView3.id -> startActivityTest()
-
-
-            else -> {}
         }
     }
 

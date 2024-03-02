@@ -8,15 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.BySandS.testsandquizes.databinding.TestFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TestFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: TestFragmentBinding
 
     //подключаем VM фрагмента
-    private val testVM: TestFragmentViewModel by lazy {
-        ViewModelProvider(this).get(TestFragmentViewModel::class.java)
-    }
+    private val testVM by viewModel<TestFragmentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

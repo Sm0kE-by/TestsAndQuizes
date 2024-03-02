@@ -21,7 +21,7 @@ val domainModule = module {
     }
     factory<GetQuantityOfQuestionUseCase> {
         GetQuantityOfQuestionUseCase(
-            quantityOfQuestionRepository = get()
+            testQuantityOfQuestionRepository = get()
         )
     }
     factory<GetQuestionListUseCase> {

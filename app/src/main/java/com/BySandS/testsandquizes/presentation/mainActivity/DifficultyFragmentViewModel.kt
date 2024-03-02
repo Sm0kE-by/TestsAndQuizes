@@ -17,29 +17,22 @@ class DifficultyFragmentViewModel(
     private val getQuantityOfQuestionUseCase: GetQuantityOfQuestionUseCase
 ) : ViewModel() {
 
-    private var subcategoryModel: SubcategoryModel? =
+    private val subcategoryModelMutable = MutableLiveData<SubcategoryModel>(
         SubcategoryModel(
-            1,
-            "test",
-            "Cosmosss",
-            33,
-            66,
-            100
+            1, "test", "Cosmosss", 33, 66, 100
         )
-    private lateinit var quantityOfQuestionsMutable: MutableLiveData<QuantityOfQuestionModel>
+    )
+    var subcategoryModel: LiveData<SubcategoryModel> = subcategoryModelMutable
+
+    private val quantityOfQuestionsMutable = MutableLiveData<QuantityOfQuestionModel>()
     var quantityOfQuestions: LiveData<QuantityOfQuestionModel> = quantityOfQuestionsMutable
+
     private val quantityOfQuestionParam =
         GetQuantityOfQuestionParam(idQuantity = 1)
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val quantity =
-                getQuantityOfQuestionUseCase.execute(param = quantityOfQuestionParam)
-            quantityOfQuestionsMutable.value = quantity
+            quantityOfQuestionsMutable.postValue(getQuantityOfQuestionUseCase.execute(param = quantityOfQuestionParam))
         }
-    }
-
-    fun getCategory(): SubcategoryModel {
-        return subcategoryModel!!
     }
 }

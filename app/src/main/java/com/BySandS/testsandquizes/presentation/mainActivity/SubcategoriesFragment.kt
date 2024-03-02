@@ -26,11 +26,7 @@ private const val TAG = "AAA"
 class SubcategoriesFragment() : Fragment() {
 
     private lateinit var testsRecyclerView: RecyclerView
-
-    //подключаем VM фрагмента
-
     private val subcategoryVM by viewModel<SubcategoriesViewModel>()
-
     private var adapter: SubcategoryAdapter? = SubcategoryAdapter(emptyList())
 
     /**
@@ -52,13 +48,7 @@ class SubcategoriesFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//Пример. Как только listLiveData измениться, у нас отработает кусок кода в Observer
-//        subcategoryVM.listLiveData.observe(viewLifecycleOwner, Observer{
-//            testsRecyclerView = it
-//        })
 
-        Log.e(TAG, "${subcategoryVM.listLiveData}")
-        //возможно надо вместо метода следить за объектом
         subcategoryVM.listLiveData.observe(
             viewLifecycleOwner,
             Observer { subcategories ->

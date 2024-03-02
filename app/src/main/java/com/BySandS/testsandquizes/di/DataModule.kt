@@ -1,6 +1,6 @@
 package com.BySandS.testsandquizes.di
 
-import com.BySandS.testsandquizes.data.test.repository.TestQuantityOfQuestionRepositoryImpl
+import com.BySandS.testsandquizes.data.test.repository.TestTestQuantityOfQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestResultRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestStatisticRepositoryImpl
@@ -15,7 +15,7 @@ import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuestionStorage
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoResultStorage
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoStatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoSubcategoryStorage
-import com.BySandS.testsandquizes.domain.tests.repository.QuantityOfQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestStatisticRepository
@@ -28,9 +28,9 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
-    // single<SubcategoryStorage> = SubcategoryStorage - интерфейс
+// single<SubcategoryStorage> = SubcategoryStorage - интерфейс
     single<SubcategoryStorage> {
-        //DaoSubcategoryStorage - имплементация
+//DaoSubcategoryStorage - имплементация
         DaoSubcategoryStorage(context = get())
     }
     single<QuantityOfQuestionStorage> {
@@ -50,14 +50,14 @@ val dataModule = module {
     single<TestSubcategoryRepository> {
         TestSubcategoryRepositoryImpl(subcategoryStorage = get())
     }
-    single<QuantityOfQuestionRepository> {
-        TestQuantityOfQuestionRepositoryImpl(quantityOfQuestionStorage = get())
+    single<TestQuantityOfQuestionRepository> {
+        TestTestQuantityOfQuestionRepositoryImpl(quantityOfQuestionStorage = get())
     }
     single<TestResultRepository> {
         TestResultRepositoryImpl(resultStorage = get())
     }
     single<TestStatisticRepository> {
-        TestStatisticRepositoryImpl(daoStatisticStorage = get())
+        TestStatisticRepositoryImpl(statisticStorage = get())
     }
     single<TestQuestionRepository> {
         TestQuestionRepositoryImpl(questionStorage = get())
