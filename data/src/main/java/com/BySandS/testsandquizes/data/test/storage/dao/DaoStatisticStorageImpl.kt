@@ -6,7 +6,7 @@ import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.test.storage.StatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.models.StatisticModelDb
 
-class DaoStatisticStorage(context: Context): StatisticStorage {
+class DaoStatisticStorageImpl(context: Context): StatisticStorage {
 
     private val testsDaoRu = AppDatabase.getInstance(context).statisticDao()
     override fun getStatistic(nameSubcategory: String): StatisticModelDb {

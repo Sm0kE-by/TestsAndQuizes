@@ -5,7 +5,7 @@ import com.BySandS.testsandquizes.data.AppDatabase
 import com.BySandS.testsandquizes.data.test.storage.QuantityOfQuestionStorage
 import com.BySandS.testsandquizes.data.test.storage.models.QuantityOfQuestionModelDb
 
-class DaoQuantityOfQuestionStorage(context: Context): QuantityOfQuestionStorage {
+class DaoQuantityOfQuestionStorageImpl(context: Context): QuantityOfQuestionStorage {
 
     private val testDao = AppDatabase.getInstance(context).quantityOfQuestionDao()
     override fun getQuantity(idQuantity: Long): QuantityOfQuestionModelDb {

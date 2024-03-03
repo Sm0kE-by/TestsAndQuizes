@@ -10,11 +10,11 @@ import com.BySandS.testsandquizes.data.test.storage.QuestionStorage
 import com.BySandS.testsandquizes.data.test.storage.ResultStorage
 import com.BySandS.testsandquizes.data.test.storage.StatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuantityOfQuestionStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuestionStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoResultStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoStatisticStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoSubcategoryStorage
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuantityOfQuestionStorageImpl
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuestionStorageImpl
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoResultStorageImpl
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoStatisticStorageImpl
+import com.BySandS.testsandquizes.data.test.storage.dao.DaoSubcategoryStorageImpl
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
@@ -31,19 +31,19 @@ val dataModule = module {
 // single<SubcategoryStorage> = SubcategoryStorage - интерфейс
     single<SubcategoryStorage> {
 //DaoSubcategoryStorage - имплементация
-        DaoSubcategoryStorage(context = get())
+        DaoSubcategoryStorageImpl(context = get())
     }
     single<QuantityOfQuestionStorage> {
-        DaoQuantityOfQuestionStorage(context = get())
+        DaoQuantityOfQuestionStorageImpl(context = get())
     }
     single<ResultStorage> {
-        DaoResultStorage(context = get())
+        DaoResultStorageImpl(context = get())
     }
     single<StatisticStorage> {
-        DaoStatisticStorage(context = get())
+        DaoStatisticStorageImpl(context = get())
     }
     single<QuestionStorage> {
-        DaoQuestionStorage(context = get())
+        DaoQuestionStorageImpl(context = get())
     }
 
 

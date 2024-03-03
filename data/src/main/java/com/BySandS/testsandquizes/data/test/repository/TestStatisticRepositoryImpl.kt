@@ -3,7 +3,6 @@ package com.BySandS.testsandquizes.data.test.repository
 import android.util.Log
 import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.test.storage.StatisticStorage
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoStatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.models.StatisticModelDb
 import com.BySandS.testsandquizes.domain.tests.models.param.GetStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.StatisticModel

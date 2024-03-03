@@ -1,6 +1,8 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,9 +32,6 @@ class TestFragmentViewModel(
     private val questionList = MutableLiveData<List<QuestionModel>>()
     private val result = MutableLiveData<ResultTestModel>()
     private val static = MutableLiveData<StatisticModel>()
-
-
-
 
     //Пока вручную, потом буду принимать его на вход
     val testModelPresentation =
@@ -99,22 +98,24 @@ class TestFragmentViewModel(
 
     //Или подгружать новый, или принимать на вход выбранный, пока руками написал
     var statisticModel =
-        com.BySandS.testsandquizes.domain.tests.models.StatisticModel(1, "Cosmos", 30, 60, 90)
+        StatisticModel(1, "Cosmos", 30, 60, 90)
 
     //количество подсказок пока руками, модельки еще нет
     var quantityOfHint = 2
     var quantityCorrectAnswer = 0
-    var quantityIncorrectAnswer = 0
     var quantityOfQuestion = 0
+    private var quantityOfQuestionMutable = MutableLiveData<Int>(quantityOfQuestion)
 
     //Для инициализации
     val getQuestionListParam = GetQuestionListParam(difficultyId = 1, quantityOfQuestions = 1)
     val getResultParam = GetResultParam(testResultId = 1, difficultyId = 1)
     val getStatisticParam = GetStatisticParam(nameSubcategory = "cosmos")
+
+    private var questionMutable =
+        MutableLiveData<QuestionModel>(getQuestion(listQuestions[quantityOfQuestionMutable.value!!]))
+    var question: LiveData<QuestionModel> = questionMutable
+
     init {
-        //!!!Пока руками!!!
-
-
         viewModelScope.launch(Dispatchers.IO) {
             questionList.postValue(getQuestionListUseCase.execute(param = getQuestionListParam))
             result.postValue(getTestResultUseCase.execute(param = getResultParam))
@@ -122,14 +123,90 @@ class TestFragmentViewModel(
         }
     }
 
-    fun calculateTheResult() {
-        Log.e(TAG, "quantityCorrectAnswer - $quantityCorrectAnswer")
-        val result = (quantityCorrectAnswer / listQuestions.size) * 100
-        Log.e(
-            TAG,
-            "result $result% ${quantityCorrectAnswer}/${quantityCorrectAnswer / listQuestions.size}"
-        )
-//        Toast.makeText(getApplication(), "result $result%", Toast.LENGTH_LONG).show()
+    /**
+     * Вычисление статистики пройденного теста
+     */
+    private fun calculateTheResult(): Int {
+        Log.i(TAG, "calculateTheResult")
+        val correctAnswer: Double = quantityCorrectAnswer.toDouble()
+        val listSize: Double = listQuestions.size.toDouble()
+        return ((correctAnswer / listSize) * 100).toInt()
     }
 
+    /**
+     * Перемешивание ответов в вопросе
+     */
+    private fun randomAnswerOfQuestion(questionModel: QuestionModel): QuestionModel {
+        Log.i(TAG, "randomAnswerOfQuestion")
+        val list = listOf(
+            questionModel.correctAnswer,
+            questionModel.incorrectAnswer1,
+            questionModel.incorrectAnswer2,
+            questionModel.incorrectAnswer3
+        ).shuffled()
+        return QuestionModel(
+            id = questionModel.id,
+            questionText = questionModel.questionText,
+            correctAnswer = list[0],
+            incorrectAnswer1 = list[1],
+            incorrectAnswer2 = list[2],
+            incorrectAnswer3 = list[3]
+        )
+    }
+
+    /**
+     * Проверка правильности ответа
+     */
+    fun checkingAnswer(answerText: String) {
+        Log.i(TAG, "checkingAnswer")
+        Log.i(TAG, "$answerText")
+        if (answerText == listQuestions[quantityOfQuestion].correctAnswer.toString()) {
+            quantityCorrectAnswer++
+            Log.i(TAG, "quantityCorrectAnswer - $quantityCorrectAnswer")
+            questionMutable.value = getQuestion(listQuestions[quantityOfQuestion])
+        } else {
+            Log.i(TAG, "$quantityCorrectAnswer")
+            questionMutable.value = getQuestion(listQuestions[quantityOfQuestion])
+        }
+    }
+
+    private fun getQuestion(question: QuestionModel): QuestionModel {
+        Log.i(TAG, "getQuestion")
+        val question1 = randomAnswerOfQuestion(question)
+        if (quantityOfQuestion != listQuestions.size) {
+            ++quantityOfQuestion
+            Log.i(TAG, "getQuestion $quantityOfQuestion listQuestions.size ${listQuestions.size}")
+        } else {
+            /**
+             * Загрузка результата
+             */
+            Log.i(TAG, "saveStatistic")
+            when (testModelPresentation.difficultyId) {
+                1L -> saveTestStatisticUseCase.execute(
+                    StatisticModel(
+                        id = static.value!!.id,
+                        nameSubcategory = static.value!!.nameSubcategory,
+                        easy = calculateTheResult(),
+                        norm = static.value!!.norm,
+                        hard = static.value!!.hard
+                    )
+                )
+                2L -> saveTestStatisticUseCase.execute(StatisticModel(
+                    id = static.value!!.id,
+                    nameSubcategory = static.value!!.nameSubcategory,
+                    easy = static.value!!.easy,
+                    norm = calculateTheResult(),
+                    hard = static.value!!.hard
+                ))
+                3L -> saveTestStatisticUseCase.execute(StatisticModel(
+                    id = static.value!!.id,
+                    nameSubcategory = static.value!!.nameSubcategory,
+                    easy = static.value!!.easy,
+                    norm = static.value!!.norm,
+                    hard = calculateTheResult()
+                ))
+            }
+        }
+        return question1
+    }
 }
