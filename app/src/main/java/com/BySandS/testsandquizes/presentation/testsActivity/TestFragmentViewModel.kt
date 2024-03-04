@@ -130,7 +130,8 @@ class TestFragmentViewModel(
      * Вычисление статистики пройденного теста
      */
     private fun calculateTheResult(): Int {
-        Log.i(TAG, "calculateTheResult")
+        Log.i(TAG, "Starting fun - calculateTheResult")
+        Log.i(TAG, "CorrectAnswer = $quantityCorrectAnswer из ${listQuestions.size}")
         val correctAnswer: Double = quantityCorrectAnswer.toDouble()
         val listSize: Double = listQuestions.size.toDouble()
         return ((correctAnswer / listSize) * 100).toInt()
@@ -140,7 +141,7 @@ class TestFragmentViewModel(
      * Перемешивание ответов в вопросе
      */
     private fun randomAnswerOfQuestion(questionModel: QuestionModel): QuestionModel {
-        Log.i(TAG, "randomAnswerOfQuestion")
+        Log.i(TAG, "Starting fun - randomAnswerOfQuestion")
         val list = listOf(
             questionModel.correctAnswer,
             questionModel.incorrectAnswer1,
@@ -177,7 +178,7 @@ class TestFragmentViewModel(
     private fun updateParam() {
         Log.i(TAG, "Starting fun - updateParam")
 
-        if (quantityOfQuestion != listQuestions.size-1) {
+        if (quantityOfQuestion != listQuestions.size - 1) {
             ++quantityOfQuestion
             val question1 = listQuestions[quantityOfQuestion]
             Log.i(TAG, "$question1")
@@ -185,37 +186,35 @@ class TestFragmentViewModel(
             questionMutable.value = randomAnswerOfQuestion(question1)
         } else {
             Log.i(TAG, "saveStatistic")
-//            when (testModelPresentation.difficultyId) {
-//                1L -> saveTestStatisticUseCase.execute(
-//                    StatisticModel(
-//                        id = static.value!!.id,
-//                        nameSubcategory = static.value!!.nameSubcategory,
-//                        easy = calculateTheResult(),
-//                        norm = static.value!!.norm,
-//                        hard = static.value!!.hard
-//                    )
-//                )
-//
-//                2L -> saveTestStatisticUseCase.execute(
-//                    StatisticModel(
-//                        id = static.value!!.id,
-//                        nameSubcategory = static.value!!.nameSubcategory,
-//                        easy = static.value!!.easy,
-//                        norm = calculateTheResult(),
-//                        hard = static.value!!.hard
-//                    )
-//                )
-//
-//                3L -> saveTestStatisticUseCase.execute(
-//                    StatisticModel(
-//                        id = static.value!!.id,
-//                        nameSubcategory = static.value!!.nameSubcategory,
-//                        easy = static.value!!.easy,
-//                        norm = static.value!!.norm,
-//                        hard = calculateTheResult()
-//                    )
-//                )
-//            }
+            saveStatistic()
         }
     }
+
+    /**
+     * data Class StatisticModel - переменные типа VAR!!!!!!!!!!!!
+     * if() в when()!!!!!
+     */
+    private fun saveStatistic() {
+        val newStatistic = calculateTheResult()
+        val result = mapToSaveStatistic(static)
+        Log.i(TAG, "New Statistic - $newStatistic")
+        when (testModelPresentation.difficultyId) {
+            1L -> if (newStatistic>result.easy) result.easy = newStatistic
+            2L -> if (newStatistic>result.norm) result.norm = newStatistic
+            3L -> if (newStatistic>result.hard) result.hard = newStatistic
+        }
+        viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
+    }
+
+    //Что за !! ????
+    private fun mapToSaveStatistic(static: MutableLiveData<StatisticModel>): StatisticModel {
+        return StatisticModel(
+            id = static.value!!.id,
+            nameSubcategory = static.value!!.nameSubcategory,
+            easy = static.value!!.easy,
+            norm = static.value!!.norm,
+            hard = static.value!!.hard
+        )
+    }
+
 }
