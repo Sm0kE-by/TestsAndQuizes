@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.BySandS.testsandquizes.databinding.TestFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+private const val TAG = "AAA"
 class TestFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: TestFragmentBinding
@@ -33,11 +34,17 @@ class TestFragment : Fragment(), View.OnClickListener {
         binding.btAnswer2.setOnClickListener(this@TestFragment)
         binding.btAnswer3.setOnClickListener(this@TestFragment)
         binding.btAnswer4.setOnClickListener(this@TestFragment)
-        testVM.question.observe(
-            viewLifecycleOwner, Observer { question ->
-                showQuestion(
-                    question = question
-                )
+        testVM.questionList.observe(
+            viewLifecycleOwner, Observer { it ->
+                it?.let {
+                    testVM.question.observe(viewLifecycleOwner, Observer { question ->
+                        question?.let {
+                            showQuestion(
+                                question = question
+                            )
+                        }
+                    })
+                }
             }
         )
     }
@@ -48,7 +55,7 @@ class TestFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showQuestion(question: QuestionModel) = with(binding) {
-
+        Log.i(TAG, "------------------------------------------")
         //Hint deleted!!!
         val quantityOfHints = "${testVM.quantityOfHint} из 3"
         tvHintNumber.text = quantityOfHints
@@ -75,11 +82,11 @@ class TestFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?): Unit =
         with(binding) {
-                when (v?.id) {
-                    btAnswer1.id -> testVM.checkingAnswer(btAnswer1.text.toString())
-                    btAnswer2.id -> testVM.checkingAnswer(btAnswer2.text.toString())
-                    btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
-                    btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
+            when (v?.id) {
+                btAnswer1.id -> testVM.checkingAnswer(btAnswer1.text.toString())
+                btAnswer2.id -> testVM.checkingAnswer(btAnswer2.text.toString())
+                btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
+                btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
             }
         }
 }

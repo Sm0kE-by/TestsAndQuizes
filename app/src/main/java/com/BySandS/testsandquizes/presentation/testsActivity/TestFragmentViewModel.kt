@@ -1,7 +1,6 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,7 +28,8 @@ class TestFragmentViewModel(
     private val getTestStatisticUseCase: GetTestStatisticUseCase
 ) : ViewModel() {
 
-    private val questionList = MutableLiveData<List<QuestionModel>>()
+    //private val questionListMutable = MutableLiveData<List<QuestionModel>>()
+
     private val result = MutableLiveData<ResultTestModel>()
     private val static = MutableLiveData<StatisticModel>()
 
@@ -95,6 +95,8 @@ class TestFragmentViewModel(
             "Incorrect Answer 7 - 3"
         ),
     )
+    private val questionListMutable = MutableLiveData<List<QuestionModel>>(listQuestions)
+    val questionList: LiveData<List<QuestionModel>> = questionListMutable
 
     //Или подгружать новый, или принимать на вход выбранный, пока руками написал
     var statisticModel =
@@ -112,12 +114,13 @@ class TestFragmentViewModel(
     val getStatisticParam = GetStatisticParam(nameSubcategory = "cosmos")
 
     private var questionMutable =
-        MutableLiveData<QuestionModel>(getQuestion(listQuestions[quantityOfQuestionMutable.value!!]))
+        MutableLiveData<QuestionModel>(randomAnswerOfQuestion(listQuestions[quantityOfQuestion]))
     var question: LiveData<QuestionModel> = questionMutable
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            questionList.postValue(getQuestionListUseCase.execute(param = getQuestionListParam))
+            //questionList.postValue(getQuestionListUseCase.execute(param = getQuestionListParam))
+            //  questionListMutable.value = listQuestions
             result.postValue(getTestResultUseCase.execute(param = getResultParam))
             static.postValue(getTestStatisticUseCase.execute(param = getStatisticParam))
         }
@@ -158,55 +161,61 @@ class TestFragmentViewModel(
      * Проверка правильности ответа
      */
     fun checkingAnswer(answerText: String) {
-        Log.i(TAG, "checkingAnswer")
-        Log.i(TAG, "$answerText")
-        if (answerText == listQuestions[quantityOfQuestion].correctAnswer.toString()) {
+        Log.i(TAG, "Starting fun - checkingAnswer")
+        Log.i(
+            TAG,
+            "answerText = $answerText; correctAnswer = ${listQuestions[quantityOfQuestion].correctAnswer}"
+        )
+        if (answerText == listQuestions[quantityOfQuestion].correctAnswer) {
             quantityCorrectAnswer++
-            Log.i(TAG, "quantityCorrectAnswer - $quantityCorrectAnswer")
-            questionMutable.value = getQuestion(listQuestions[quantityOfQuestion])
+            Log.i(TAG, "CorrectAnswer - $answerText")
         } else {
-            Log.i(TAG, "$quantityCorrectAnswer")
-            questionMutable.value = getQuestion(listQuestions[quantityOfQuestion])
         }
+        updateParam()
     }
 
-    private fun getQuestion(question: QuestionModel): QuestionModel {
-        Log.i(TAG, "getQuestion")
-        val question1 = randomAnswerOfQuestion(question)
-        if (quantityOfQuestion != listQuestions.size) {
+    private fun updateParam() {
+        Log.i(TAG, "Starting fun - updateParam")
+
+        if (quantityOfQuestion != listQuestions.size-1) {
             ++quantityOfQuestion
+            val question1 = listQuestions[quantityOfQuestion]
+            Log.i(TAG, "$question1")
             Log.i(TAG, "getQuestion $quantityOfQuestion listQuestions.size ${listQuestions.size}")
+            questionMutable.value = randomAnswerOfQuestion(question1)
         } else {
-            /**
-             * Загрузка результата
-             */
             Log.i(TAG, "saveStatistic")
-            when (testModelPresentation.difficultyId) {
-                1L -> saveTestStatisticUseCase.execute(
-                    StatisticModel(
-                        id = static.value!!.id,
-                        nameSubcategory = static.value!!.nameSubcategory,
-                        easy = calculateTheResult(),
-                        norm = static.value!!.norm,
-                        hard = static.value!!.hard
-                    )
-                )
-                2L -> saveTestStatisticUseCase.execute(StatisticModel(
-                    id = static.value!!.id,
-                    nameSubcategory = static.value!!.nameSubcategory,
-                    easy = static.value!!.easy,
-                    norm = calculateTheResult(),
-                    hard = static.value!!.hard
-                ))
-                3L -> saveTestStatisticUseCase.execute(StatisticModel(
-                    id = static.value!!.id,
-                    nameSubcategory = static.value!!.nameSubcategory,
-                    easy = static.value!!.easy,
-                    norm = static.value!!.norm,
-                    hard = calculateTheResult()
-                ))
-            }
+//            when (testModelPresentation.difficultyId) {
+//                1L -> saveTestStatisticUseCase.execute(
+//                    StatisticModel(
+//                        id = static.value!!.id,
+//                        nameSubcategory = static.value!!.nameSubcategory,
+//                        easy = calculateTheResult(),
+//                        norm = static.value!!.norm,
+//                        hard = static.value!!.hard
+//                    )
+//                )
+//
+//                2L -> saveTestStatisticUseCase.execute(
+//                    StatisticModel(
+//                        id = static.value!!.id,
+//                        nameSubcategory = static.value!!.nameSubcategory,
+//                        easy = static.value!!.easy,
+//                        norm = calculateTheResult(),
+//                        hard = static.value!!.hard
+//                    )
+//                )
+//
+//                3L -> saveTestStatisticUseCase.execute(
+//                    StatisticModel(
+//                        id = static.value!!.id,
+//                        nameSubcategory = static.value!!.nameSubcategory,
+//                        easy = static.value!!.easy,
+//                        norm = static.value!!.norm,
+//                        hard = calculateTheResult()
+//                    )
+//                )
+//            }
         }
-        return question1
     }
 }
