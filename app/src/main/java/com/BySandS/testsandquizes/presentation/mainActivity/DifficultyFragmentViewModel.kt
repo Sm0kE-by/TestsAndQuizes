@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestionParam
 import com.BySandS.testsandquizes.domain.tests.usecase.GetQuantityOfQuestionUseCase
 import kotlinx.coroutines.Dispatchers
@@ -17,12 +17,12 @@ class DifficultyFragmentViewModel(
     private val getQuantityOfQuestionUseCase: GetQuantityOfQuestionUseCase
 ) : ViewModel() {
 
-    private val subcategoryModelMutable = MutableLiveData<SubcategoryModel>(
-        SubcategoryModel(
+    private val subcategoryAndStatisticModelMutable = MutableLiveData<SubcategoryAndStatisticModel>(
+        SubcategoryAndStatisticModel(
             1, "test", "Cosmosss", 33, 66, 100
         )
     )
-    var subcategoryModel: LiveData<SubcategoryModel> = subcategoryModelMutable
+    var subcategoryAndStatisticModel: LiveData<SubcategoryAndStatisticModel> = subcategoryAndStatisticModelMutable
 
     private val quantityOfQuestionsMutable = MutableLiveData<QuantityOfQuestionModel>()
     var quantityOfQuestions: LiveData<QuantityOfQuestionModel> = quantityOfQuestionsMutable

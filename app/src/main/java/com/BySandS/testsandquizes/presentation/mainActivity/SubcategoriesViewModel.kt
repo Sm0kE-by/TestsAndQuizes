@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.BySandS.testsandquizes.domain.tests.models.param.GetCategoryParam
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryUseCase
+import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryAndStatisticParam
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
+import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryAndStatisticUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,20 +24,20 @@ private const val TAG = "AAA"
  * Из LiveData не надо отписываться, одписка происходит автоматически. Важно!!! - если в Активити вы подписались в onCreate - отписка произойдет в onDestroy,
  *      если подписались в  onResum ->  отписка в onPause!!!
  */
-class SubcategoriesViewModel(private val getTestSubcategoryUseCase: GetTestSubcategoryUseCase) :
+class SubcategoriesViewModel(private val getTestSubcategoryAndStatisticUseCase: GetTestSubcategoryAndStatisticUseCase) :
     ViewModel() {
 
 
-    private val param = GetCategoryParam(1)
-    private var listSubcategoryModelLiveData =
-        MutableLiveData<List<SubcategoryModel>>()
-    var listLiveData: LiveData<List<SubcategoryModel>> = listSubcategoryModelLiveData
+    private val param = GetSubcategoryAndStatisticParam(1)
+    private var listSubcategoryAndStatisticModelLiveData =
+        MutableLiveData<List<SubcategoryAndStatisticModel>>()
+    var listLiveData: LiveData<List<SubcategoryAndStatisticModel>> = listSubcategoryAndStatisticModelLiveData
 
     init {
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
-            val list = getTestSubcategoryUseCase.execute(param)
-            listSubcategoryModelLiveData.postValue(list)
+            val list = getTestSubcategoryAndStatisticUseCase.execute(param)
+            listSubcategoryAndStatisticModelLiveData.postValue(list)
         }
     }
 

@@ -61,7 +61,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         tvHintNumber.text = quantityOfHints
         //русский текст!!!
         // ПРОВЕРИТЬ!!!
-        val questionsNumbers = "${testVM.quantityOfQuestion} из ${testVM.listQuestions.size}"
+        val questionsNumbers = "${testVM.quantityOfQuestion.value!!+1} из ${testVM.listQuestions.size}"
         tvQuestion.text = question.questionText
         // Пока не перемешиваем ответы!!!
         btAnswer1.text = question.correctAnswer
@@ -70,15 +70,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         btAnswer4.text = question.incorrectAnswer3
 
         tvQuestionsNumbers.text = questionsNumbers
-
-//        Toast.makeText(
-//            activity?.applicationContext,
-//            "Test Completed\n Correct - ${testVM.quantityCorrectAnswer}\n Incorrect - ${testVM.quantityIncorrectAnswer}",
-//            Toast.LENGTH_LONG
-//        ).show()
-        // testVM.calculateTheResult()
     }
-
 
     override fun onClick(v: View?): Unit =
         with(binding) {

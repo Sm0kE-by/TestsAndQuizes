@@ -3,7 +3,7 @@ package com.BySandS.testsandquizes.data.test.storage.models
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 
-data class SubcategoryModelDb(
+data class SubcategoryAndStatisticModelDb(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "category_name_ru") val typeName: String,
     @ColumnInfo(name = "subcategory_name_ru") val subcategoryName: String,

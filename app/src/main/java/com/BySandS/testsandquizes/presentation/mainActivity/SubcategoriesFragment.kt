@@ -9,12 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -64,7 +63,7 @@ class SubcategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<SubcategoryModel>) {
+    fun updateUI(subcategory: List<SubcategoryAndStatisticModel>) {
         adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
@@ -80,20 +79,20 @@ class SubcategoriesFragment() : Fragment() {
     private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
         val binding = SubcategoryItemFragmentBinding.bind(item)
-        lateinit var subcategory: SubcategoryModel
+        lateinit var subcategory: SubcategoryAndStatisticModel
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            subcategoryModel: SubcategoryModel
+            subcategoryAndStatisticModel: SubcategoryAndStatisticModel
         ) = with(binding) {
-            subcategory = subcategoryModel
-            val easyPercent = ": ${subcategoryModel.statisticEasyPercent}%"
-            val normPercent = ": ${subcategoryModel.statisticNormPercent}%"
-            val hardPercent = ": ${subcategoryModel.statisticHardPercent}%"
-            tvNameSubcategory.text = subcategoryModel.subcategoryName
+            subcategory = subcategoryAndStatisticModel
+            val easyPercent = ": ${subcategoryAndStatisticModel.statisticEasyPercent}%"
+            val normPercent = ": ${subcategoryAndStatisticModel.statisticNormPercent}%"
+            val hardPercent = ": ${subcategoryAndStatisticModel.statisticHardPercent}%"
+            tvNameSubcategory.text = subcategoryAndStatisticModel.subcategoryName
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
             tvPercentHard.text = hardPercent
@@ -114,7 +113,7 @@ class SubcategoriesFragment() : Fragment() {
      * class Adapter
      */
     private inner class SubcategoryAdapter(
-        var subcategories: List<SubcategoryModel>,
+        var subcategories: List<SubcategoryAndStatisticModel>,
     ) :
         RecyclerView.Adapter<SubcategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {

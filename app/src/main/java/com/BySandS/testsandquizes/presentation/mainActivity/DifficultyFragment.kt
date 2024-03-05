@@ -2,16 +2,14 @@ package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +36,7 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         difficultyVM.quantityOfQuestions.observe(
             viewLifecycleOwner, Observer { quantity ->
                 quantity?.let {
-                    difficultyVM.subcategoryModel.observe(
+                    difficultyVM.subcategoryAndStatisticModel.observe(
                         viewLifecycleOwner,
                         Observer { subcategory ->
                             subcategory?.let { updateUI(quantity, subcategory) }
@@ -53,17 +51,17 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         fun newInstance() = DifficultyFragment()
     }
 
-    private fun updateUI(quantityOfQuestions: QuantityOfQuestionModel, subcategoryModel: SubcategoryModel) = with(binding) {
+    private fun updateUI(quantityOfQuestions: QuantityOfQuestionModel, subcategoryAndStatisticModel: SubcategoryAndStatisticModel) = with(binding) {
 
         //получаю из БД кол-во вопросов
         tvQuantityQuestionEasy.text = quantityOfQuestions.easyQuantity.toString()
         tvQuantityQuestionNorm.text = quantityOfQuestions.normQuantity.toString()
         tvQuantityQuestionHard.text = quantityOfQuestions.hardQuantity.toString()
         // получаю из БД статистика
-        tvBestResultEasyNamber.text = subcategoryModel.statisticEasyPercent.toString()
-        tvBestResultNormNamber.text = subcategoryModel.statisticNormPercent.toString()
-        tvBestResultHardNamber.text = subcategoryModel.statisticHardPercent.toString()
-        tvNameSubcategory.text = subcategoryModel.subcategoryName
+        tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasyPercent.toString()
+        tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNormPercent.toString()
+        tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHardPercent.toString()
+        tvNameSubcategory.text = subcategoryAndStatisticModel.subcategoryName
     }
 
     override fun onClick(v: View?): Unit = with(binding) {

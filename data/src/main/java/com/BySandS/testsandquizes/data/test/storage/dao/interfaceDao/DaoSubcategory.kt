@@ -2,7 +2,7 @@ package com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
+import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryAndStatisticModelDb
 
 @Dao
 interface DaoSubcategory {
@@ -14,5 +14,5 @@ interface DaoSubcategory {
                 "JOIN categories ON subcategory.category_id = categories.id " +
                 "WHERE subcategory.category_id = :idCategory"
     )
-     fun getSubcategoriesAndStatistics(idCategory: Long): List<SubcategoryModelDb>
+     fun getSubcategoriesAndStatistics(idCategory: Long): List<SubcategoryAndStatisticModelDb>
 }

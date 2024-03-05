@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val appModule = module {
 
     viewModel<SubcategoriesViewModel> {
-        SubcategoriesViewModel(getTestSubcategoryUseCase = get())
+        SubcategoriesViewModel(getTestSubcategoryAndStatisticUseCase = get())
     }
 
     viewModel<DifficultyFragmentViewModel> {
