@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
@@ -48,6 +50,7 @@ class SubcategoriesFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val num = requireArguments().getInt(ARG_NAME)
         subcategoryVM.listLiveData.observe(
             viewLifecycleOwner,
             Observer { subcategories ->
@@ -71,6 +74,10 @@ class SubcategoriesFragment() : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = SubcategoriesFragment()
+        //name поменять, это для практики, наз объекта
+        const val ARG_NAME = "name"
+        const val REQUEST_CODE = "REQUEST_CODE"
+        const val EXTRA_RANDOM_NUMBER = "EXTRA_RANDOM_NUMBER"
     }
 
     /**

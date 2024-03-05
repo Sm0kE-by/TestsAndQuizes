@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainMenuFragment">
+
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.BySandS.testsandquizes.presentation.mainActivity.MainMenuFragment"
+        android:label="main_menu_fragment"
+        tools:layout="@layout/main_menu_fragment" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_subcategoriesFragment"
+            app:destination="@id/subcategoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subcategoriesFragment"
+        android:name="com.BySandS.testsandquizes.presentation.mainActivity.SubcategoriesFragment"
+        android:label="subcategories_fragment"
+        tools:layout="@layout/subcategories_fragment" >
+        <action
+            android:id="@+id/action_subcategoriesFragment_to_difficultyFragment"
+            app:destination="@id/difficultyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/difficultyFragment"
+        android:name="com.BySandS.testsandquizes.presentation.mainActivity.DifficultyFragment"
+        android:label="defficulty_fragment"
+        tools:layout="@layout/defficulty_fragment" />
+</navigation>

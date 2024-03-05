@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 
@@ -39,9 +41,10 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?): Unit = with(binding) {
+        val num = 123
         when (v?.id) {
-            bTests.id -> (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.holder, SubcategoriesFragment.newInstance()).commit()
+            bTests.id -> findNavController().navigate(R.id.action_mainMenuFragment_to_subcategoriesFragment,
+                bundleOf(SubcategoriesFragment.ARG_NAME to num))
 
             bQuizzes.id -> Toast.makeText(
                 activity?.applicationContext,
