@@ -44,7 +44,7 @@ class SubcategoriesFragment() : Fragment() {
         testsRecyclerView = view.findViewById(R.id.test_recycler_view)
         testsRecyclerView.layoutManager = LinearLayoutManager(context)
         testsRecyclerView.adapter = adapter
-      //  val idCategory = requireArguments().getInt(ARG_NAME)
+        idCategory = requireArguments().getInt(ARG_NAME)
         return view
     }
 
@@ -76,6 +76,7 @@ class SubcategoriesFragment() : Fragment() {
         @JvmStatic
         fun newInstance() = SubcategoriesFragment()
         //name поменять, это для практики, наз объекта
+        var idCategory:Int = 0
         const val ARG_NAME = "name"
         const val REQUEST_CODE = "REQUEST_CODE"
         const val EXTRA_RANDOM_NUMBER = "EXTRA_RANDOM_NUMBER"

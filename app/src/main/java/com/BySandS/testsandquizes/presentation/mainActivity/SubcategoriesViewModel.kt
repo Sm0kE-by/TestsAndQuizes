@@ -1,5 +1,6 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +35,7 @@ class SubcategoriesViewModel(private val getTestSubcategoryAndStatisticUseCase: 
     var listLiveData: LiveData<List<SubcategoryAndStatisticModel>> = listSubcategoryAndStatisticModelLiveData
 
     init {
-        val idCategory = SubcategoriesFragment.requireArguments().getInt(SubcategoriesFragment.ARG_NAME)
+        Log.i(TAG, "CategoriesFragment.idCategory = ${SubcategoriesFragment.idCategory}")
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
             val list = getTestSubcategoryAndStatisticUseCase.execute(param)

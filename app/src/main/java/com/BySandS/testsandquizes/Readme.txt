@@ -18,6 +18,4 @@
         fun saveStatistic(statisticModel: StatisticsDbEntity): Boolean
         Нельзя вернуть Boolean, только ИНТ, сделать проверку через ИНТ!!!!
 17. data Class StatisticModel - переменные типа VAR!!!!!!!!!!!!
-
-
-
+18. Переходы между фрагментами: Bundle передает объект который находиться в Object - НАДО ПЕРЕНЕСТИ В KOIN!!!!
