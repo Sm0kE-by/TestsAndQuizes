@@ -28,12 +28,13 @@ class SubcategoriesViewModel(private val getTestSubcategoryAndStatisticUseCase: 
     ViewModel() {
 
 
-    private val param = GetSubcategoryAndStatisticParam(1)
+    private val param = GetSubcategoryAndStatisticParam(idCategory = 1)
     private var listSubcategoryAndStatisticModelLiveData =
         MutableLiveData<List<SubcategoryAndStatisticModel>>()
     var listLiveData: LiveData<List<SubcategoryAndStatisticModel>> = listSubcategoryAndStatisticModelLiveData
 
     init {
+        val idCategory = SubcategoriesFragment.requireArguments().getInt(SubcategoriesFragment.ARG_NAME)
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
             val list = getTestSubcategoryAndStatisticUseCase.execute(param)

@@ -34,7 +34,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         binding.btAnswer2.setOnClickListener(this@TestFragment)
         binding.btAnswer3.setOnClickListener(this@TestFragment)
         binding.btAnswer4.setOnClickListener(this@TestFragment)
-        testVM.questionList.observe(
+        testVM.quantityOfHint.observe(
             viewLifecycleOwner, Observer { it ->
                 it?.let {
                     testVM.question.observe(viewLifecycleOwner, Observer { question ->
@@ -57,7 +57,7 @@ class TestFragment : Fragment(), View.OnClickListener {
     private fun showQuestion(question: QuestionModel) = with(binding) {
         Log.i(TAG, "------------------------------------------")
         //Hint deleted!!!
-        val quantityOfHints = "${testVM.quantityOfHint} из 3"
+        val quantityOfHints = "${testVM.quantityOfHint.value} из 3"
         tvHintNumber.text = quantityOfHints
         //русский текст!!!
         // ПРОВЕРИТЬ!!!

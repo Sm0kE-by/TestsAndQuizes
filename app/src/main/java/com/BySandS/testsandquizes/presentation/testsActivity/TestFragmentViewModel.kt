@@ -116,7 +116,7 @@ class TestFragmentViewModel(
             questionMutable.postValue(randomAnswerOfQuestion(listQuestions[quantityOfQuestion.value!!]))
             result.postValue(getTestResultUseCase.execute(param = getResultParam))
             static.postValue(getTestStatisticUseCase.execute(param = getStatisticParam))
-            quantityOfHintMutable.postValue(0)
+            quantityOfHintMutable.postValue(2)
         }
     }
 

@@ -44,13 +44,14 @@ class SubcategoriesFragment() : Fragment() {
         testsRecyclerView = view.findViewById(R.id.test_recycler_view)
         testsRecyclerView.layoutManager = LinearLayoutManager(context)
         testsRecyclerView.adapter = adapter
+      //  val idCategory = requireArguments().getInt(ARG_NAME)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val num = requireArguments().getInt(ARG_NAME)
+
         subcategoryVM.listLiveData.observe(
             viewLifecycleOwner,
             Observer { subcategories ->

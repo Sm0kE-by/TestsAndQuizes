@@ -41,10 +41,16 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?): Unit = with(binding) {
-        val num = 123
+        val idCategory :Int
         when (v?.id) {
-            bTests.id -> findNavController().navigate(R.id.action_mainMenuFragment_to_subcategoriesFragment,
-                bundleOf(SubcategoriesFragment.ARG_NAME to num))
+
+            bTests.id -> {
+                idCategory = 1
+                findNavController().navigate(
+                    R.id.action_mainMenuFragment_to_subcategoriesFragment,
+                    bundleOf(SubcategoriesFragment.ARG_NAME to idCategory)
+                )
+            }
 
             bQuizzes.id -> Toast.makeText(
                 activity?.applicationContext,
