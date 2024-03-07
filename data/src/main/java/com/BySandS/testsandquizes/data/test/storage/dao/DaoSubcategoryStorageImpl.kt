@@ -9,8 +9,12 @@ import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 class DaoSubcategoryStorageImpl(context: Context) : SubcategoryStorage {
 
     private val testsDaoRu = AppDatabase.getInstance(context).subcategoryDao()
-    override fun getSubcategoriesAndStatistics(idCategory: Long): List<SubcategoryAndStatisticModelDb> {
-        return testsDaoRu.getSubcategoriesAndStatistics(idCategory = idCategory)
+    override fun getListSubcategoriesAndStatistics(idCategory: Long): List<SubcategoryAndStatisticModelDb> {
+        return testsDaoRu.getListSubcategoriesAndStatistics(idCategory = idCategory)
+    }
+
+    override fun getSubcategoriesAndStatistics(idSubcategory: Long): SubcategoryAndStatisticModelDb {
+        return testsDaoRu.getSubcategoriesAndStatistics(idSubcategory = idSubcategory)
     }
 
     override fun getSubcategoryById(idSubcategory: Long): SubcategoryModelDb {

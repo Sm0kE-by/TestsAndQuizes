@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
+import com.BySandS.testsandquizes.R.*
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,7 +43,7 @@ class SubcategoriesFragment() : Fragment() {
         testsRecyclerView = view.findViewById(R.id.test_recycler_view)
         testsRecyclerView.layoutManager = LinearLayoutManager(context)
         testsRecyclerView.adapter = adapter
-        idCategory = requireArguments().getInt(ARG_NAME)
+        idCategory = requireArguments().getLong(ARG_NAME)
         return view
     }
 
@@ -75,11 +74,10 @@ class SubcategoriesFragment() : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = SubcategoriesFragment()
+
         //name поменять, это для практики, наз объекта
-        var idCategory:Int = 0
-        const val ARG_NAME = "name"
-        const val REQUEST_CODE = "REQUEST_CODE"
-        const val EXTRA_RANDOM_NUMBER = "EXTRA_RANDOM_NUMBER"
+        var idCategory: Long = 0
+        const val ARG_NAME = "ARG_NAME"
     }
 
     /**
@@ -111,10 +109,19 @@ class SubcategoriesFragment() : Fragment() {
          * Обработка нажатия на фрагмент категории
          */
         override fun onClick(v: View?) {
-            (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.holder, DifficultyFragment.newInstance()).commit()
-            Toast.makeText(context, "${subcategory.subcategoryName} pressed!", Toast.LENGTH_SHORT)
-                .show()
+            val bundle = Bundle()
+            val idSubcategory = subcategory.id
+            val idQuantityOfQuestion = 1L
+            bundle.putLong(DifficultyFragment.ID_QUANTITY_OF_QUESTION, idQuantityOfQuestion)
+            bundle.putLong(DifficultyFragment.ID_SUBCATEGORY_AND_STATISTIC, idSubcategory)
+
+            findNavController().navigate(
+                R.id.action_subcategoriesFragment_to_difficultyFragment,
+                bundleOf(
+                    DifficultyFragment.ID_QUANTITY_OF_QUESTION to idQuantityOfQuestion,
+                    DifficultyFragment.ID_SUBCATEGORY_AND_STATISTIC to idSubcategory
+                )
+            )
         }
     }
 

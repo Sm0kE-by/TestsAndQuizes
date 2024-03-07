@@ -1,3 +1,4 @@
 package com.BySandS.testsandquizes.domain.tests.models.param
 
-class GetSubcategoryAndStatisticParam(val idCategory: Long)
+class GetSubcategoryAndStatisticParam(val idSubcategory: Long) {
+}

@@ -3,9 +3,10 @@ package com.BySandS.testsandquizes.data.test.repository
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryAndStatisticModelDb
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
-import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryAndStatisticParam
+import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryAndStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryAndStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryParam
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
@@ -15,10 +16,18 @@ import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryReposit
 class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryStorage) :
     TestSubcategoryRepository {
 
-    override fun getAllSubcategoriesAndStatistic(param: GetSubcategoryAndStatisticParam): List<SubcategoryAndStatisticModel> {
+    override fun getAllSubcategoriesAndStatistic(param: GetListSubcategoryAndStatisticParam): List<SubcategoryAndStatisticModel> {
+        return mapToDomainListSubAndStat(
+            subcategoryAndStatisticModelDb = subcategoryStorage.getListSubcategoriesAndStatistics(
+                idCategory = mapToStorageListSubAndStat(param = param)
+            )
+        )
+    }
+
+    override fun getSubcategoriesAndStatisticById(param: GetSubcategoryAndStatisticParam): SubcategoryAndStatisticModel {
         return mapToDomainSubAndStat(
             subcategoryAndStatisticModelDb = subcategoryStorage.getSubcategoriesAndStatistics(
-                idCategory = mapToStorageSubAndStat(param = param)
+                idSubcategory = mapToStorageSubAndStat(param = param)
             )
         )
     }
@@ -31,7 +40,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         )
     }
 
-    private fun mapToDomainSubAndStat(subcategoryAndStatisticModelDb: List<SubcategoryAndStatisticModelDb>): List<SubcategoryAndStatisticModel> {
+    private fun mapToDomainListSubAndStat(subcategoryAndStatisticModelDb: List<SubcategoryAndStatisticModelDb>): List<SubcategoryAndStatisticModel> {
         var listSubcategoryAndStatisticModel = ArrayList<SubcategoryAndStatisticModel>()
         subcategoryAndStatisticModelDb.forEach { it ->
             listSubcategoryAndStatisticModel.add(
@@ -48,6 +57,18 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         return listSubcategoryAndStatisticModel
     }
 
+    private fun mapToDomainSubAndStat(subcategoryAndStatisticModelDb: SubcategoryAndStatisticModelDb):
+            SubcategoryAndStatisticModel {
+        return SubcategoryAndStatisticModel(
+            id = subcategoryAndStatisticModelDb.id,
+            typeName = subcategoryAndStatisticModelDb.subcategoryName,
+            subcategoryName = subcategoryAndStatisticModelDb.subcategoryName,
+            statisticEasyPercent = subcategoryAndStatisticModelDb.statisticEasy,
+            statisticNormPercent = subcategoryAndStatisticModelDb.statisticNorm,
+            statisticHardPercent = subcategoryAndStatisticModelDb.statisticHard
+        )
+    }
+
     private fun mapToDomainSub(subcategoryModelDb: SubcategoryModelDb): SubcategoryModel {
         return SubcategoryModel(
             id = subcategoryModelDb.id,
@@ -60,8 +81,11 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         )
     }
 
-    private fun mapToStorageSubAndStat(param: GetSubcategoryAndStatisticParam): Long {
+    private fun mapToStorageListSubAndStat(param: GetListSubcategoryAndStatisticParam): Long {
         return param.idCategory
+    }
+    private fun mapToStorageSubAndStat(param: GetSubcategoryAndStatisticParam): Long {
+        return param.idSubcategory
     }
 
     private fun mapToStorageSub(param: GetSubcategoryParam): Long {

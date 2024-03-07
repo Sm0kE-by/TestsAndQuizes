@@ -25,6 +25,8 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = DefficultyFragmentBinding.inflate(inflater, container, false)
+        idQuantityOfQuestion = requireArguments().getLong(ID_QUANTITY_OF_QUESTION)
+        idSubcategoryAndStatistic = requireArguments().getLong(ID_SUBCATEGORY_AND_STATISTIC)
         return binding.root
     }
 
@@ -49,9 +51,16 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         fun newInstance() = DifficultyFragment()
+        var idQuantityOfQuestion: Long = 0
+        var idSubcategoryAndStatistic:Long = 0
+        const val ID_QUANTITY_OF_QUESTION = "ID_QUANTITY_OF_QUESTION"
+        const val ID_SUBCATEGORY_AND_STATISTIC = "SUBCATEGORY_AND_STATISTIC"
     }
 
-    private fun updateUI(quantityOfQuestions: QuantityOfQuestionModel, subcategoryAndStatisticModel: SubcategoryAndStatisticModel) = with(binding) {
+    private fun updateUI(
+        quantityOfQuestions: QuantityOfQuestionModel,
+        subcategoryAndStatisticModel: SubcategoryAndStatisticModel
+    ) = with(binding) {
 
         //получаю из БД кол-во вопросов
         tvQuantityQuestionEasy.text = quantityOfQuestions.easyQuantity.toString()

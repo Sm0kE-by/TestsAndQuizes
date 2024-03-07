@@ -41,11 +41,11 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?): Unit = with(binding) {
-        val idCategory :Int
+        val idCategory :Long
         when (v?.id) {
 
             bTests.id -> {
-                idCategory = 1
+                idCategory = 1L
                 findNavController().navigate(
                     R.id.action_mainMenuFragment_to_subcategoriesFragment,
                     bundleOf(SubcategoriesFragment.ARG_NAME to idCategory)
