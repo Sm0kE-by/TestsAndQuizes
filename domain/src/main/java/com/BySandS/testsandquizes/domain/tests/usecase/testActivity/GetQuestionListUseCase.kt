@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.domain.tests.usecase
+package com.BySandS.testsandquizes.domain.tests.usecase.testActivity
 
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam

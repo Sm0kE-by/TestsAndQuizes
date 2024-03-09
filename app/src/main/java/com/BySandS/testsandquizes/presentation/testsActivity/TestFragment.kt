@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.BySandS.testsandquizes.databinding.TestFragmentBinding
-import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 private const val TAG = "AAA"
@@ -25,6 +23,8 @@ class TestFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = TestFragmentBinding.inflate(inflater, container, false)
+        idSubcategory = requireArguments().getLong(ID_SUBCATEGORY_AND_STATISTIC)
+        Log.i(TAG, "idSubcategory => $idSubcategory")
         return binding.root
     }
 
@@ -52,6 +52,8 @@ class TestFragment : Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = TestFragment()
+        var idSubcategory: Long = 0
+        const val  ID_SUBCATEGORY_AND_STATISTIC = "ID_SUBCATEGORY_AND_STATISTIC"
     }
 
     private fun showQuestion(question: QuestionModel) = with(binding) {

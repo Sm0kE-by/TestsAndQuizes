@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.domain.tests.usecase
+package com.BySandS.testsandquizes.domain.tests.usecase.mainActivity
 
 import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryAndStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel

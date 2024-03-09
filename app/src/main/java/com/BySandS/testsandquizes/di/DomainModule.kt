@@ -1,13 +1,13 @@
 package com.BySandS.testsandquizes.di
 
-import com.BySandS.testsandquizes.domain.tests.usecase.GetQuantityOfQuestionUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionListUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetListTestSubcategoryAndStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryAndStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestSubcategoryByIdUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.SaveTestStatisticUseCase
 import org.koin.dsl.module
 
 /**
@@ -26,8 +26,8 @@ val domainModule = module {
             testSubcategoryRepository = get()
         )
     }
-    factory<GetTestSubcategoryUseCase> {
-        GetTestSubcategoryUseCase(
+    factory<GetTestSubcategoryByIdUseCase> {
+        GetTestSubcategoryByIdUseCase(
             testSubcategoryRepository = get()
         )
     }

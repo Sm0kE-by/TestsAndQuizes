@@ -6,11 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
+import com.BySandS.testsandquizes.presentation.testsActivity.TestFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val TAG = "AAA"
@@ -83,7 +87,14 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     }
 
     private fun startActivityTest() {
-        val testActivity = Intent(activity, TestActivity::class.java)
-        startActivity(testActivity)
+        val idSubcategory = idSubcategoryAndStatistic
+//        val testActivity = Intent(activity, TestActivity::class.java)
+//        startActivity(testActivity)
+        findNavController().navigate(
+            R.id.action_difficultyFragment_to_testFragment,
+            bundleOf(
+                TestFragment.ID_SUBCATEGORY_AND_STATISTIC to idSubcategory
+            )
+        )
     }
 }

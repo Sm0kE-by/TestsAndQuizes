@@ -8,8 +8,8 @@ import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestionParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryAndStatisticParam
-import com.BySandS.testsandquizes.domain.tests.usecase.GetQuantityOfQuestionUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetTestSubcategoryAndStatisticUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

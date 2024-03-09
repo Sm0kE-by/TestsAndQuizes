@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryAndStatisticParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
-import com.BySandS.testsandquizes.domain.tests.usecase.GetListTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListTestSubcategoryAndStatisticUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

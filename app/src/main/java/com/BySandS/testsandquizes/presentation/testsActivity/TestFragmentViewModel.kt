@@ -8,13 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetStatisticParam
-import com.BySandS.testsandquizes.domain.tests.usecase.GetQuestionListUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestResultUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.GetTestStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.SaveTestStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryParam
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestSubcategoryByIdUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.SaveTestStatisticUseCase
 import com.BySandS.testsandquizes.presentation.model.TestModelPresentation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,9 +28,10 @@ class TestFragmentViewModel(
     private val getTestResultUseCase: GetTestResultUseCase,
     private val getQuestionListUseCase: GetQuestionListUseCase,
     private val saveTestStatisticUseCase: SaveTestStatisticUseCase,
-    private val getTestStatisticUseCase: GetTestStatisticUseCase
+    private val getTestStatisticUseCase: GetTestStatisticUseCase,
+    private val getTestSubcategoryByIdUseCase: GetTestSubcategoryByIdUseCase
 ) : ViewModel() {
-
+    private val idSubcategory = TestFragment.idSubcategory
     private val result = MutableLiveData<ResultTestModel>()
     private val static = MutableLiveData<StatisticModel>()
     val listQuestions: List<QuestionModel> = listOf(
@@ -97,26 +101,41 @@ class TestFragmentViewModel(
     val questionList: LiveData<List<QuestionModel>> = questionListMutable
     var quantityOfQuestion: LiveData<Int> = quantityOfQuestionMutable
     var question: LiveData<QuestionModel> = questionMutable
-    val quantityOfHint:  LiveData<Int> =quantityOfHintMutable
+    val quantityOfHint: LiveData<Int> = quantityOfHintMutable
 
     private var quantityCorrectAnswer = 0
 
     //Пока вручную, потом буду принимать его на вход
     val testModelPresentation =
         TestModelPresentation(nameSubcategoryId = 1, difficultyId = 1, quantityOfQuestion = 7)
+    private var subcategoryModel: SubcategoryModel? = null
 
     init {
 
-        val getQuestionListParam = GetQuestionListParam(difficultyId = 1, quantityOfQuestions = 1)
-        val getResultParam = GetResultParam(testResultId = 1, difficultyId = 1)
-        val getStatisticParam = GetStatisticParam(nameSubcategory = "cosmos")
 
         viewModelScope.launch(Dispatchers.IO) {
-            questionListMutable.postValue(listQuestions)
-            questionMutable.postValue(randomAnswerOfQuestion(listQuestions[quantityOfQuestion.value!!]))
-            result.postValue(getTestResultUseCase.execute(param = getResultParam))
-            static.postValue(getTestStatisticUseCase.execute(param = getStatisticParam))
-            quantityOfHintMutable.postValue(2)
+
+            val getSubcategoryParam = GetSubcategoryParam(idSubcategory = idSubcategory)
+
+            subcategoryModel = getTestSubcategoryByIdUseCase.execute(param = getSubcategoryParam)
+            Log.i(TAG, "subcategoryModel ->>> $subcategoryModel")
+            subcategoryModel.let {
+                val getQuestionListParam =
+                    GetQuestionListParam(
+                        difficultyId = 1,
+                        quantityOfQuestions = subcategoryModel!!.quantityOfQuestionsId
+                    )
+                val getResultParam =
+                    GetResultParam(testResultId = subcategoryModel!!.testResultId, difficultyId = 1)
+                val getStatisticParam = GetStatisticParam(nameSubcategory = subcategoryModel!!.subcategoryName)
+
+
+                questionListMutable.postValue(listQuestions)
+                questionMutable.postValue(randomAnswerOfQuestion(listQuestions[quantityOfQuestion.value!!]))
+                result.postValue(getTestResultUseCase.execute(param = getResultParam))
+                static.postValue(getTestStatisticUseCase.execute(param = getStatisticParam))
+                quantityOfHintMutable.postValue(2)
+            }
         }
     }
 
@@ -173,7 +192,7 @@ class TestFragmentViewModel(
         Log.i(TAG, "Starting fun - updateParam")
 
         if (quantityOfQuestion.value != listQuestions.size - 1) {
-            val num: Int= quantityOfQuestionMutable.value!!+1
+            val num: Int = quantityOfQuestionMutable.value!! + 1
             quantityOfQuestionMutable.value = num
             val question1 = listQuestions[quantityOfQuestionMutable.value!!]
             Log.i(TAG, "$question1")

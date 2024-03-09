@@ -21,7 +21,8 @@ val appModule = module {
             getTestResultUseCase = get(),
             getQuestionListUseCase = get(),
             saveTestStatisticUseCase = get(),
-            getTestStatisticUseCase = get()
+            getTestStatisticUseCase = get(),
+            getTestSubcategoryByIdUseCase = get()
         )
     }
 }
