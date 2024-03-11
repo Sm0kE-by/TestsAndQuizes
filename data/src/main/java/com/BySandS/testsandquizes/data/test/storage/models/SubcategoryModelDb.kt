@@ -5,10 +5,13 @@ import androidx.room.PrimaryKey
 
 data class SubcategoryModelDb(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "subcategory_name_ru") val subcategoryName: String,
-    @ColumnInfo(name = "subcategory_name_eng") val subcategoryNameEng: String,
-    @ColumnInfo(name = "statistic_id") val statisticId: Long,
-    @ColumnInfo(name = "category_id") val categoryId:  Long,
+    @ColumnInfo(name = "name_ru") val nameRu: String,
+    @ColumnInfo(name = "name_eng") val nameEng: String,
+    @ColumnInfo(name = "category_id") val categoryId: Long,
     @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestionsId: Long,
-    @ColumnInfo(name = "test_result_id") val testResultId: Long,
+    @ColumnInfo(name = "statistic_easy") val statisticEasy: Int,
+    @ColumnInfo(name = "statistic_norm") val statisticNorm: Int,
+    @ColumnInfo(name = "statistic_hard") val statisticHard: Int,
+    @ColumnInfo(name = "link_to_background") val linkToBackground: String,
+    @ColumnInfo(name = "link_to_icon") val linkToIcon: String
 )

@@ -8,6 +8,6 @@ import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestion
 class GetQuantityOfQuestionUseCase(private val testQuantityOfQuestionRepository: TestQuantityOfQuestionRepository) {
 
     fun execute(param: GetQuantityOfQuestionParam): QuantityOfQuestionModel {
-        return testQuantityOfQuestionRepository.getQuantity(idQuantity = param)
+        return testQuantityOfQuestionRepository.getQuantity(param = param)
     }
 }

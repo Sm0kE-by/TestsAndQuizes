@@ -9,16 +9,12 @@ import com.BySandS.testsandquizes.data.entity.CategoryDbEntity
 import com.BySandS.testsandquizes.data.entity.DifficultyDbEntity
 import com.BySandS.testsandquizes.data.entity.QuantityOfQuestionsDbEntity
 import com.BySandS.testsandquizes.data.entity.QuestionDbEntity
-import com.BySandS.testsandquizes.data.entity.QuestionTextDbEntity
 import com.BySandS.testsandquizes.data.entity.ResultDbEntity
-import com.BySandS.testsandquizes.data.entity.ResultTextDbEntity
-import com.BySandS.testsandquizes.data.entity.ResultsTestDbEntity
-import com.BySandS.testsandquizes.data.entity.StatisticsDbEntity
 import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
+import com.BySandS.testsandquizes.data.entity.SubcategoryDifficultyLevel
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoQuantityOfQuestion
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoQuestionRu
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoResult
-import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoStatistic
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcategory
 
 @Database(
@@ -27,14 +23,13 @@ import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcateg
         DifficultyDbEntity::class,
         QuantityOfQuestionsDbEntity::class,
         QuestionDbEntity::class,
-        QuestionTextDbEntity::class,
         ResultDbEntity::class,
-        ResultsTestDbEntity::class,
-        ResultTextDbEntity::class,
-        StatisticsDbEntity::class,
-        SubcategoryDbEntity::class
-    ], version = 4, exportSchema = true,
-    autoMigrations = [AutoMigration(from = 3, to = 4)]
+        SubcategoryDbEntity::class,
+        SubcategoryDifficultyLevel::class
+    ], version = 7, exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 4, to = 7, spec = AutoMigrationSpecFrom4To7::class)
+    ]
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -42,7 +37,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun questionDao(): DaoQuestionRu
     abstract fun quantityOfQuestionDao(): DaoQuantityOfQuestion
     abstract fun resultDao(): DaoResult
-    abstract fun statisticDao(): DaoStatistic
+
 
     companion object {
         private const val DATABASE_NAME = "tests-database"

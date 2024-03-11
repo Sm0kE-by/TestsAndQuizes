@@ -1,6 +1,5 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.DefficultyFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
-import com.BySandS.testsandquizes.presentation.testsActivity.TestActivity
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -63,7 +61,7 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
 
     private fun updateUI(
         quantityOfQuestions: QuantityOfQuestionModel,
-        subcategoryAndStatisticModel: SubcategoryAndStatisticModel
+        subcategoryAndStatisticModel: SubcategoryModel
     ) = with(binding) {
 
         //получаю из БД кол-во вопросов
@@ -71,10 +69,10 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         tvQuantityQuestionNorm.text = quantityOfQuestions.normQuantity.toString()
         tvQuantityQuestionHard.text = quantityOfQuestions.hardQuantity.toString()
         // получаю из БД статистика
-        tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasyPercent.toString()
-        tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNormPercent.toString()
-        tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHardPercent.toString()
-        tvNameSubcategory.text = subcategoryAndStatisticModel.subcategoryName
+        tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasy.toString()
+        tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNorm.toString()
+        tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHard.toString()
+        tvNameSubcategory.text = subcategoryAndStatisticModel.name
     }
 
     override fun onClick(v: View?): Unit = with(binding) {

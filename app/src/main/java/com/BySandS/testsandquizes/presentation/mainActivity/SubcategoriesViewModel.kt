@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryAndStatisticParam
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryAndStatisticModel
-import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategory
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListSubcategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,21 +26,21 @@ private const val TAG = "AAA"
  *      если подписались в  onResum ->  отписка в onPause!!!
  */
 class SubcategoriesViewModel(
-    private val getListTestSubcategoryAndStatisticUseCase: GetListTestSubcategoryAndStatisticUseCase
+    private val getListSubcategoryUseCase: GetListSubcategoryUseCase
 ) : ViewModel() {
 
     private var idCategory:Long = SubcategoriesFragment.idCategory
-    private val param = GetListSubcategoryAndStatisticParam(idCategory = idCategory)
+    private val param = GetListSubcategory(idCategory = idCategory)
     private var listSubcategoryAndStatisticModelLiveData =
-        MutableLiveData<List<SubcategoryAndStatisticModel>>()
-    var listLiveData: LiveData<List<SubcategoryAndStatisticModel>> =
+        MutableLiveData<List<SubcategoryModel>>()
+    var listLiveData: LiveData<List<SubcategoryModel>> =
         listSubcategoryAndStatisticModelLiveData
 
     init {
         Log.i(TAG, "ID_Category = $idCategory")
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
-            val list = getListTestSubcategoryAndStatisticUseCase.execute(param)
+            val list = getListSubcategoryUseCase.execute(param)
             listSubcategoryAndStatisticModelLiveData.postValue(list)
         }
     }

@@ -5,13 +5,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "subcategory",
+@Entity(
+    tableName = "subcategory",
     foreignKeys = [
-        ForeignKey(
-            entity = StatisticsDbEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["statistic_id"]
-        ),
         ForeignKey(
             entity = CategoryDbEntity::class,
             parentColumns = ["id"],
@@ -21,20 +17,18 @@ import androidx.room.PrimaryKey
             entity = QuantityOfQuestionsDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["quantity_of_questions_id"]
-        ),
-        ForeignKey(
-            entity = ResultsTestDbEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["test_result_id"]
-        ),
+        )
     ]
 )
 data class SubcategoryDbEntity(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "subcategory_name_ru") val subcategoryNameRu: String,
-    @ColumnInfo(name = "subcategory_name_eng") val subcategoryNameEng: String,
-    @ColumnInfo(name = "statistic_id") val statisticId: Long,
-    @ColumnInfo(name = "category_id") val categoryId:  Long,
+    @ColumnInfo(name = "name_ru" , defaultValue = " ") val nameRu: String,
+    @ColumnInfo(name = "name_eng") val nameEng: String,
+    @ColumnInfo(name = "category_id") val categoryId: Long,
     @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestionsId: Long,
-    @ColumnInfo(name = "test_result_id") val testResultId: Long,
+    @ColumnInfo(name = "statistic_easy", defaultValue = "0") val statisticEasy: Int,
+    @ColumnInfo(name = "statistic_norm", defaultValue = "0") val statisticNorm: Int,
+    @ColumnInfo(name = "statistic_hard", defaultValue = "0") val statisticHard: Int,
+    @ColumnInfo(name = "link_to_background", defaultValue = " ") val linkToBackground: String,
+    @ColumnInfo(name = "link_to_icon", defaultValue = " ") val linkToIcon: String
 )

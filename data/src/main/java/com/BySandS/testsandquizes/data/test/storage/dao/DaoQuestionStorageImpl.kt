@@ -10,7 +10,7 @@ class DaoQuestionStorageImpl(context: Context) : QuestionStorage {
     private val testDao = AppDatabase.getInstance(context).questionDao()
     override fun getQuestionsList(
         difficultyId: Long,
-        quantityOfQuestions: Int
+        quantityOfQuestions: Long
     ): List<QuestionModelDb> {
         return testDao.getQuestionsListByDifficulty(
             difficultyId = difficultyId,

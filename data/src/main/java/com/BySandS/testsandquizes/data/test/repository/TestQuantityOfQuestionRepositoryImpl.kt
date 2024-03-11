@@ -8,7 +8,7 @@ import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestion
 
 private const val TAG = "AAA"
 
-class TestTestQuantityOfQuestionRepositoryImpl(private val quantityOfQuestionStorage: QuantityOfQuestionStorage) :
+class TestQuantityOfQuestionRepositoryImpl(private val quantityOfQuestionStorage: QuantityOfQuestionStorage) :
     TestQuantityOfQuestionRepository {
 
     override fun getQuantity(param: GetQuantityOfQuestionParam): QuantityOfQuestionModel {

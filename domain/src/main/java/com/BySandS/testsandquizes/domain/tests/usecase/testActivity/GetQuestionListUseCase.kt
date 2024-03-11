@@ -7,6 +7,6 @@ import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 class GetQuestionListUseCase(private val tesQuestionRepository: TestQuestionRepository) {
 
     fun execute(param: GetQuestionListParam): List<QuestionModel>{
-        return tesQuestionRepository.getQuestionsList(getQuestionListParam = param)
+        return tesQuestionRepository.getQuestionsList(param = param)
     }
 }

@@ -25,7 +25,7 @@ class TestQuestionRepositoryImpl(private val questionStorage: QuestionStorage) :
             listQuestionsModel.add(
                 QuestionModel(
                     id = it.id,
-                    questionText = it.questionTextRu,
+                    questionText = it.textRu,
                     correctAnswer = it.correctAnswerRu,
                     incorrectAnswer1 = it.incorrectAnswer1Ru,
                     incorrectAnswer2 = it.incorrectAnswer2Ru,
@@ -40,7 +40,7 @@ class TestQuestionRepositoryImpl(private val questionStorage: QuestionStorage) :
         return param.difficultyId
     }
 
-    private fun mapToStorageQuantity(param: GetQuestionListParam): Int {
+    private fun mapToStorageQuantity(param: GetQuestionListParam): Long {
         return param.quantityOfQuestions
     }
 }

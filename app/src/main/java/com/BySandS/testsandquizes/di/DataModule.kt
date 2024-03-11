@@ -1,24 +1,20 @@
 package com.BySandS.testsandquizes.di
 
-import com.BySandS.testsandquizes.data.test.repository.TestTestQuantityOfQuestionRepositoryImpl
+import com.BySandS.testsandquizes.data.test.repository.TestQuantityOfQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestResultRepositoryImpl
-import com.BySandS.testsandquizes.data.test.repository.TestStatisticRepositoryImpl
 import com.BySandS.testsandquizes.data.test.repository.TestSubcategoryRepositoryImpl
 import com.BySandS.testsandquizes.data.test.storage.QuantityOfQuestionStorage
 import com.BySandS.testsandquizes.data.test.storage.QuestionStorage
 import com.BySandS.testsandquizes.data.test.storage.ResultStorage
-import com.BySandS.testsandquizes.data.test.storage.StatisticStorage
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuantityOfQuestionStorageImpl
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoQuestionStorageImpl
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoResultStorageImpl
-import com.BySandS.testsandquizes.data.test.storage.dao.DaoStatisticStorageImpl
 import com.BySandS.testsandquizes.data.test.storage.dao.DaoSubcategoryStorageImpl
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
-import com.BySandS.testsandquizes.domain.tests.repository.TestStatisticRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 import org.koin.dsl.module
 
@@ -39,9 +35,6 @@ val dataModule = module {
     single<ResultStorage> {
         DaoResultStorageImpl(context = get())
     }
-    single<StatisticStorage> {
-        DaoStatisticStorageImpl(context = get())
-    }
     single<QuestionStorage> {
         DaoQuestionStorageImpl(context = get())
     }
@@ -51,13 +44,10 @@ val dataModule = module {
         TestSubcategoryRepositoryImpl(subcategoryStorage = get())
     }
     single<TestQuantityOfQuestionRepository> {
-        TestTestQuantityOfQuestionRepositoryImpl(quantityOfQuestionStorage = get())
+        TestQuantityOfQuestionRepositoryImpl(quantityOfQuestionStorage = get())
     }
     single<TestResultRepository> {
         TestResultRepositoryImpl(resultStorage = get())
-    }
-    single<TestStatisticRepository> {
-        TestStatisticRepositoryImpl(statisticStorage = get())
     }
     single<TestQuestionRepository> {
         TestQuestionRepositoryImpl(questionStorage = get())

@@ -6,6 +6,6 @@ import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam
 
 interface TestQuestionRepository {
 
-    fun getQuestionsList(getQuestionListParam: GetQuestionListParam): List<QuestionModel>
+    fun getQuestionsList(param: GetQuestionListParam): List<QuestionModel>
 
 }

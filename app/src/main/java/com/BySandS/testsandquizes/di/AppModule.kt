@@ -9,19 +9,17 @@ import org.koin.dsl.module
 val appModule = module {
 
     viewModel<SubcategoriesViewModel> {
-        SubcategoriesViewModel(getListTestSubcategoryAndStatisticUseCase = get())
+        SubcategoriesViewModel(getListSubcategoryUseCase = get())
     }
 
     viewModel<DifficultyFragmentViewModel> {
         DifficultyFragmentViewModel(getQuantityOfQuestionUseCase = get(),
-            getTestSubcategoryAndStatisticUseCase = get())
+            getTestSubcategoryUseCase = get())
     }
     viewModel<TestFragmentViewModel> {
         TestFragmentViewModel(
             getTestResultUseCase = get(),
             getQuestionListUseCase = get(),
-            saveTestStatisticUseCase = get(),
-            getTestStatisticUseCase = get(),
             getTestSubcategoryByIdUseCase = get()
         )
     }

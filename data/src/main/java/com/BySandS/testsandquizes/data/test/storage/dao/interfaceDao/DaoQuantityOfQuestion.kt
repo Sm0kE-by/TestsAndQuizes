@@ -7,7 +7,8 @@ import com.BySandS.testsandquizes.data.test.storage.models.QuantityOfQuestionMod
 @Dao
 interface DaoQuantityOfQuestion {
 
-    @Query("SELECT * FROM quantity_of_questions, subcategory " +
+    @Query("SELECT quantity_of_questions.id, quantity_of_questions.easy_quantity, quantity_of_questions.norm_quantity, " +
+            "quantity_of_questions.hard_quantity FROM quantity_of_questions, subcategory " +
             "WHERE subcategory.quantity_of_questions_id = :idQuantity"
     )
     fun getQuantityOfQuestion(idQuantity: Long): QuantityOfQuestionModelDb

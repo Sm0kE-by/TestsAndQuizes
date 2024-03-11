@@ -1,3 +1,3 @@
 package com.BySandS.testsandquizes.domain.tests.models.param
 
-class GetSubcategoryParam (val idSubcategory: Long)
+class GetListSubcategory(val idCategory: Long)

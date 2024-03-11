@@ -16,17 +16,20 @@ import androidx.room.PrimaryKey
             entity = SubcategoryDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["subcategory_id"]
-        ),
-        ForeignKey(
-            entity = QuestionTextDbEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["question_text_id"]
-        ),
+        )
     ]
 )
 data class QuestionDbEntity(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "difficulty_id") val resultText: Long,
-    @ColumnInfo(name = "subcategory_id") val testResult:  Long,
-    @ColumnInfo(name = "question_text_id") val difficulty: Long,
+    @ColumnInfo(name = "difficulty_id") val difficultyId: Long,
+    @ColumnInfo(name = "subcategory_id", defaultValue = "1") val subcategoryId:  Long,
+    @ColumnInfo(name = "text_ru", defaultValue = " ") val textRu: String,
+    @ColumnInfo(name = "correct_answer_ru", defaultValue = " ") val correctAnswerRu: String,
+    @ColumnInfo(name = "incorrect_answer_1_ru", defaultValue = " ") val incorrectAnswer1Ru: String,
+    @ColumnInfo(name = "incorrect_answer_2_ru", defaultValue = " ") val incorrectAnswer2Ru: String,
+    @ColumnInfo(name = "incorrect_answer_3_ru", defaultValue = " ") val incorrectAnswer3Ru: String,
+    @ColumnInfo(name = "correct_answer_eng", defaultValue = " ") val correctAnswerEng: String,
+    @ColumnInfo(name = "incorrect_answer_1_eng", defaultValue = " ") val incorrectAnswer1Eng: String,
+    @ColumnInfo(name = "incorrect_answer_2_eng", defaultValue = " ") val incorrectAnswer2Eng: String,
+    @ColumnInfo(name = "incorrect_answer_3_eng", defaultValue = " ") val incorrectAnswer3Eng: String
 )

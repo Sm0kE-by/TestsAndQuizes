@@ -5,6 +5,6 @@ import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestio
 
 interface TestQuantityOfQuestionRepository {
 
-    fun getQuantity(idQuantity: GetQuantityOfQuestionParam): QuantityOfQuestionModel
+    fun getQuantity(param: GetQuantityOfQuestionParam): QuantityOfQuestionModel
 
 }

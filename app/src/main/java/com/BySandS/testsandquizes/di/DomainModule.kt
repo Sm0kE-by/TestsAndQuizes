@@ -3,11 +3,9 @@ package com.BySandS.testsandquizes.di
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListTestSubcategoryAndStatisticUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetTestSubcategoryAndStatisticUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListSubcategoryUseCase
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetTestSubcategoryUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestSubcategoryByIdUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.SaveTestStatisticUseCase
 import org.koin.dsl.module
 
 /**
@@ -16,13 +14,13 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
-    factory<GetListTestSubcategoryAndStatisticUseCase> {
-        GetListTestSubcategoryAndStatisticUseCase(
+    factory<GetListSubcategoryUseCase> {
+        GetListSubcategoryUseCase(
             testSubcategoryRepository = get()
         )
     }
-    factory<GetTestSubcategoryAndStatisticUseCase> {
-        GetTestSubcategoryAndStatisticUseCase(
+    factory<GetTestSubcategoryUseCase> {
+        GetTestSubcategoryUseCase(
             testSubcategoryRepository = get()
         )
     }
@@ -39,16 +37,6 @@ val domainModule = module {
     factory<GetQuestionListUseCase> {
         GetQuestionListUseCase(
             tesQuestionRepository = get()
-        )
-    }
-    factory<SaveTestStatisticUseCase> {
-        SaveTestStatisticUseCase(
-            testStatisticRepository = get()
-        )
-    }
-    factory<GetTestStatisticUseCase> {
-        GetTestStatisticUseCase(
-            testStatisticRepository = get()
         )
     }
     factory<GetTestResultUseCase> {

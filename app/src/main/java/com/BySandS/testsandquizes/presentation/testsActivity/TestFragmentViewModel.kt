@@ -7,17 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
-import com.BySandS.testsandquizes.domain.tests.models.StatisticModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetStatisticParam
-import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryParam
+import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryByIdParam
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestStatisticUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestSubcategoryByIdUseCase
-import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.SaveTestStatisticUseCase
 import com.BySandS.testsandquizes.presentation.model.TestModelPresentation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,13 +24,10 @@ private const val TAG = "AAA"
 class TestFragmentViewModel(
     private val getTestResultUseCase: GetTestResultUseCase,
     private val getQuestionListUseCase: GetQuestionListUseCase,
-    private val saveTestStatisticUseCase: SaveTestStatisticUseCase,
-    private val getTestStatisticUseCase: GetTestStatisticUseCase,
     private val getTestSubcategoryByIdUseCase: GetTestSubcategoryByIdUseCase
 ) : ViewModel() {
     private val idSubcategory = TestFragment.idSubcategory
     private val result = MutableLiveData<ResultTestModel>()
-    private val static = MutableLiveData<StatisticModel>()
     val listQuestions: List<QuestionModel> = listOf(
         QuestionModel(
             1,
@@ -115,9 +109,9 @@ class TestFragmentViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            val getSubcategoryParam = GetSubcategoryParam(idSubcategory = idSubcategory)
+            val getSubcategoryByIdParam = GetSubcategoryByIdParam(idSubcategory = idSubcategory)
 
-            subcategoryModel = getTestSubcategoryByIdUseCase.execute(param = getSubcategoryParam)
+            subcategoryModel = getTestSubcategoryByIdUseCase.execute(param = getSubcategoryByIdParam)
             Log.i(TAG, "subcategoryModel ->>> $subcategoryModel")
             subcategoryModel.let {
                 val getQuestionListParam =
@@ -126,14 +120,13 @@ class TestFragmentViewModel(
                         quantityOfQuestions = subcategoryModel!!.quantityOfQuestionsId
                     )
                 val getResultParam =
-                    GetResultParam(testResultId = subcategoryModel!!.testResultId, difficultyId = 1)
-                val getStatisticParam = GetStatisticParam(nameSubcategory = subcategoryModel!!.subcategoryName)
+                    GetResultParam(subcategoryId = subcategoryModel!!.id, difficultyId = 1)
+                //val getStatisticParam = GetStatisticParam(nameSubcategory = subcategoryModel!!.subcategoryName)
 
 
                 questionListMutable.postValue(listQuestions)
                 questionMutable.postValue(randomAnswerOfQuestion(listQuestions[quantityOfQuestion.value!!]))
                 result.postValue(getTestResultUseCase.execute(param = getResultParam))
-                static.postValue(getTestStatisticUseCase.execute(param = getStatisticParam))
                 quantityOfHintMutable.postValue(2)
             }
         }
@@ -210,26 +203,26 @@ class TestFragmentViewModel(
      */
     private fun saveStatistic() {
         val newStatistic = calculateTheResult()
-        val result = mapToSaveStatistic(static)
+        //val result = mapToSaveStatistic(static)
         Log.i(TAG, "New Statistic - $newStatistic")
-        if (testModelPresentation.difficultyId == 1L && newStatistic > result.easy) result.easy =
+        if (testModelPresentation.difficultyId == 1L && newStatistic > subcategoryModel!!.statisticEasy) subcategoryModel!!.statisticEasy =
             newStatistic
-        if (testModelPresentation.difficultyId == 2L && newStatistic > result.norm) result.norm =
+        if (testModelPresentation.difficultyId == 2L && newStatistic > subcategoryModel!!.statisticNorm) subcategoryModel!!.statisticNorm =
             newStatistic
-        if (testModelPresentation.difficultyId == 3L && newStatistic > result.hard) result.hard =
+        if (testModelPresentation.difficultyId == 3L && newStatistic > subcategoryModel!!.statisticHard) subcategoryModel!!.statisticHard =
             newStatistic
 
-        viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
+       // viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
     }
 
     //Что за !! ????
-    private fun mapToSaveStatistic(static: MutableLiveData<StatisticModel>): StatisticModel {
-        return StatisticModel(
-            id = static.value!!.id,
-            nameSubcategory = static.value!!.nameSubcategory,
-            easy = static.value!!.easy,
-            norm = static.value!!.norm,
-            hard = static.value!!.hard
-        )
-    }
+//    private fun mapToSaveStatistic() {
+//        subcategoryModel.(
+//            id = static.value!!.id,
+//            nameSubcategory = static.value!!.nameSubcategory,
+//            easy = static.value!!.easy,
+//            norm = static.value!!.norm,
+//            hard = static.value!!.hard
+//        )
+//    }
 }
