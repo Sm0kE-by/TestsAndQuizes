@@ -56,6 +56,7 @@ class SubcategoriesFragment() : Fragment() {
             Observer { subcategories ->
                 subcategories?.let {
                     Log.i(TAG, "Got crimes ${subcategories.size}")
+                    Log.i(TAG, "Got crimes $subcategories")
                     updateUI(subcategories)
                 }
             })
@@ -76,7 +77,7 @@ class SubcategoriesFragment() : Fragment() {
         fun newInstance() = SubcategoriesFragment()
 
         //name поменять, это для практики, наз объекта
-        var idCategory: Long = 0
+        var idCategory: Long = 1
         const val ARG_NAME = "ARG_NAME"
     }
 
@@ -103,6 +104,19 @@ class SubcategoriesFragment() : Fragment() {
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
             tvPercentHard.text = hardPercent
+            when (subcategory.linkToIcon) {
+                "space_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.space_icon)
+                "school_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.school_icon)
+                "nature_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.nature_icon)
+                "erudition_and_intelligence_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.erudition_and_intelligence_icon)
+                "movie_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.movie_icon)
+                "music_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.music_icon)
+                "leisure_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.leisure_icon)
+                "technologies_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.technologies_icon)
+                "sport_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.sport_icon)
+                "health_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.health_icon)
+            }
+
         }
 
         /**
