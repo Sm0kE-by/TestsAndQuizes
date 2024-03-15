@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/main_menu_background">
 
         <TextView
             android:id="@+id/tv_name_subcategory"
@@ -47,7 +48,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/easy_icon">
 
                 <TextView
                     android:id="@+id/tvDiffenetlyNameEasy"
@@ -98,7 +100,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="@string/edit_cat_easy"
+                    android:text="132"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -111,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="7"
+                    android:text="5"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -156,7 +158,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/norm_icon">
 
                 <TextView
                     android:id="@+id/tvDiffenetlyNameNorm"
@@ -209,7 +212,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="@string/edit_cat_norm"
+                    android:text="12332"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -222,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="10"
+                    android:text="7"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -267,7 +270,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/hard_icon">
 
                 <TextView
                     android:id="@+id/tvDiffenetlyNameHard"
@@ -318,7 +322,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="@string/edit_cat_hard"
+                    android:text="32156"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -331,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="serif"
-                    android:text="15"
+                    android:text="12"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"

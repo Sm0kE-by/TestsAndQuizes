@@ -2,8 +2,10 @@ package com.BySandS.testsandquizes.data.test.repository
 
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
-import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategory
+import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelForSubcategoryFragmentDb
+import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModelForSubcategoryFragment
 import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryByIdParam
 import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
@@ -13,7 +15,7 @@ import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryReposit
 class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryStorage) :
     TestSubcategoryRepository {
 
-    override fun getListSubcategories(param: GetListSubcategory): List<SubcategoryModel> {
+    override fun getListSubcategories(param: GetListSubcategoryParam): List<SubcategoryModelForSubcategoryFragment> {
         return mapToDomainListSub(
             subcategoryModelDb = subcategoryStorage.getListSubcategories(
                 idCategory = mapToStorageListSub(param = param)
@@ -29,19 +31,16 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         )
     }
 
-    private fun mapToDomainListSub(subcategoryModelDb: List<SubcategoryModelDb>): List<SubcategoryModel> {
-        var listSubcategoryAndStatisticModel = ArrayList<SubcategoryModel>()
+    private fun mapToDomainListSub(subcategoryModelDb: List<SubcategoryModelForSubcategoryFragmentDb>): List<SubcategoryModelForSubcategoryFragment> {
+        var listSubcategoryAndStatisticModel = ArrayList<SubcategoryModelForSubcategoryFragment>()
         subcategoryModelDb.forEach { it ->
             listSubcategoryAndStatisticModel.add(
-                SubcategoryModel(
+                SubcategoryModelForSubcategoryFragment(
                     id = it.id,
-                    name = it.nameRu,
-                    categoryId = it.categoryId,
-                    quantityOfQuestionsId = it.quantityOfQuestionsId,
+                    name = it.name,
                     statisticEasy = it.statisticEasy,
                     statisticNorm = it.statisticNorm,
                     statisticHard = it.statisticHard,
-                    linkToBackground = it.linkToBackground,
                     linkToIcon = it.linkToIcon
                 )
             )
@@ -64,7 +63,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
         )
     }
 
-    private fun mapToStorageListSub(param: GetListSubcategory): Long {
+    private fun mapToStorageListSub(param: GetListSubcategoryParam): Long {
         return param.idCategory
     }
 

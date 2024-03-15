@@ -105,12 +105,8 @@ class TestFragmentViewModel(
     private var subcategoryModel: SubcategoryModel? = null
 
     init {
-
-
         viewModelScope.launch(Dispatchers.IO) {
-
             val getSubcategoryByIdParam = GetSubcategoryByIdParam(idSubcategory = idSubcategory)
-
             subcategoryModel = getTestSubcategoryByIdUseCase.execute(param = getSubcategoryByIdParam)
             Log.i(TAG, "subcategoryModel ->>> $subcategoryModel")
             subcategoryModel.let {

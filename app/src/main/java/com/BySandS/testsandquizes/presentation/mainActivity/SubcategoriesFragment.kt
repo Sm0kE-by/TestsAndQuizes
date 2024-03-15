@@ -1,7 +1,6 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
-import com.BySandS.testsandquizes.R.*
 import com.BySandS.testsandquizes.databinding.SubcategoryItemFragmentBinding
-import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModelForSubcategoryFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -55,8 +53,6 @@ class SubcategoriesFragment() : Fragment() {
             viewLifecycleOwner,
             Observer { subcategories ->
                 subcategories?.let {
-                    Log.i(TAG, "Got crimes ${subcategories.size}")
-                    Log.i(TAG, "Got crimes $subcategories")
                     updateUI(subcategories)
                 }
             })
@@ -67,14 +63,14 @@ class SubcategoriesFragment() : Fragment() {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(subcategory: List<SubcategoryModel>) {
+    fun updateUI(subcategory: List<SubcategoryModelForSubcategoryFragment>) {
         adapter = SubcategoryAdapter(subcategory)
         testsRecyclerView.adapter = adapter
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = SubcategoriesFragment()
+//        @JvmStatic
+//        fun newInstance() = SubcategoriesFragment()
 
         //name поменять, это для практики, наз объекта
         var idCategory: Long = 1
@@ -87,14 +83,14 @@ class SubcategoriesFragment() : Fragment() {
     private inner class SubcategoryHolder(item: View) : RecyclerView.ViewHolder(item),
         View.OnClickListener {
         val binding = SubcategoryItemFragmentBinding.bind(item)
-        lateinit var subcategory: SubcategoryModel
+        lateinit var subcategory: SubcategoryModelForSubcategoryFragment
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(
-            subcategoryModel: SubcategoryModel
+            subcategoryModel: SubcategoryModelForSubcategoryFragment
         ) = with(binding) {
             subcategory = subcategoryModel
             val easyPercent = ": ${subcategoryModel.statisticEasy}%"
@@ -104,6 +100,8 @@ class SubcategoriesFragment() : Fragment() {
             tvPercentEasy.text = easyPercent
             tvPercentNorm.text = normPercent
             tvPercentHard.text = hardPercent
+            //Проверка на наличие вери хард режима
+            //if() tvPercentHard.text = hardPercent
             when (subcategory.linkToIcon) {
                 "space_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.space_icon)
                 "school_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.school_icon)
@@ -116,23 +114,16 @@ class SubcategoriesFragment() : Fragment() {
                 "sport_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.sport_icon)
                 "health_icon.jpg" -> constLayMain.setBackgroundResource(R.drawable.health_icon)
             }
-
         }
 
         /**
          * Обработка нажатия на фрагмент категории
          */
         override fun onClick(v: View?) {
-            val bundle = Bundle()
             val idSubcategory = subcategory.id
-            val idQuantityOfQuestion = 1L
-            bundle.putLong(DifficultyFragment.ID_QUANTITY_OF_QUESTION, idQuantityOfQuestion)
-            bundle.putLong(DifficultyFragment.ID_SUBCATEGORY_AND_STATISTIC, idSubcategory)
-
             findNavController().navigate(
                 R.id.action_subcategoriesFragment_to_difficultyFragment,
                 bundleOf(
-                    DifficultyFragment.ID_QUANTITY_OF_QUESTION to idQuantityOfQuestion,
                     DifficultyFragment.ID_SUBCATEGORY_AND_STATISTIC to idSubcategory
                 )
             )
@@ -143,7 +134,7 @@ class SubcategoriesFragment() : Fragment() {
      * class Adapter
      */
     private inner class SubcategoryAdapter(
-        var subcategories: List<SubcategoryModel>,
+        var subcategories: List<SubcategoryModelForSubcategoryFragment>,
     ) :
         RecyclerView.Adapter<SubcategoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoryHolder {

@@ -1,12 +1,12 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategory
+import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
+import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModelForSubcategoryFragment
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetListSubcategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,15 +30,13 @@ class SubcategoriesViewModel(
 ) : ViewModel() {
 
     private var idCategory:Long = SubcategoriesFragment.idCategory
-    private val param = GetListSubcategory(idCategory = idCategory)
+    private val param = GetListSubcategoryParam(idCategory = idCategory)
     private var listSubcategoryAndStatisticModelLiveData =
-        MutableLiveData<List<SubcategoryModel>>()
-    var listLiveData: LiveData<List<SubcategoryModel>> =
+        MutableLiveData<List<SubcategoryModelForSubcategoryFragment>>()
+    var listLiveData: LiveData<List<SubcategoryModelForSubcategoryFragment>> =
         listSubcategoryAndStatisticModelLiveData
 
     init {
-        Log.i(TAG, "ID_Category = $idCategory")
-        // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
             val list = getListSubcategoryUseCase.execute(param)
             listSubcategoryAndStatisticModelLiveData.postValue(list)

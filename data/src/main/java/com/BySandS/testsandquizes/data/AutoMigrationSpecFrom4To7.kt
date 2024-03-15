@@ -20,6 +20,11 @@ import androidx.room.migration.AutoMigrationSpec
     fromColumnName = "subcategory_name_eng",
     toColumnName = "name_eng"
 )
+@RenameColumn(
+    tableName = "result",
+    fromColumnName = "difficulty_id",
+    toColumnName = "difficulty_lexel_id"
+)
 @DeleteColumn(
     tableName = "subcategory",
     columnName = "test_result_id"
@@ -52,5 +57,5 @@ import androidx.room.migration.AutoMigrationSpec
 @DeleteTable(
     tableName = "statistic_subcategory"
 )
-class AutoMigrationSpecFrom4To7: AutoMigrationSpec {
+class AutoMigrationSpecFrom4To7 : AutoMigrationSpec {
 }

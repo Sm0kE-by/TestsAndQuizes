@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
@@ -17,6 +18,8 @@ import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoQuestion
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoResult
 import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcategory
 
+private const val TAG = "AAA"
+
 @Database(
     entities = [
         CategoryDbEntity::class,
@@ -26,9 +29,14 @@ import com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao.DaoSubcateg
         ResultDbEntity::class,
         SubcategoryDbEntity::class,
         SubcategoryDifficultyLevel::class
-    ], version = 7, exportSchema = true,
+    ], version = 2, exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 4, to = 7, spec = AutoMigrationSpecFrom4To7::class)
+//       // AutoMigration(from = 2, to = 4),
+//       // AutoMigration(from = 3, to = 4),
+//        AutoMigration(from = 2, to = 7, spec = AutoMigrationSpecFrom4To7::class),
+//      //   AutoMigration(from = 5, to = 6),
+//      //   AutoMigration(from = 6, to = 7),
+//        AutoMigration(from = 7, to = 10),
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -40,27 +48,24 @@ abstract class AppDatabase : RoomDatabase() {
 
 
     companion object {
-        private const val DATABASE_NAME = "tests-database"
+        private const val DATABASE_NAME = "db1.db"
 
-        /**
-         * As we need only one instance of db in our app will use to store
-         * This is to avoid memory leaks in android when there exist multiple instances of db
-         */
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-
             var instance = INSTANCE
 
             if (instance == null) {
                 instance = Room.databaseBuilder(
-                    context.applicationContext,
+                    context,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).createFromAsset("database/tests-database.db")
+                ).createFromAsset("db1.db")
+                    //.fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
+                Log.i(TAG, "ID_Category = $instance")
             }
             return instance
         }

@@ -10,9 +10,9 @@
     <string name="main_exit">EXIT</string>
 
     <!-- Categories and Difficulties -->
-    <string name="edit_cat_easy">EASY</string>
-    <string name="edit_cat_norm">NORM</string>
-    <string name="edit_cat_hard">HARD</string>
+    <string name="edit_cat_easy">Легкий</string>
+    <string name="edit_cat_norm">Средний</string>
+    <string name="edit_cat_hard">Сложный</string>
     <string name="edit_cat_percent"> --%</string>
     <string name="quantity_question">Количество вопросов</string>
     <string name="difficulty_level">Уровень сложности</string>
