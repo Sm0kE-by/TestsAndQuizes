@@ -58,11 +58,14 @@ class DifficultyFragmentViewModel(
             )
             Log.i(TAG, "idSubcategory => ${subcategoryAndStatisticModelMutable.value}")
         }
+        while (subcategoryAndStatisticModelMutable.value == null) {
+            Thread.sleep(10L)
+        }
         createOrderJob.join()
         Log.i(TAG, "idSubcategory => ${subcategoryAndStatisticModelMutable.value}")
         val invoiceJob = launch {
             val quantityOfQuestionParam =
-                subcategoryAndStatisticModel.value?.quantityOfQuestionsId?.let {
+                subcategoryAndStatisticModel.value?.quantityOfQuestions?.let {
                     GetQuantityOfQuestionParam(
                         it
                     )
@@ -75,6 +78,9 @@ class DifficultyFragmentViewModel(
                 }
             )
             Log.i(TAG, "idSubcategory => ${quantityOfQuestionsMutable.value}")
+        }
+        while (quantityOfQuestionsMutable.value == null) {
+            Thread.sleep(10L)
         }
         invoiceJob.join()
 

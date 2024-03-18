@@ -48,7 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
 
 
     companion object {
-        private const val DATABASE_NAME = "db1.db"
+        private const val DATABASE_NAME = "tests-database.db"
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -61,7 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     DATABASE_NAME
-                ).createFromAsset("db1.db")
+                ).createFromAsset("database/tests-database.db")
                     //.fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

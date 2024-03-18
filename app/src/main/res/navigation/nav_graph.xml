@@ -36,5 +36,13 @@
         android:id="@+id/testFragment"
         android:name="com.BySandS.testsandquizes.presentation.testsActivity.TestFragment"
         android:label="test_fragment"
-        tools:layout="@layout/test_fragment" />
+        tools:layout="@layout/test_fragment" >
+        <action
+            android:id="@+id/action_testFragment_to_testResultDialogFragment"
+            app:destination="@id/testResultDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/testResultDialogFragment"
+        android:name="com.BySandS.testsandquizes.presentation.testsActivity.TestResultDialogFragment"
+        android:label="TestResultDialogFragment" />
 </navigation>

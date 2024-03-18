@@ -54,7 +54,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
             id = subcategoryModelDb.id,
             name = subcategoryModelDb.nameRu,
             categoryId = subcategoryModelDb.categoryId,
-            quantityOfQuestionsId = subcategoryModelDb.quantityOfQuestionsId,
+            quantityOfQuestions = subcategoryModelDb.quantityOfQuestionsId,
             statisticEasy = subcategoryModelDb.statisticEasy,
             statisticNorm = subcategoryModelDb.statisticNorm,
             statisticHard = subcategoryModelDb.statisticHard,

@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,49 +47,64 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
     }
 
 
-companion object {
-    //        @JvmStatic
+    companion object {
+        //        @JvmStatic
 //        fun newInstance() = DifficultyFragment()
-    //       var idQuantityOfQuestion: Long = 0
-    var idSubcategoryAndStatistic: Long = 0
-    const val ID_QUANTITY_OF_QUESTION = "ID_QUANTITY_OF_QUESTION"
-    const val ID_SUBCATEGORY_AND_STATISTIC = "SUBCATEGORY_AND_STATISTIC"
-}
-
-private fun updateUI(
-    quantityOfQuestions: QuantityOfQuestionModel,
-    subcategoryAndStatisticModel: SubcategoryModel
-) = with(binding) {
-
-    //получаю из БД кол-во вопросов
-    tvQuantityQuestionEasy.text = quantityOfQuestions.easyQuantity.toString()
-    tvQuantityQuestionNorm.text = quantityOfQuestions.normQuantity.toString()
-    tvQuantityQuestionHard.text = quantityOfQuestions.hardQuantity.toString()
-    // получаю из БД статистика
-    tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasy.toString()
-    tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNorm.toString()
-    tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHard.toString()
-    tvNameSubcategory.text = subcategoryAndStatisticModel.name
-}
-
-override fun onClick(v: View?): Unit = with(binding) {
-    when (v?.id) {
-        //Убрать метод вызова активити в ВМ
-        cardView1.id -> startActivityTest()
-        cardView2.id -> startActivityTest()
-        cardView3.id -> startActivityTest()
+        //       var idQuantityOfQuestion: Long = 0
+        var idSubcategoryAndStatistic: Long = 0
+        const val ID_QUANTITY_OF_QUESTION = "ID_QUANTITY_OF_QUESTION"
+        const val ID_SUBCATEGORY_AND_STATISTIC = "SUBCATEGORY_AND_STATISTIC"
     }
-}
 
-private fun startActivityTest() {
-    val idSubcategory = idSubcategoryAndStatistic
+    private fun updateUI(
+        quantityOfQuestions: QuantityOfQuestionModel,
+        subcategoryAndStatisticModel: SubcategoryModel
+    ) = with(binding) {
+
+        //получаю из БД кол-во вопросов
+        tvQuantityQuestionEasy.text = quantityOfQuestions.easyQuantity.toString()
+        tvQuantityQuestionNorm.text = quantityOfQuestions.normQuantity.toString()
+        tvQuantityQuestionHard.text = quantityOfQuestions.hardQuantity.toString()
+        // получаю из БД статистика
+        tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasy.toString()
+        tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNorm.toString()
+        tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHard.toString()
+        tvNameSubcategory.text = subcategoryAndStatisticModel.name
+    }
+
+    override fun onClick(v: View?): Unit = with(binding) {
+        when (v?.id) {
+            //Убрать метод вызова активити в ВМ
+            cardView1.id -> startActivityTest(1L)
+            cardView2.id -> startActivityTest(2L)
+            cardView3.id -> startActivityTest(3L)
+        }
+    }
+
+    private fun startActivityTest(idDifficult: Long) {
+        var quantityOfQuestions = 0
+        difficultyVM.quantityOfQuestions.observe(
+            viewLifecycleOwner, Observer { quantity ->
+                quantity?.let {
+                    when (idDifficult){
+                        1L ->  quantityOfQuestions = it.easyQuantity
+                        2L ->  quantityOfQuestions = it.normQuantity
+                        3L ->  quantityOfQuestions = it.hardQuantity
+                    }
+
+                }
+            })
+        Log.i(TAG, "quantityOfQuestions 1111 => $quantityOfQuestions")
+        val idSubcategory = idSubcategoryAndStatistic
 //        val testActivity = Intent(activity, TestActivity::class.java)
 //        startActivity(testActivity)
-    findNavController().navigate(
-        R.id.action_difficultyFragment_to_testFragment,
-        bundleOf(
-            TestFragment.ID_SUBCATEGORY_AND_STATISTIC to idSubcategory
+        findNavController().navigate(
+            R.id.action_difficultyFragment_to_testFragment,
+            bundleOf(
+                TestFragment.ID_SUBCATEGORY_AND_STATISTIC to idSubcategory,
+                TestFragment.ID_DIFFICULTY_LEVEL to idDifficult,
+                TestFragment.QUANTITY_OF_QUESTION to quantityOfQuestions
+            )
         )
-    )
-}
+    }
 }

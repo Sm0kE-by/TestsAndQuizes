@@ -40,7 +40,7 @@ class TestQuestionRepositoryImpl(private val questionStorage: QuestionStorage) :
         return param.difficultyId
     }
 
-    private fun mapToStorageQuantity(param: GetQuestionListParam): Long {
+    private fun mapToStorageQuantity(param: GetQuestionListParam): Int {
         return param.quantityOfQuestions
     }
 }
