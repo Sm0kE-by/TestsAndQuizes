@@ -8,6 +8,7 @@ class SubcategoryModel(
     var statisticEasy: Int,
     var statisticNorm: Int,
     var statisticHard: Int,
+    var statisticVeryHard: Int,
     val linkToBackground: String,
     val linkToIcon: String
 )

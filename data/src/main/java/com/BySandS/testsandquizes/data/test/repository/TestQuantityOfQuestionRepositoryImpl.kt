@@ -24,7 +24,8 @@ class TestQuantityOfQuestionRepositoryImpl(private val quantityOfQuestionStorage
             id = quantityOfQuestionModelDb.id,
             easyQuantity = quantityOfQuestionModelDb.easyQuantity,
             normQuantity = quantityOfQuestionModelDb.normQuantity,
-            hardQuantity = quantityOfQuestionModelDb.hardQuantity
+            hardQuantity = quantityOfQuestionModelDb.hardQuantity,
+            veryHardQuantity = quantityOfQuestionModelDb.veryhardQuantity
         )
     }
 

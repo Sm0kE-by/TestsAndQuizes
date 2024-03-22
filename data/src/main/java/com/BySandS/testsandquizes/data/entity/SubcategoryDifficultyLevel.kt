@@ -21,6 +21,6 @@ import androidx.room.PrimaryKey
 )
 data class SubcategoryDifficultyLevel(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "subcategory_id", defaultValue = "1") val subcategoryId: Long,
+    @ColumnInfo(name = "subcategory_id") val subcategoryId: Long,
     @ColumnInfo(name = "difficulty_id") val difficultyId: Long
 )

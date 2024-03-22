@@ -4,5 +4,6 @@ class QuantityOfQuestionModel (
     val id: Long,
     val easyQuantity: Int,
     val normQuantity: Int,
-    val hardQuantity: Int
+    val hardQuantity: Int,
+    val veryHardQuantity: Int
 )

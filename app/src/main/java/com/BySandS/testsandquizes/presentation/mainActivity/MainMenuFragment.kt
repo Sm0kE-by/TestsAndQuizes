@@ -69,12 +69,14 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
             )
                 .show()
 
-            bSettings.id -> Toast.makeText(
-                activity?.applicationContext,
-                "Settings",
-                Toast.LENGTH_LONG
-            )
-                .show()
+            bSettings.id -> findNavController ().navigate(
+                R.id.action_mainMenuFragment_to_myDialog)
+//                Toast.makeText(
+//                activity?.applicationContext,
+//                "Settings",
+//                Toast.LENGTH_LONG
+//            )
+//                .show()
 
             bExit.id -> Toast.makeText(activity?.applicationContext, "Exit", Toast.LENGTH_LONG)
                 .show()

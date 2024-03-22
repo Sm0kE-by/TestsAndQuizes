@@ -8,7 +8,7 @@ import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelForSu
 @Dao
 interface DaoSubcategory {
     @Query(
-        "SELECT id, name_ru as name, statistic_easy, statistic_norm, statistic_hard, link_to_icon " +
+        "SELECT id, name_ru as name, statistic_easy, statistic_norm, statistic_hard, statistic_veryhard, link_to_icon " +
                 "FROM subcategory WHERE subcategory.category_id = :idCategory"
     )
     fun getListSubcategories(idCategory: Long): List<SubcategoryModelForSubcategoryFragmentDb>

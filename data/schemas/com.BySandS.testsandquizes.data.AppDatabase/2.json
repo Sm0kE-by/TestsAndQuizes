@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "6cf1394167235ae262e927d87679f997",
+    "identityHash": "90c7fdd4ab4ffb64af5094f378ac87c9",
     "entities": [
       {
         "tableName": "categories",
@@ -71,7 +71,7 @@
       },
       {
         "tableName": "quantity_of_questions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `easy_quantity` INTEGER NOT NULL, `norm_quantity` INTEGER NOT NULL, `hard_quantity` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `easy_quantity` INTEGER NOT NULL, `norm_quantity` INTEGER NOT NULL, `hard_quantity` INTEGER NOT NULL, `veryhard_quantity` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -94,6 +94,12 @@
           {
             "fieldPath": "hardQuantity",
             "columnName": "hard_quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hardHardQuantity",
+            "columnName": "veryhard_quantity",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -228,7 +234,7 @@
       },
       {
         "tableName": "result",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `difficulty_id` INTEGER NOT NULL, `subcategory_id` INTEGER NOT NULL DEFAULT 1, `result_text_33_ru` TEXT NOT NULL DEFAULT ' ', `result_text_66_ru` TEXT NOT NULL DEFAULT ' ', `result_text_99_ru` TEXT NOT NULL DEFAULT ' ', `result_text_100_ru` TEXT NOT NULL DEFAULT ' ', `result_text_33_eng` TEXT NOT NULL DEFAULT ' ', `result_text_66_eng` TEXT NOT NULL DEFAULT ' ', `result_text_99_eng` TEXT NOT NULL DEFAULT ' ', `result_text_100_eng` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`difficulty_id`) REFERENCES `difficulty_level`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`subcategory_id`) REFERENCES `subcategory`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `difficulty_level_id` INTEGER NOT NULL, `subcategory_id` INTEGER NOT NULL DEFAULT 1, `result_text_33_ru` TEXT NOT NULL DEFAULT ' ', `result_text_66_ru` TEXT NOT NULL DEFAULT ' ', `result_text_99_ru` TEXT NOT NULL DEFAULT ' ', `result_text_100_ru` TEXT NOT NULL DEFAULT ' ', `result_text_33_eng` TEXT NOT NULL DEFAULT ' ', `result_text_66_eng` TEXT NOT NULL DEFAULT ' ', `result_text_99_eng` TEXT NOT NULL DEFAULT ' ', `result_text_100_eng` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`difficulty_level_id`) REFERENCES `difficulty_level`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`subcategory_id`) REFERENCES `subcategory`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -238,7 +244,7 @@
           },
           {
             "fieldPath": "difficultyId",
-            "columnName": "difficulty_id",
+            "columnName": "difficulty_level_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -319,7 +325,7 @@
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
-              "difficulty_id"
+              "difficulty_level_id"
             ],
             "referencedColumns": [
               "id"
@@ -340,7 +346,7 @@
       },
       {
         "tableName": "subcategory",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name_ru` TEXT NOT NULL DEFAULT ' ', `name_eng` TEXT NOT NULL, `category_id` INTEGER NOT NULL, `quantity_of_questions_id` INTEGER NOT NULL, `statistic_easy` INTEGER NOT NULL DEFAULT 0, `statistic_norm` INTEGER NOT NULL DEFAULT 0, `statistic_hard` INTEGER NOT NULL DEFAULT 0, `link_to_background` TEXT NOT NULL DEFAULT ' ', `link_to_icon` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`quantity_of_questions_id`) REFERENCES `quantity_of_questions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name_ru` TEXT NOT NULL DEFAULT ' ', `name_eng` TEXT NOT NULL, `category_id` INTEGER NOT NULL, `quantity_of_questions_id` INTEGER NOT NULL, `statistic_easy` INTEGER NOT NULL DEFAULT 0, `statistic_norm` INTEGER NOT NULL DEFAULT 0, `statistic_hard` INTEGER NOT NULL DEFAULT 0, `statistic_veryhard` INTEGER NOT NULL DEFAULT 0, `link_to_background` TEXT NOT NULL DEFAULT ' ', `link_to_icon` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`quantity_of_questions_id`) REFERENCES `quantity_of_questions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -390,6 +396,13 @@
           {
             "fieldPath": "statisticHard",
             "columnName": "statistic_hard",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "statisticVeryHard",
+            "columnName": "statistic_veryhard",
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "0"
@@ -501,7 +514,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6cf1394167235ae262e927d87679f997')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '177c442f7399b3748e87ecb172b7346f')"
     ]
   }
 }

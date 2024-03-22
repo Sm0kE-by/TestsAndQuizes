@@ -10,4 +10,5 @@ data class QuantityOfQuestionsDbEntity(
     @ColumnInfo(name = "easy_quantity") val easyQuantity: Int,
     @ColumnInfo(name = "norm_quantity") val normQuantity: Int,
     @ColumnInfo(name = "hard_quantity") val hardQuantity: Int,
+    @ColumnInfo(name = "veryhard_quantity") val hardHardQuantity: Int,
 )

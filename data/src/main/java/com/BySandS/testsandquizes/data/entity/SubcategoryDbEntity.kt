@@ -29,6 +29,7 @@ data class SubcategoryDbEntity(
     @ColumnInfo(name = "statistic_easy", defaultValue = "0") val statisticEasy: Int,
     @ColumnInfo(name = "statistic_norm", defaultValue = "0") val statisticNorm: Int,
     @ColumnInfo(name = "statistic_hard", defaultValue = "0") val statisticHard: Int,
-    @ColumnInfo(name = "link_to_background", defaultValue = " ") val linkToBackground: String,
-    @ColumnInfo(name = "link_to_icon", defaultValue = " ") val linkToIcon: String
+    @ColumnInfo(name = "statistic_veryhard", defaultValue = "0") val statisticVeryHard: Int,
+    @ColumnInfo(name = "link_to_background") val linkToBackground: String,
+    @ColumnInfo(name = "link_to_icon") val linkToIcon: String
 )

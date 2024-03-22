@@ -6,5 +6,6 @@ class SubcategoryModelForSubcategoryFragment(
     var statisticEasy: Int,
     var statisticNorm: Int,
     var statisticHard: Int,
+    var statisticVeryHard: Int,
     val linkToIcon: String
 )

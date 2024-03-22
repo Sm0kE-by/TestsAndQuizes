@@ -100,8 +100,19 @@ class TestFragment : Fragment(), View.OnClickListener {
                 btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
                 btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
                 btBack.id -> {
-                   dialog = DialogFragment(R.layout.test_result_dialog_fragment)
-                    dialog.showsDialog
+                    findNavController ().navigate(
+                        R.id.action_testFragment_to_testResultDialogFragment )
+//                   dialog = DialogFragment(R.layout.test_result_dialog_fragment)
+//                    dialog.showsDialog
+//                       val ft= fragmentManager?.beginTransaction()
+//
+//                    if (ft != null) {
+//                        TestResultDialogFragment.newInstance(
+//                            getString(R.string.best_result),
+//                            getString(R.string.main_tests)
+//                        ).show(ft, TestResultDialogFragment.TAG)
+//                    }
+                                     //   ).show(TestResultDialogFragment.TAG)
                 }
             }
         }

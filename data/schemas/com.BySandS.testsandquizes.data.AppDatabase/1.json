@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6cf1394167235ae262e927d87679f997",
+    "identityHash": "177c442f7399b3748e87ecb172b7346f",
     "entities": [
       {
         "tableName": "categories",
@@ -228,7 +228,7 @@
       },
       {
         "tableName": "result",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `difficulty_id` INTEGER NOT NULL, `subcategory_id` INTEGER NOT NULL DEFAULT 1, `result_text_33_ru` TEXT NOT NULL DEFAULT ' ', `result_text_66_ru` TEXT NOT NULL DEFAULT ' ', `result_text_99_ru` TEXT NOT NULL DEFAULT ' ', `result_text_100_ru` TEXT NOT NULL DEFAULT ' ', `result_text_33_eng` TEXT NOT NULL DEFAULT ' ', `result_text_66_eng` TEXT NOT NULL DEFAULT ' ', `result_text_99_eng` TEXT NOT NULL DEFAULT ' ', `result_text_100_eng` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`difficulty_id`) REFERENCES `difficulty_level`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`subcategory_id`) REFERENCES `subcategory`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `difficulty_level_id` INTEGER NOT NULL, `subcategory_id` INTEGER NOT NULL DEFAULT 1, `result_text_33_ru` TEXT NOT NULL DEFAULT ' ', `result_text_66_ru` TEXT NOT NULL DEFAULT ' ', `result_text_99_ru` TEXT NOT NULL DEFAULT ' ', `result_text_100_ru` TEXT NOT NULL DEFAULT ' ', `result_text_33_eng` TEXT NOT NULL DEFAULT ' ', `result_text_66_eng` TEXT NOT NULL DEFAULT ' ', `result_text_99_eng` TEXT NOT NULL DEFAULT ' ', `result_text_100_eng` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`difficulty_level_id`) REFERENCES `difficulty_level`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`subcategory_id`) REFERENCES `subcategory`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -238,7 +238,7 @@
           },
           {
             "fieldPath": "difficultyId",
-            "columnName": "difficulty_id",
+            "columnName": "difficulty_level_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -319,7 +319,7 @@
             "onDelete": "NO ACTION",
             "onUpdate": "NO ACTION",
             "columns": [
-              "difficulty_id"
+              "difficulty_level_id"
             ],
             "referencedColumns": [
               "id"
@@ -501,7 +501,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6cf1394167235ae262e927d87679f997')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '177c442f7399b3748e87ecb172b7346f')"
     ]
   }
 }

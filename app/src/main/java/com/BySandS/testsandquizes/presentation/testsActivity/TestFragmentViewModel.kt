@@ -28,81 +28,21 @@ class TestFragmentViewModel(
     private val idSubcategory = TestFragment.idSubcategory
     private val idDifficultyLevel = TestFragment.idDifficultyLevel
     private val quantityOfQuestionMax= TestFragment.quantityOfQuestion
-    private val result = MutableLiveData<ResultTestModel>()
 
-    //    val listQuestions: List<QuestionModel> = listOf(
-//        QuestionModel(
-//            1,
-//            "QuestionText 1",
-//            "Correct Answer 1",
-//            "Incorrect Answer 1 - 1",
-//            "Incorrect Answer 1 - 2",
-//            "Incorrect Answer 1 - 3"
-//        ),
-//        QuestionModel(
-//            2,
-//            "QuestionText 2",
-//            "Correct Answer 2",
-//            "Incorrect Answer 2 - 1",
-//            "Incorrect Answer 2 - 2",
-//            "Incorrect Answer 2 - 3"
-//        ),
-//        QuestionModel(
-//            3,
-//            "QuestionText 3",
-//            "Correct Answer 3",
-//            "Incorrect Answer 3 - 1",
-//            "Incorrect Answer 3 - 2",
-//            "Incorrect Answer 3 - 3"
-//        ),
-//        QuestionModel(
-//            4,
-//            "QuestionText 4",
-//            "Correct Answer 4",
-//            "Incorrect Answer 4 - 1",
-//            "Incorrect Answer 4 - 2",
-//            "Incorrect Answer 4 - 3"
-//        ),
-//        QuestionModel(
-//            5,
-//            "QuestionText 5",
-//            "Correct Answer 5",
-//            "Incorrect Answer 5 - 1",
-//            "Incorrect Answer 5 - 2",
-//            "Incorrect Answer 5 - 3"
-//        ),
-//        QuestionModel(
-//            6,
-//            "QuestionText 6",
-//            "Correct Answer 6",
-//            "Incorrect Answer 6 - 1",
-//            "Incorrect Answer 6 - 2",
-//            "Incorrect Answer 6 - 3"
-//        ),
-//        QuestionModel(
-//            7,
-//            "QuestionText 7",
-//            "Correct Answer 7",
-//            "Incorrect Answer 7 - 1",
-//            "Incorrect Answer 7 - 2",
-//            "Incorrect Answer 7 - 3"
-//        ),
-//    )
+
     private val questionListMutable = MutableLiveData<List<QuestionModel>>()
     private var quantityOfQuestionMutable = MutableLiveData<Int>(0)
     private var questionMutable = MutableLiveData<QuestionModel>()
     private val quantityOfHintMutable = MutableLiveData<Int>()
+    private val resultMutable = MutableLiveData<ResultTestModel>()
 
     val questionList: LiveData<List<QuestionModel>> = questionListMutable
     var quantityOfQuestion: LiveData<Int> = quantityOfQuestionMutable
     var question: LiveData<QuestionModel> = questionMutable
     val quantityOfHint: LiveData<Int> = quantityOfHintMutable
+    val result: LiveData<ResultTestModel> = resultMutable
 
     private var quantityCorrectAnswer = 0
-
-    //Пока вручную, потом буду принимать его на вход
-    //  val testModelPresentation =
-    //      TestModelPresentation(nameSubcategoryId = 1, difficultyId = 1, quantityOfQuestion = 7)
     private var subcategoryModel: SubcategoryModel? = null
 
     init {
@@ -136,6 +76,9 @@ class TestFragmentViewModel(
                 }
                 questionMutable.postValue (
                     randomAnswerOfQuestion(questionList.value!![quantityOfQuestion.value!!]))
+
+                resultMutable.postValue(getTestResultUseCase.execute(getResultParam))
+                Log.i(TAG, "resultMutable ->>> ${resultMutable.value.toString()}")
             }
         }
 
@@ -218,11 +161,13 @@ class TestFragmentViewModel(
         val newStatistic = calculateTheResult()
         //val result = mapToSaveStatistic(static)
         Log.i(TAG, "New Statistic - $newStatistic")
-        if (idSubcategory == 1L && newStatistic > subcategoryModel!!.statisticEasy) subcategoryModel!!.statisticEasy =
+        if (idDifficultyLevel == 1L && newStatistic > subcategoryModel!!.statisticEasy) subcategoryModel!!.statisticEasy =
             newStatistic
         if (idSubcategory == 2L && newStatistic > subcategoryModel!!.statisticNorm) subcategoryModel!!.statisticNorm =
             newStatistic
         if (idSubcategory == 3L && newStatistic > subcategoryModel!!.statisticHard) subcategoryModel!!.statisticHard =
+            newStatistic
+        if (idSubcategory == 4L && newStatistic > subcategoryModel!!.statisticVeryHard) subcategoryModel!!.statisticVeryHard =
             newStatistic
 
         // viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
@@ -238,4 +183,67 @@ class TestFragmentViewModel(
 //            hard = static.value!!.hard
 //        )
 //    }
+
+    private fun getQuestionSample(): List<QuestionModel>{
+            val listQuestions: List<QuestionModel> = listOf(
+        QuestionModel(
+            1,
+            "QuestionText 1",
+            "Correct Answer 1",
+            "Incorrect Answer 1 - 1",
+            "Incorrect Answer 1 - 2",
+            "Incorrect Answer 1 - 3"
+        ),
+        QuestionModel(
+            2,
+            "QuestionText 2",
+            "Correct Answer 2",
+            "Incorrect Answer 2 - 1",
+            "Incorrect Answer 2 - 2",
+            "Incorrect Answer 2 - 3"
+        ),
+        QuestionModel(
+            3,
+            "QuestionText 3",
+            "Correct Answer 3",
+            "Incorrect Answer 3 - 1",
+            "Incorrect Answer 3 - 2",
+            "Incorrect Answer 3 - 3"
+        ),
+        QuestionModel(
+            4,
+            "QuestionText 4",
+            "Correct Answer 4",
+            "Incorrect Answer 4 - 1",
+            "Incorrect Answer 4 - 2",
+            "Incorrect Answer 4 - 3"
+        ),
+        QuestionModel(
+            5,
+            "QuestionText 5",
+            "Correct Answer 5",
+            "Incorrect Answer 5 - 1",
+            "Incorrect Answer 5 - 2",
+            "Incorrect Answer 5 - 3"
+        ),
+        QuestionModel(
+            6,
+            "QuestionText 6",
+            "Correct Answer 6",
+            "Incorrect Answer 6 - 1",
+            "Incorrect Answer 6 - 2",
+            "Incorrect Answer 6 - 3"
+        ),
+        QuestionModel(
+            7,
+            "QuestionText 7",
+            "Correct Answer 7",
+            "Incorrect Answer 7 - 1",
+            "Incorrect Answer 7 - 2",
+            "Incorrect Answer 7 - 3"
+        ),
+    )
+        return listQuestions
+    }
+
 }

@@ -29,9 +29,9 @@ private const val TAG = "AAA"
         ResultDbEntity::class,
         SubcategoryDbEntity::class,
         SubcategoryDifficultyLevel::class
-    ], version = 2, exportSchema = true,
+    ], version = 3, exportSchema = true,
     autoMigrations = [
-//       // AutoMigration(from = 2, to = 4),
+ AutoMigration(from = 2, to = 3),
 //       // AutoMigration(from = 3, to = 4),
 //        AutoMigration(from = 2, to = 7, spec = AutoMigrationSpecFrom4To7::class),
 //      //   AutoMigration(from = 5, to = 6),

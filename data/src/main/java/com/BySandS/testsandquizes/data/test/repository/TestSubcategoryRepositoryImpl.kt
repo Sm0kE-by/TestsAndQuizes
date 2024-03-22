@@ -41,6 +41,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
                     statisticEasy = it.statisticEasy,
                     statisticNorm = it.statisticNorm,
                     statisticHard = it.statisticHard,
+                    statisticVeryHard = it.statisticVeryHard,
                     linkToIcon = it.linkToIcon
                 )
             )
@@ -58,6 +59,7 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
             statisticEasy = subcategoryModelDb.statisticEasy,
             statisticNorm = subcategoryModelDb.statisticNorm,
             statisticHard = subcategoryModelDb.statisticHard,
+            statisticVeryHard = subcategoryModelDb.statisticVeryHard,
             linkToBackground = subcategoryModelDb.linkToBackground,
             linkToIcon = subcategoryModelDb.linkToIcon
         )

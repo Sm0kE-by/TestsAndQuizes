@@ -18,4 +18,9 @@
     <string name="difficulty_level">Уровень сложности</string>
     <string name="best_result">Лучший результат</string>
 
+    <!-- Result dialog fragment -->
+    <string name="bt_continue">Продолжить</string>
+    <string name="bt_share_result">Поделиться</string>
+    <string name="bt_try_again">Ещё раз</string>
+
 </resources>

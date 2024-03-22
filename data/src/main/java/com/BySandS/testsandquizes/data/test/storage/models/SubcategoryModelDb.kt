@@ -12,6 +12,7 @@ data class SubcategoryModelDb(
     @ColumnInfo(name = "statistic_easy") val statisticEasy: Int,
     @ColumnInfo(name = "statistic_norm") val statisticNorm: Int,
     @ColumnInfo(name = "statistic_hard") val statisticHard: Int,
+    @ColumnInfo(name = "statistic_veryhard") val statisticVeryHard: Int,
     @ColumnInfo(name = "link_to_background") val linkToBackground: String,
     @ColumnInfo(name = "link_to_icon") val linkToIcon: String
 )

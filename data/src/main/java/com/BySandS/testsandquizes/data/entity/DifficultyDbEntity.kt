@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class DifficultyDbEntity(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "name_level_ru") val nameLevelRu: String,
-    @ColumnInfo(name = "name_level_eng", defaultValue = " ") val nameLevelEng: String,
+    @ColumnInfo(name = "name_level_eng") val nameLevelEng: String,
 )

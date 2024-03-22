@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = DifficultyDbEntity::class,
             parentColumns = ["id"],
-            childColumns = ["difficulty_id"]
+            childColumns = ["difficulty_level_id"]
         ),
         ForeignKey(
             entity = SubcategoryDbEntity::class,
@@ -21,14 +21,14 @@ import androidx.room.PrimaryKey
 )
 data class ResultDbEntity(
     @PrimaryKey val id: Long,
-    @ColumnInfo(name = "difficulty_id") val difficultyId: Long,
-    @ColumnInfo(name = "subcategory_id", defaultValue = "1") val subcategoryId:  Long,
-    @ColumnInfo(name = "result_text_33_ru", defaultValue = " ") val resultText33Ru:  String,
-    @ColumnInfo(name = "result_text_66_ru", defaultValue = " ") val resultText66Ru:  String,
-    @ColumnInfo(name = "result_text_99_ru", defaultValue = " ") val resultText99Ru:  String,
-    @ColumnInfo(name = "result_text_100_ru", defaultValue = " ") val resultText100Ru:  String,
-    @ColumnInfo(name = "result_text_33_eng", defaultValue = " ") val resultText33Eng:  String,
-    @ColumnInfo(name = "result_text_66_eng", defaultValue = " ") val resultText66Eng:  String,
-    @ColumnInfo(name = "result_text_99_eng", defaultValue = " ") val resultText99Eng:  String,
-    @ColumnInfo(name = "result_text_100_eng", defaultValue = " ") val resultText100Eng:  String,
+    @ColumnInfo(name = "difficulty_level_id") val difficultyId: Long,
+    @ColumnInfo(name = "subcategory_id") val subcategoryId:  Long,
+    @ColumnInfo(name = "result_text_33_ru") val resultText33Ru:  String,
+    @ColumnInfo(name = "result_text_66_ru") val resultText66Ru:  String,
+    @ColumnInfo(name = "result_text_99_ru") val resultText99Ru:  String,
+    @ColumnInfo(name = "result_text_100_ru") val resultText100Ru:  String,
+    @ColumnInfo(name = "result_text_33_eng") val resultText33Eng:  String,
+    @ColumnInfo(name = "result_text_66_eng") val resultText66Eng:  String,
+    @ColumnInfo(name = "result_text_99_eng") val resultText99Eng:  String,
+    @ColumnInfo(name = "result_text_100_eng") val resultText100Eng:  String,
 )

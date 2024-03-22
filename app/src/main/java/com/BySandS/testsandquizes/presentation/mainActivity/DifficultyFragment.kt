@@ -90,6 +90,7 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
                         1L ->  quantityOfQuestions = it.easyQuantity
                         2L ->  quantityOfQuestions = it.normQuantity
                         3L ->  quantityOfQuestions = it.hardQuantity
+                        4L ->  quantityOfQuestions = it.veryHardQuantity
                     }
 
                 }
