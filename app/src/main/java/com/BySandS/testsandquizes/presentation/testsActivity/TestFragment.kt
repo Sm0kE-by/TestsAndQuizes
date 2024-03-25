@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.TestFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Objects
 
 private const val TAG = "AAA"
+
 class TestFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: TestFragmentBinding
@@ -50,7 +49,10 @@ class TestFragment : Fragment(), View.OnClickListener {
             viewLifecycleOwner, Observer { it ->
                 it?.let {
                     testVM.question.observe(viewLifecycleOwner, Observer { question ->
-                        Log.i(TAG, "questionListMutable2 ->>> ${testVM.questionList.value.toString()}")
+                        Log.i(
+                            TAG,
+                            "questionListMutable2 ->>> ${testVM.questionList.value.toString()}"
+                        )
                         Log.i(TAG, "question ->>> ${question.toString()}")
                         question?.let {
                             showQuestion(
@@ -69,9 +71,9 @@ class TestFragment : Fragment(), View.OnClickListener {
         var idSubcategory: Long = 0
         var idDifficultyLevel: Long = 0
         var quantityOfQuestion: Int = 0
-        const val  ID_SUBCATEGORY_AND_STATISTIC = "ID_SUBCATEGORY_AND_STATISTIC"
-        const val  ID_DIFFICULTY_LEVEL = "ID_DIFFICULTY_LEVEL"
-        const val  QUANTITY_OF_QUESTION = "QUANTITY_OF_QUESTION"
+        const val ID_SUBCATEGORY_AND_STATISTIC = "ID_SUBCATEGORY_AND_STATISTIC"
+        const val ID_DIFFICULTY_LEVEL = "ID_DIFFICULTY_LEVEL"
+        const val QUANTITY_OF_QUESTION = "QUANTITY_OF_QUESTION"
     }
 
     private fun showQuestion(question: QuestionModel) = with(binding) {
@@ -81,7 +83,8 @@ class TestFragment : Fragment(), View.OnClickListener {
         tvHintNumber.text = quantityOfHints
         //русский текст!!!
         // ПРОВЕРИТЬ!!!
-        val questionsNumbers = "${testVM.quantityOfQuestion.value!!+1} из ${testVM.questionList.value!!.size}"
+        val questionsNumbers =
+            "${testVM.numberOfQuestion.value!! + 1} из ${testVM.questionList.value!!.size}"
         tvQuestion.text = question.questionText
         // Пока не перемешиваем ответы!!!
         btAnswer1.text = question.correctAnswer
@@ -94,26 +97,24 @@ class TestFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?): Unit =
         with(binding) {
-            when (v?.id) {
-                btAnswer1.id -> testVM.checkingAnswer(btAnswer1.text.toString())
-                btAnswer2.id -> testVM.checkingAnswer(btAnswer2.text.toString())
-                btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
-                btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
-                btBack.id -> {
-                    findNavController ().navigate(
-                        R.id.action_testFragment_to_testResultDialogFragment )
-//                   dialog = DialogFragment(R.layout.test_result_dialog_fragment)
-//                    dialog.showsDialog
-//                       val ft= fragmentManager?.beginTransaction()
-//
-//                    if (ft != null) {
-//                        TestResultDialogFragment.newInstance(
-//                            getString(R.string.best_result),
-//                            getString(R.string.main_tests)
-//                        ).show(ft, TestResultDialogFragment.TAG)
-//                    }
-                                     //   ).show(TestResultDialogFragment.TAG)
+            if (testVM.numberOfQuestion.value != testVM.questionList.value!!.size - 1) {
+                when (v?.id) {
+                    btAnswer1.id -> testVM.checkingAnswer(btAnswer1.text.toString())
+                    btAnswer2.id -> testVM.checkingAnswer(btAnswer2.text.toString())
+                    btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
+                    btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
+                    btBack.id -> {
+                        findNavController().navigate(
+                            R.id.action_testFragment_to_testResultDialogFragment
+                        )
+                    }
                 }
+
+            } else {
+                val newStatisticResult = testVM.calculateResultStatistic()
+                findNavController().navigate(
+                    R.id.action_testFragment_to_testResultDialogFragment
+                )
             }
         }
 }

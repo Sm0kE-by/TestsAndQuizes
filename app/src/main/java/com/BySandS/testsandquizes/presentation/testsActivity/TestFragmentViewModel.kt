@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
+import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
@@ -31,13 +34,13 @@ class TestFragmentViewModel(
 
 
     private val questionListMutable = MutableLiveData<List<QuestionModel>>()
-    private var quantityOfQuestionMutable = MutableLiveData<Int>(0)
+    private var numberOfQuestionMutable = MutableLiveData<Int>(0)
     private var questionMutable = MutableLiveData<QuestionModel>()
     private val quantityOfHintMutable = MutableLiveData<Int>()
     private val resultMutable = MutableLiveData<ResultTestModel>()
 
     val questionList: LiveData<List<QuestionModel>> = questionListMutable
-    var quantityOfQuestion: LiveData<Int> = quantityOfQuestionMutable
+    var numberOfQuestion: LiveData<Int> = numberOfQuestionMutable
     var question: LiveData<QuestionModel> = questionMutable
     val quantityOfHint: LiveData<Int> = quantityOfHintMutable
     val result: LiveData<ResultTestModel> = resultMutable
@@ -75,7 +78,7 @@ class TestFragmentViewModel(
                     Log.i(TAG, "questionListMutable ->>> ${questionListMutable.value.toString()}")
                 }
                 questionMutable.postValue (
-                    randomAnswerOfQuestion(questionList.value!![quantityOfQuestion.value!!]))
+                    randomAnswerOfQuestion(questionList.value!![numberOfQuestion.value!!]))
 
                 resultMutable.postValue(getTestResultUseCase.execute(getResultParam))
                 Log.i(TAG, "resultMutable ->>> ${resultMutable.value.toString()}")
@@ -88,9 +91,7 @@ class TestFragmentViewModel(
     /**
      * Вычисление статистики пройденного теста
      */
-    private fun calculateTheResult(): Int {
-        //       Log.i(TAG, "Starting fun - calculateTheResult")
-        //       Log.i(TAG, "CorrectAnswer = $quantityCorrectAnswer из ${listQuestions.size}")
+    fun calculateResultStatistic(): Int {
         val correctAnswer: Double = quantityCorrectAnswer.toDouble()
         val listSize: Double = questionList.value!!.size.toDouble()
         return ((correctAnswer / listSize) * 100).toInt()
@@ -121,44 +122,33 @@ class TestFragmentViewModel(
      * Проверка правильности ответа
      */
     fun checkingAnswer(answerText: String) {
-        //       Log.i(TAG, "Starting fun - checkingAnswer")
-//        Log.i(
-//            TAG,
-//            "answerText = $answerText; correctAnswer = ${questionList.value!![quantityOfQuestion].correctAnswer}"
-//        )
-        if (answerText == questionList.value!![quantityOfQuestion.value!!].correctAnswer) {
+        if (answerText == questionList.value!![numberOfQuestion.value!!].correctAnswer) {
             quantityCorrectAnswer++
-//            Log.i(TAG, "CorrectAnswer - $answerText")
         } else {
         }
-        updateParam()
+        updateNumberQuestion()
     }
 
-    private fun updateParam() {
-        Log.i(TAG, "Starting fun - updateParam")
+    /**
+     * Функция считает номер вопроса, увеличивает его на 1 и перемешивает ответы и записывает в вопрос
+     */
+    private fun updateNumberQuestion() {
 
-        if (quantityOfQuestion.value != questionList.value!!.size - 1) {
-            val num: Int = quantityOfQuestionMutable.value!! + 1
-            quantityOfQuestionMutable.value = num
-            val question1 = questionList.value!![quantityOfQuestionMutable.value!!]
-            Log.i(TAG, "$question1")
-            Log.i(
-                TAG,
-                "quantityOfQuestion = ${num} listQuestions.size ${questionList.value!!.size}"
-            )
+        if (numberOfQuestion.value != questionList.value!!.size - 1) {
+            val num: Int = numberOfQuestionMutable.value!! + 1
+            numberOfQuestionMutable.value = num
+            val question1 = questionList.value!![numberOfQuestionMutable.value!!]
             questionMutable.value = randomAnswerOfQuestion(question1)
-        } else {
-//            Log.i(TAG, "saveStatistic")
-            saveStatistic()
         }
     }
 
     /**
+     * Сохранение статистики
      * data Class StatisticModel - переменные типа VAR!!!!!!!!!!!!
      * if() в when()!!!!!
      */
     private fun saveStatistic() {
-        val newStatistic = calculateTheResult()
+        val newStatistic = calculateResultStatistic()
         //val result = mapToSaveStatistic(static)
         Log.i(TAG, "New Statistic - $newStatistic")
         if (idDifficultyLevel == 1L && newStatistic > subcategoryModel!!.statisticEasy) subcategoryModel!!.statisticEasy =
@@ -172,17 +162,6 @@ class TestFragmentViewModel(
 
         // viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
     }
-
-    //Что за !! ????
-//    private fun mapToSaveStatistic() {
-//        subcategoryModel.(
-//            id = static.value!!.id,
-//            nameSubcategory = static.value!!.nameSubcategory,
-//            easy = static.value!!.easy,
-//            norm = static.value!!.norm,
-//            hard = static.value!!.hard
-//        )
-//    }
 
     private fun getQuestionSample(): List<QuestionModel>{
             val listQuestions: List<QuestionModel> = listOf(
@@ -244,6 +223,12 @@ class TestFragmentViewModel(
         ),
     )
         return listQuestions
+    }
+    fun getResult(newStatistic: Int):String{
+        val oldStatistic= 1
+        if (newStatistic>subcategoryModel.statisticEasy)
+        val result = ""
+        return result
     }
 
 }
