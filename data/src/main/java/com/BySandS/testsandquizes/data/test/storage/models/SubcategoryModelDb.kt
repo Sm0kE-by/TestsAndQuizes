@@ -8,7 +8,7 @@ data class SubcategoryModelDb(
     @ColumnInfo(name = "name_ru") val nameRu: String,
     @ColumnInfo(name = "name_eng") val nameEng: String,
     @ColumnInfo(name = "category_id") val categoryId: Long,
-    @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestionsId: Long,
+    @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestions: Long,
     @ColumnInfo(name = "statistic_easy") val statisticEasy: Int,
     @ColumnInfo(name = "statistic_norm") val statisticNorm: Int,
     @ColumnInfo(name = "statistic_hard") val statisticHard: Int,

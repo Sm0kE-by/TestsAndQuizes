@@ -22,5 +22,12 @@
     <string name="bt_continue">Продолжить</string>
     <string name="bt_share_result">Поделиться</string>
     <string name="bt_try_again">Ещё раз</string>
+    <string name="congratulations">Поздравляем</string>
+    <string name="regret">Сожалеем</string>
+    <string name="error_result">Ошибка вывода результата!!!</string>
+
+    <string name="result_desc">Вы правильно ответили на %s вопросов из %s \n
+        Статистика правильных ответов составила %s%%\n %s</string>
+
 
 </resources>

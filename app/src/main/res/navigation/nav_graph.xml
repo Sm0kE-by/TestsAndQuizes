@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_subcategoriesFragment"
             app:destination="@id/subcategoriesFragment" />
-        <action
-            android:id="@+id/action_mainMenuFragment_to_myDialog"
-            app:destination="@id/myDialog" />
     </fragment>
     <fragment
         android:id="@+id/subcategoriesFragment"
@@ -46,6 +43,9 @@
         <action
             android:id="@+id/action_testFragment_to_testResultDialogFragment"
             app:destination="@id/testResultDialogFragment" />
+        <action
+            android:id="@+id/action_testFragment_to_difficultyFragment"
+            app:destination="@id/difficultyFragment" />
     </fragment>
     <dialog
         android:id="@+id/myDialog"
@@ -54,5 +54,9 @@
     <dialog
         android:id="@+id/testResultDialogFragment"
         android:name="com.BySandS.testsandquizes.presentation.testsActivity.TestResultDialogFragment"
-        android:label="TestResultDialogFragment" />
+        android:label="TestResultDialogFragment" >
+        <action
+            android:id="@+id/action_testResultDialogFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+    </dialog>
 </navigation>

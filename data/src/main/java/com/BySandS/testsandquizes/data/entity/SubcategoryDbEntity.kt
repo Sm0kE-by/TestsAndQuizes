@@ -25,7 +25,7 @@ data class SubcategoryDbEntity(
     @ColumnInfo(name = "name_ru" , defaultValue = " ") val nameRu: String,
     @ColumnInfo(name = "name_eng") val nameEng: String,
     @ColumnInfo(name = "category_id") val categoryId: Long,
-    @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestionsId: Long,
+    @ColumnInfo(name = "quantity_of_questions_id") val quantityOfQuestions: Long,
     @ColumnInfo(name = "statistic_easy", defaultValue = "0") val statisticEasy: Int,
     @ColumnInfo(name = "statistic_norm", defaultValue = "0") val statisticNorm: Int,
     @ColumnInfo(name = "statistic_hard", defaultValue = "0") val statisticHard: Int,

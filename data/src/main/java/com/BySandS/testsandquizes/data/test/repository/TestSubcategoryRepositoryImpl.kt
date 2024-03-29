@@ -1,5 +1,6 @@
 package com.BySandS.testsandquizes.data.test.repository
 
+import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
 import com.BySandS.testsandquizes.data.test.storage.SubcategoryStorage
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelForSubcategoryFragmentDb
@@ -24,11 +25,15 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
     }
 
     override fun getSubcategoryById(param: GetSubcategoryByIdParam): SubcategoryModel {
-        return this.mapToDomainSubById(
+        return mapToDomainSubById(
             subcategoryModelDb = subcategoryStorage.getSubcategoryById(
                 idSubcategory = mapToStorageSub(param = param)
             )
         )
+    }
+
+    override fun updateSubcategory(subcategory: SubcategoryModel) {
+        return subcategoryStorage.updateSubcategory(mapToStorageSubUpdate(subcategory))
     }
 
     private fun mapToDomainListSub(subcategoryModelDb: List<SubcategoryModelForSubcategoryFragmentDb>): List<SubcategoryModelForSubcategoryFragment> {
@@ -53,15 +58,32 @@ class TestSubcategoryRepositoryImpl(private val subcategoryStorage: SubcategoryS
             SubcategoryModel {
         return SubcategoryModel(
             id = subcategoryModelDb.id,
-            name = subcategoryModelDb.nameRu,
+            nameRu = subcategoryModelDb.nameRu,
+            nameEng = subcategoryModelDb.nameEng,
             categoryId = subcategoryModelDb.categoryId,
-            quantityOfQuestions = subcategoryModelDb.quantityOfQuestionsId,
+            quantityOfQuestions = subcategoryModelDb.quantityOfQuestions,
             statisticEasy = subcategoryModelDb.statisticEasy,
             statisticNorm = subcategoryModelDb.statisticNorm,
             statisticHard = subcategoryModelDb.statisticHard,
             statisticVeryHard = subcategoryModelDb.statisticVeryHard,
             linkToBackground = subcategoryModelDb.linkToBackground,
             linkToIcon = subcategoryModelDb.linkToIcon
+        )
+    }
+    private fun mapToStorageSubUpdate(subcategory: SubcategoryModel):
+            SubcategoryDbEntity {
+        return SubcategoryDbEntity(
+            id = subcategory.id,
+            nameRu = subcategory.nameRu,
+            nameEng = subcategory.nameEng,
+            categoryId = subcategory.categoryId,
+            quantityOfQuestions = subcategory.quantityOfQuestions,
+            statisticEasy = subcategory.statisticEasy,
+            statisticNorm = subcategory.statisticNorm,
+            statisticHard = subcategory.statisticHard,
+            statisticVeryHard = subcategory.statisticVeryHard,
+            linkToBackground = subcategory.linkToBackground,
+            linkToIcon = subcategory.linkToIcon
         )
     }
 

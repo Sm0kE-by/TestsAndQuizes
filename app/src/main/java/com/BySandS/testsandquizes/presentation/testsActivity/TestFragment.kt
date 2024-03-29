@@ -2,11 +2,11 @@ package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
@@ -45,6 +45,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         binding.btAnswer3.setOnClickListener(this@TestFragment)
         binding.btAnswer4.setOnClickListener(this@TestFragment)
         binding.btBack.setOnClickListener(this@TestFragment)
+        binding.btHelp.setOnClickListener(this@TestFragment)
         testVM.quantityOfHint.observe(
             viewLifecycleOwner, Observer { it ->
                 it?.let {
@@ -63,6 +64,13 @@ class TestFragment : Fragment(), View.OnClickListener {
                 }
             }
         )
+        parentFragmentManager.setFragmentResultListener(
+            TestResultDialogFragment.REQUEST_CODE,
+            viewLifecycleOwner
+        ) { _, data ->
+            val number = data.getInt(TestResultDialogFragment.BUTTON_RESULT)
+            processingResultOfDialogFragment(number)
+        }
     }
 
 
@@ -86,7 +94,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         val questionsNumbers =
             "${testVM.numberOfQuestion.value!! + 1} из ${testVM.questionList.value!!.size}"
         tvQuestion.text = question.questionText
-        // Пока не перемешиваем ответы!!!
+        // Ответы уже перемешаны
         btAnswer1.text = question.correctAnswer
         btAnswer2.text = question.incorrectAnswer1
         btAnswer3.text = question.incorrectAnswer2
@@ -95,6 +103,11 @@ class TestFragment : Fragment(), View.OnClickListener {
         tvQuestionsNumbers.text = questionsNumbers
     }
 
+    /**
+     * В зависимости от нажатой кнопки - отправляет ответ на проверку
+     * После последнего вопроса формирует данные для показа результата
+     * и запускает диалоговый фрагмент с результатами теста
+     */
     override fun onClick(v: View?): Unit =
         with(binding) {
             if (testVM.numberOfQuestion.value != testVM.questionList.value!!.size - 1) {
@@ -104,17 +117,49 @@ class TestFragment : Fragment(), View.OnClickListener {
                     btAnswer3.id -> testVM.checkingAnswer(btAnswer3.text.toString())
                     btAnswer4.id -> testVM.checkingAnswer(btAnswer4.text.toString())
                     btBack.id -> {
-                        findNavController().navigate(
-                            R.id.action_testFragment_to_testResultDialogFragment
-                        )
+                        findNavController().popBackStack()
+                    }
+
+                    btHelp.id -> {
+                        getHelp()
                     }
                 }
-
             } else {
                 val newStatisticResult = testVM.calculateResultStatistic()
+                val bundle = testVM.getResult(newStatisticResult)
                 findNavController().navigate(
-                    R.id.action_testFragment_to_testResultDialogFragment
+                    R.id.action_testFragment_to_testResultDialogFragment, bundle
                 )
             }
         }
+
+    /**
+     * Обработка результата нажатия кнопок в ResultDialogFragment
+     */
+    private fun processingResultOfDialogFragment(num: Int) {
+        when (num) {
+            1 -> {
+                testVM.saveStatistic()
+                findNavController().popBackStack()
+            }
+
+            2 -> testVM.resetTest()
+
+        }
+    }
+
+    private fun getHelp() {
+        var answer = ArrayList<String>()
+
+        val list = listOf(1, 2, 3).shuffled()
+        for (i in 0..1) {
+            when (list[i]) {
+                1 -> answer.add(i, testVM.question.value?.incorrectAnswer1.toString())
+                2 -> answer.add(i, testVM.question.value?.incorrectAnswer2.toString())
+                3 -> answer.add(i, testVM.question.value?.incorrectAnswer3.toString())
+            }
+        }
+        Log.i(TAG, " answer -> ${answer.toString()}")
+        
+    }
 }

@@ -20,7 +20,8 @@ val appModule = module {
         TestFragmentViewModel(
             getTestResultUseCase = get(),
             getQuestionListUseCase = get(),
-            getTestSubcategoryByIdUseCase = get()
+            getTestSubcategoryByIdUseCase = get(),
+            updateTestSubcategoryUseCase = get()
         )
     }
 }

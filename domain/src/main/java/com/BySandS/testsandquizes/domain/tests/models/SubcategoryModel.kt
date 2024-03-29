@@ -2,7 +2,8 @@ package com.BySandS.testsandquizes.domain.tests.models
 
 class SubcategoryModel(
     val id: Long,
-    val name: String,
+    val nameRu: String,
+    val nameEng: String,
     val categoryId: Long,
     val quantityOfQuestions: Long,
     var statisticEasy: Int,

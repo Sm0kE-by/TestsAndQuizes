@@ -1,19 +1,18 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
-import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryByIdParam
+import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.UpdateTestSubcategoryUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestSubcategoryByIdUseCase
@@ -25,12 +24,13 @@ private const val TAG = "AAA"
 class TestFragmentViewModel(
     private val getTestResultUseCase: GetTestResultUseCase,
     private val getQuestionListUseCase: GetQuestionListUseCase,
-    private val getTestSubcategoryByIdUseCase: GetTestSubcategoryByIdUseCase
+    private val getTestSubcategoryByIdUseCase: GetTestSubcategoryByIdUseCase,
+    private val updateTestSubcategoryUseCase: UpdateTestSubcategoryUseCase
 ) : ViewModel() {
 
     private val idSubcategory = TestFragment.idSubcategory
     private val idDifficultyLevel = TestFragment.idDifficultyLevel
-    private val quantityOfQuestionMax= TestFragment.quantityOfQuestion
+    private val quantityOfQuestionMax = TestFragment.quantityOfQuestion
 
 
     private val questionListMutable = MutableLiveData<List<QuestionModel>>()
@@ -43,49 +43,41 @@ class TestFragmentViewModel(
     var numberOfQuestion: LiveData<Int> = numberOfQuestionMutable
     var question: LiveData<QuestionModel> = questionMutable
     val quantityOfHint: LiveData<Int> = quantityOfHintMutable
-    val result: LiveData<ResultTestModel> = resultMutable
+    private val result: LiveData<ResultTestModel> = resultMutable
 
     private var quantityCorrectAnswer = 0
     private var subcategoryModel: SubcategoryModel? = null
+
+    private val getQuestionListParam = GetQuestionListParam(
+        difficultyId = idDifficultyLevel,
+        quantityOfQuestions = quantityOfQuestionMax
+    )
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val getSubcategoryByIdParam = GetSubcategoryByIdParam(idSubcategory = idSubcategory)
             subcategoryModel =
                 getTestSubcategoryByIdUseCase.execute(param = getSubcategoryByIdParam)
-            Log.i(TAG, "subcategoryModel ->>> ${subcategoryModel.toString()}")
+
             subcategoryModel.let {
-                val getQuestionListParam =
-                    GetQuestionListParam(
-                        difficultyId = idDifficultyLevel,
-                        quantityOfQuestions = quantityOfQuestionMax
-                    )
-                Log.i(TAG, "quantityOfQuestions ->>> ${subcategoryModel!!.quantityOfQuestions}")
+
                 val getResultParam =
                     GetResultParam(
                         subcategoryId = subcategoryModel!!.id,
                         difficultyId = idDifficultyLevel
                     )
-
-                //  questionListMutable.postValue(listQuestions)
                 questionListMutable.postValue(getQuestionListUseCase.execute(getQuestionListParam))
-                Log.i(TAG, "questionListMutable ->>> ${questionListMutable.value.toString()}")
 
-                //  result.postValue(getTestResultUseCase.execute(param = getResultParam))
                 quantityOfHintMutable.postValue(2)
                 while (questionList.value == null) {
                     Thread.sleep(10L)
-                    Log.i(TAG, "questionListMutable ->>> ${questionListMutable.value.toString()}")
                 }
-                questionMutable.postValue (
-                    randomAnswerOfQuestion(questionList.value!![numberOfQuestion.value!!]))
-
+                questionMutable.postValue(
+                    randomAnswerOfQuestion(questionList.value!![numberOfQuestion.value!!])
+                )
                 resultMutable.postValue(getTestResultUseCase.execute(getResultParam))
-                Log.i(TAG, "resultMutable ->>> ${resultMutable.value.toString()}")
             }
         }
-
-        //  questionMutable.value(randomAnswerOfQuestion(questionList(quantityOfQuestion.value!!)))
     }
 
     /**
@@ -133,7 +125,6 @@ class TestFragmentViewModel(
      * Функция считает номер вопроса, увеличивает его на 1 и перемешивает ответы и записывает в вопрос
      */
     private fun updateNumberQuestion() {
-
         if (numberOfQuestion.value != questionList.value!!.size - 1) {
             val num: Int = numberOfQuestionMutable.value!! + 1
             numberOfQuestionMutable.value = num
@@ -147,10 +138,10 @@ class TestFragmentViewModel(
      * data Class StatisticModel - переменные типа VAR!!!!!!!!!!!!
      * if() в when()!!!!!
      */
-    private fun saveStatistic() {
+    fun saveStatistic() {
         val newStatistic = calculateResultStatistic()
-        //val result = mapToSaveStatistic(static)
         Log.i(TAG, "New Statistic - $newStatistic")
+        Log.i(TAG, "OLD subcategoryModel - ${subcategoryModel?.statisticEasy.toString()}")
         if (idDifficultyLevel == 1L && newStatistic > subcategoryModel!!.statisticEasy) subcategoryModel!!.statisticEasy =
             newStatistic
         if (idSubcategory == 2L && newStatistic > subcategoryModel!!.statisticNorm) subcategoryModel!!.statisticNorm =
@@ -159,76 +150,41 @@ class TestFragmentViewModel(
             newStatistic
         if (idSubcategory == 4L && newStatistic > subcategoryModel!!.statisticVeryHard) subcategoryModel!!.statisticVeryHard =
             newStatistic
-
-        // viewModelScope.launch(Dispatchers.IO) { saveTestStatisticUseCase.execute(result) }
+        Log.i(TAG, "NEW subcategoryModel - ${subcategoryModel?.statisticEasy.toString()}")
+        viewModelScope.launch(Dispatchers.IO) {
+            updateTestSubcategoryUseCase.execute(subcategoryModel!!)
+        }
     }
 
-    private fun getQuestionSample(): List<QuestionModel>{
-            val listQuestions: List<QuestionModel> = listOf(
-        QuestionModel(
-            1,
-            "QuestionText 1",
-            "Correct Answer 1",
-            "Incorrect Answer 1 - 1",
-            "Incorrect Answer 1 - 2",
-            "Incorrect Answer 1 - 3"
-        ),
-        QuestionModel(
-            2,
-            "QuestionText 2",
-            "Correct Answer 2",
-            "Incorrect Answer 2 - 1",
-            "Incorrect Answer 2 - 2",
-            "Incorrect Answer 2 - 3"
-        ),
-        QuestionModel(
-            3,
-            "QuestionText 3",
-            "Correct Answer 3",
-            "Incorrect Answer 3 - 1",
-            "Incorrect Answer 3 - 2",
-            "Incorrect Answer 3 - 3"
-        ),
-        QuestionModel(
-            4,
-            "QuestionText 4",
-            "Correct Answer 4",
-            "Incorrect Answer 4 - 1",
-            "Incorrect Answer 4 - 2",
-            "Incorrect Answer 4 - 3"
-        ),
-        QuestionModel(
-            5,
-            "QuestionText 5",
-            "Correct Answer 5",
-            "Incorrect Answer 5 - 1",
-            "Incorrect Answer 5 - 2",
-            "Incorrect Answer 5 - 3"
-        ),
-        QuestionModel(
-            6,
-            "QuestionText 6",
-            "Correct Answer 6",
-            "Incorrect Answer 6 - 1",
-            "Incorrect Answer 6 - 2",
-            "Incorrect Answer 6 - 3"
-        ),
-        QuestionModel(
-            7,
-            "QuestionText 7",
-            "Correct Answer 7",
-            "Incorrect Answer 7 - 1",
-            "Incorrect Answer 7 - 2",
-            "Incorrect Answer 7 - 3"
-        ),
-    )
-        return listQuestions
+    /**
+     *
+     */
+    fun getResult(newStatistic: Int): Bundle {
+        val bundle = Bundle()
+        val quantityCorrAnswer = quantityCorrectAnswer
+        val quantityOfQuestion = questionList.value!!.size
+        val description: String
+
+        //составляем описание результата
+        if (newStatistic <= 33) description = result.value?.resultText33Ru.toString()
+        else if (newStatistic <= 66) description = result.value?.resultText66Ru.toString()
+        else if (newStatistic <= 99) description = result.value?.resultText99Ru.toString()
+        else description = result.value?.resultText100Ru.toString()
+
+        bundle.putInt(TestResultDialogFragment.KEY_STATISTIC, newStatistic)
+        bundle.putInt(TestResultDialogFragment.KEY_CORRECT_ANSWER, quantityCorrAnswer)
+        bundle.putInt(TestResultDialogFragment.KEY_QUANTITY_OF_QUESTION, quantityOfQuestion)
+        bundle.putString(TestResultDialogFragment.KEY_SUBTITLE, description)
+        return bundle
     }
-    fun getResult(newStatistic: Int):String{
-        val oldStatistic= 1
-        if (newStatistic>subcategoryModel.statisticEasy)
-        val result = ""
-        return result
+
+    fun resetTest() {
+        viewModelScope.launch(Dispatchers.IO) {
+            questionListMutable.postValue(getQuestionListUseCase.execute(getQuestionListParam))
+        }
+        numberOfQuestionMutable.value = 0
+        quantityCorrectAnswer = 0
+        questionMutable.postValue(randomAnswerOfQuestion(questionList.value!![numberOfQuestion.value!!]))
     }
 
 }

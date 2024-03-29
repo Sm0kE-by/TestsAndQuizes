@@ -2,6 +2,8 @@ package com.BySandS.testsandquizes.data.test.storage.dao.interfaceDao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Update
+import com.BySandS.testsandquizes.data.entity.SubcategoryDbEntity
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelDb
 import com.BySandS.testsandquizes.data.test.storage.models.SubcategoryModelForSubcategoryFragmentDb
 
@@ -18,4 +20,6 @@ interface DaoSubcategory {
     )
     fun getSubcategoryById(idSubcategory: Long): SubcategoryModelDb
 
+    @Update
+    fun updateSubcategory(subcategory: SubcategoryDbEntity)
 }

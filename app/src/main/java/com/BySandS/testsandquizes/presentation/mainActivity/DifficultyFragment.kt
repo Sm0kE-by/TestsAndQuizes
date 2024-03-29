@@ -69,7 +69,7 @@ class DifficultyFragment : Fragment(), View.OnClickListener {
         tvBestResultEasyNamber.text = subcategoryAndStatisticModel.statisticEasy.toString()
         tvBestResultNormNamber.text = subcategoryAndStatisticModel.statisticNorm.toString()
         tvBestResultHardNamber.text = subcategoryAndStatisticModel.statisticHard.toString()
-        tvNameSubcategory.text = subcategoryAndStatisticModel.name
+        tvNameSubcategory.text = subcategoryAndStatisticModel.nameRu
     }
 
     override fun onClick(v: View?): Unit = with(binding) {
