@@ -2,6 +2,8 @@
     <string name="app_name">Tests and Quizzes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="main_tests">TESTS</string>
     <string name="main_quizzes">QUIZZES</string>
     <string name="main_phrase_of_the_day">PHRASE OF THE DAY</string>
@@ -28,6 +30,14 @@
 
     <string name="result_desc">Вы правильно ответили на %s вопросов из %s \n
         Статистика правильных ответов составила %s%%\n %s</string>
+    <string name="quantity_of_hint_TF">%1$s из 3</string>
+    <string name="number_of_question_TF">%1$s из %2$s</string>
+    <string name="exite_from_test">Выход из теста</string>
+    <string name="test_exit_confirmation">Вы действительно хотите закончить прохождение теста и вернуться назад?</string>
+    <string name="get_help_tf">Использовать подсказку</string>
+    <string name="get_help_confirmation_tf">Вы действительно хотите использовать подсказку?</string>
+    <string name="no_help">Подсказка не доступна</string>
+    <string name="no_help_discription">К сожалению у Вас закончились подсказки, Вы можете пополнить их перейдя на вкладку для пополнения подсказок</string>
 
 
 </resources>

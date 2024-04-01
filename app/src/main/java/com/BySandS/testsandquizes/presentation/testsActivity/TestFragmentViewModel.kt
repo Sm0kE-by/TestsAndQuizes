@@ -46,7 +46,7 @@ class TestFragmentViewModel(
     private val result: LiveData<ResultTestModel> = resultMutable
 
     private var quantityCorrectAnswer = 0
-    private var subcategoryModel: SubcategoryModel? = null
+    var subcategoryModel: SubcategoryModel? = null
 
     private val getQuestionListParam = GetQuestionListParam(
         difficultyId = idDifficultyLevel,
@@ -68,7 +68,7 @@ class TestFragmentViewModel(
                     )
                 questionListMutable.postValue(getQuestionListUseCase.execute(getQuestionListParam))
 
-                quantityOfHintMutable.postValue(2)
+                quantityOfHintMutable.postValue(0)
                 while (questionList.value == null) {
                     Thread.sleep(10L)
                 }
@@ -116,7 +116,6 @@ class TestFragmentViewModel(
     fun checkingAnswer(answerText: String) {
         if (answerText == questionList.value!![numberOfQuestion.value!!].correctAnswer) {
             quantityCorrectAnswer++
-        } else {
         }
         updateNumberQuestion()
     }

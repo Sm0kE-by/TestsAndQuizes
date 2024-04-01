@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="test_fragment_background">
+        <item>space_background.jpg</item>
+        <item>school_background.jpg</item>
+        <item>nature_background.jpg</item>
+        <item>erudition_and_intelligence_background.jpg</item>
+        <item>movie_background.jpg</item>
+        <item>music_background.jpg</item>
+        <item>leisure_background.jpg</item>
+        <item>technologies_background.jpg</item>
+        <item>sport_background.jpg</item>
+        <item>health_background.jpg</item>
+    </string-array>
+</resources>
