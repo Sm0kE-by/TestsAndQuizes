@@ -70,12 +70,7 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
                 .show()
 
             bSettings.id ->
-                Toast.makeText(
-                activity?.applicationContext,
-                "Settings",
-                Toast.LENGTH_LONG
-            )
-                .show()
+                findNavController().navigate(R.id.action_mainMenuFragment_to_get_hint)
 
             bExit.id -> Toast.makeText(activity?.applicationContext, "Exit", Toast.LENGTH_LONG)
                 .show()

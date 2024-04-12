@@ -255,7 +255,7 @@ class TestFragment : Fragment(), View.OnClickListener {
         else {
             val listener = DialogInterface.OnClickListener { _, which ->
                 when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> findNavController().navigate(R.id.action_testFragment_to_myDialog2)
+                    DialogInterface.BUTTON_POSITIVE -> findNavController().navigate(R.id.action_testFragment_to_get_hint)
                 }
             }
 

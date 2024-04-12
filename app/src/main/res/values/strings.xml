@@ -38,6 +38,14 @@
     <string name="get_help_confirmation_tf">Вы действительно хотите использовать подсказку?</string>
     <string name="no_help">Подсказка не доступна</string>
     <string name="no_help_discription">К сожалению у Вас закончились подсказки, Вы можете пополнить их перейдя на вкладку для пополнения подсказок</string>
+    <string name="get_hint">Получить подсказку</string>
+    <string name="quantity_of_hint">Количество подсказок:</string>
+    <string name="time_until_free_hint">Время до бесплатной подсказки</string>
+    <string name="get_now">Получить сейчас</string>
+    <string name="cancel">Отмена</string>
+    <string name="from_hint">%s из 2</string>
+    <string name="btn_get">Получить</string>
+    <string name="hint_warning_max_hint">Достигнуто максимальное количество подсказок</string>
 
 
 </resources>

@@ -54,10 +54,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     //Koin for kotlin app
-    implementation("io.insert-koin:koin-core:3.1.2")
-    implementation("io.insert-koin:koin-android:3.1.2") // для VM
+    implementation("io.insert-koin:koin-core:3.5.4")
+    implementation("io.insert-koin:koin-android:3.5.4") // для VM
     //testing
-    implementation("io.insert-koin:koin-test:3.1.2")
+    implementation("io.insert-koin:koin-test:3.5.4")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
