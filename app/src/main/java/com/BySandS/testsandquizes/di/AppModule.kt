@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.di
 
 import com.BySandS.testsandquizes.presentation.mainActivity.DifficultyFragmentViewModel
+import com.BySandS.testsandquizes.presentation.mainActivity.GetHintDialogFragmentViewModel
 import com.BySandS.testsandquizes.presentation.mainActivity.SubcategoriesViewModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -11,6 +12,7 @@ val appModule = module {
     viewModel<SubcategoriesViewModel> {
         SubcategoriesViewModel(getListSubcategoryUseCase = get())
     }
+
 
     viewModel<DifficultyFragmentViewModel> {
         DifficultyFragmentViewModel(getQuantityOfQuestionUseCase = get(),
@@ -23,5 +25,8 @@ val appModule = module {
             getTestSubcategoryByIdUseCase = get(),
             updateTestSubcategoryUseCase = get()
         )
+    }
+    viewModel<GetHintDialogFragmentViewModel> {
+        GetHintDialogFragmentViewModel()
     }
 }

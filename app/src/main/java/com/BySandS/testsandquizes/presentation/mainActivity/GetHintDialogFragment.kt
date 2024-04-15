@@ -2,32 +2,27 @@ package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.GetHintDialogFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Calendar
 import java.util.Date
 import kotlin.properties.Delegates
 
 class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
+    private val getHintVM by viewModel<GetHintDialogFragmentViewModel>()
+
     private lateinit var binding: GetHintDialogFragmentBinding
-    private var quantityOfHint by Delegates.notNull<Int>()
-    private lateinit var countDownTimer: CountDownTimer
-
-    private lateinit var oldTime: Date
-    private lateinit var currentTime: Date
-    private var watchAdvertisingToday by Delegates.notNull<Int>()
-
-    companion object {
-        const val KEY_QUANTITY = "KEY_QUANTITY"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +30,6 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = GetHintDialogFragmentBinding.inflate(inflater, container, false)
-        // quantity = requireArguments().getInt(KEY_QUANTITY)
-        quantityOfHint = 1
         return binding.root
     }
 
@@ -45,9 +38,12 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         binding.btnPositive.setOnClickListener(this)
         binding.btnNegative.setOnClickListener(this)
         binding.btnAdvertising.setOnClickListener(this)
-        setupView()
-        startNewTimer222()
-        checkingTimeUntilHint()
+        getHintVM.textTimer.observe(viewLifecycleOwner, Observer { text ->
+            text?.let {
+                setupView()
+            }
+        })
+        checkingTimeUntilHint(getHintVM.oldTime.value!!, getHintVM.currentTime.value!!)
     }
 
     override fun onStart() {
@@ -60,92 +56,36 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
     private fun setupView() {
         if (binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = false
-        binding.tvQuantity.text = getString(R.string.from_hint, quantityOfHint.toString())
+        binding.tvQuantity.text = getString(R.string.from_hint, getHintVM.quantityOfHint.toString())
     }
 
-    private fun checkingTimeUntilHint() {
-        currentTime = Calendar.getInstance().time
+    private fun checkingTimeUntilHint(oldTime: Date, currentTime: Date) {
 
         if (oldTime.time > currentTime.time) {
             val different = oldTime.time - currentTime.time
-            printDifferenceDateForHours(different)
+            getHintVM.printDifferenceDateForHours(different)
         } else {
             if (!binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = true
-            printDifferenceDateForHours(0L)
+            getHintVM.printDifferenceDateForHours(0L)
         }
     }
 
-    private fun startNewTimer222() {
-        val date = Date()
-        val cal = Calendar.getInstance()
-        cal.time = date
-        cal.add(Calendar.MINUTE, 1)
-        oldTime = cal.time
-        //milliseconds
-        // var different = datePlus12Hours.time - currentTime.time
-    }
-
     private fun startNewTimer() {
-        countDownTimer.cancel()
-        val date = Date()
-        val cal = Calendar.getInstance()
-        cal.time = date
-        cal.add(Calendar.MINUTE, 1)
-        oldTime = cal.time
-//        val datePlus12Hours: Date = cal.time
-//        //milliseconds
-//        var different = datePlus12Hours.time - currentTime.time
+        getHintVM.startNewTimer()
 
         if (binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = false
         // Нужно сохранить новое время
-        checkingTimeUntilHint()
+        checkingTimeUntilHint(getHintVM.oldTime.value!!, getHintVM.currentTime.value!!)
 
     }
 
-    private fun printDifferenceDateForHours(time: Long) {
 
-        countDownTimer = object : CountDownTimer(time, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                var diff = millisUntilFinished
-                val secondsInMilli: Long = 1000
-                val minutesInMilli = secondsInMilli * 60
-                val hoursInMilli = minutesInMilli * 60
-
-                val elapsedHours = diff / hoursInMilli
-                diff %= hoursInMilli
-
-                val elapsedMinutes = diff / minutesInMilli
-                diff %= minutesInMilli
-
-                val elapsedSeconds = diff / secondsInMilli
-
-                fun getSeconds(seconds: Long): String {
-                    if (seconds < 10) return "0$seconds"
-                    return seconds.toString()
-                }
-
-                var text = "${getSeconds(elapsedHours)} : ${getSeconds(elapsedMinutes)} : ${
-                    getSeconds(elapsedSeconds)
-                }"
-                binding.tvTimer.text = text
-
-            }
-
-            override fun onFinish() {
-                binding.tvTimer.text = "00 : 00 : 00"
-                if (!binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = true
-            }
-        }.start()
-    }
-
-    override fun onClick(v: View?) {
+    override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
 
-            binding.btnPositive.id -> {
-                if (binding.btnPositive.isEnabled) {
-                    if (quantityOfHint != 2) {
-                        quantityOfHint++
+            btnPositive.id -> {
+                if (btnPositive.isEnabled) {
+                    if (getHintVM.checkQuantityOfHint()) {
                         startNewTimer()
                     } else {
                         Toast.makeText(
@@ -156,15 +96,14 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
                 }
             }
 
-            binding.btnNegative.id -> {
+           btnNegative.id -> {
                 findNavController().popBackStack()
             }
 //Загрузка рекламы
-            binding.btnAdvertising.id -> {
-                //delete
-                watchAdvertisingToday = 1
-                val advertising = true
-                if (watchAdvertisingToday != 2) {
+            btnAdvertising.id -> {
+
+               val advertising = true
+                if (getHintVM.watchAdvertisingToday.value != 2) {
                     if (advertising) {
                         Toast.makeText(
                             context, "Идет показ рекламы", Toast.LENGTH_LONG

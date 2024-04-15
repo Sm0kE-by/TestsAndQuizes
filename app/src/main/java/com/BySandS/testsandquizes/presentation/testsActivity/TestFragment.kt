@@ -38,14 +38,14 @@ class TestFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btAnswer1.setOnClickListener(this@TestFragment)
-        binding.btAnswer2.setOnClickListener(this@TestFragment)
-        binding.btAnswer3.setOnClickListener(this@TestFragment)
-        binding.btAnswer4.setOnClickListener(this@TestFragment)
-        binding.btBack.setOnClickListener(this@TestFragment)
-        binding.btHelp.setOnClickListener(this@TestFragment)
+        btAnswer1.setOnClickListener(this@TestFragment)
+        btAnswer2.setOnClickListener(this@TestFragment)
+        btAnswer3.setOnClickListener(this@TestFragment)
+        btAnswer4.setOnClickListener(this@TestFragment)
+        btBack.setOnClickListener(this@TestFragment)
+        btHelp.setOnClickListener(this@TestFragment)
         testVM.quantityOfHint.observe(
             viewLifecycleOwner, Observer { it ->
                 it?.let {
@@ -251,8 +251,7 @@ class TestFragment : Fragment(), View.OnClickListener {
                 }
                 .create()
             alertDialog.show()
-        }
-        else {
+        } else {
             val listener = DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> findNavController().navigate(R.id.action_testFragment_to_get_hint)
