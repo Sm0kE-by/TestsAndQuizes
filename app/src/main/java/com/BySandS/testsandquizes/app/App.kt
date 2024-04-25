@@ -1,7 +1,7 @@
 package com.BySandS.testsandquizes.app
 
 import android.app.Application
-import com.BySandS.testsandquizes.data.AppDatabase
+import com.BySandS.testsandquizes.data.storage.tests.dataBase.AppDatabase
 import com.BySandS.testsandquizes.di.appModule
 import com.BySandS.testsandquizes.di.dataModule
 import com.BySandS.testsandquizes.di.domainModule

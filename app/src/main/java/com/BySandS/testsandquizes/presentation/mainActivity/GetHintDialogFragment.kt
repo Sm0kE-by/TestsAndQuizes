@@ -1,8 +1,6 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.GetHintDialogFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Calendar
-import java.util.Date
-import kotlin.properties.Delegates
 
 class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
@@ -38,12 +33,26 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         binding.btnPositive.setOnClickListener(this)
         binding.btnNegative.setOnClickListener(this)
         binding.btnAdvertising.setOnClickListener(this)
+
+        getHintVM.checkingTimeUntilHint()
+
         getHintVM.textTimer.observe(viewLifecycleOwner, Observer { text ->
             text?.let {
-                setupView()
+                binding.tvTimer.text = getHintVM.textTimer.value.toString()
             }
         })
-        checkingTimeUntilHint(getHintVM.oldTime.value!!, getHintVM.currentTime.value!!)
+        getHintVM.btnPositiveIsEnabled.observe(viewLifecycleOwner, Observer { btn ->
+            btn?.let {
+                binding.btnPositive.isEnabled = btn
+            }
+        })
+        getHintVM.quantityOfHint.observe(viewLifecycleOwner, Observer { text ->
+            text?.let {
+                binding.tvQuantity.text =
+                    getString(R.string.from_hint, getHintVM.quantityOfHint.value.toString())
+            }
+        })
+
     }
 
     override fun onStart() {
@@ -54,39 +63,17 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         )
     }
 
-    private fun setupView() {
-        if (binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = false
-        binding.tvQuantity.text = getString(R.string.from_hint, getHintVM.quantityOfHint.toString())
-    }
-
-    private fun checkingTimeUntilHint(oldTime: Date, currentTime: Date) {
-
-        if (oldTime.time > currentTime.time) {
-            val different = oldTime.time - currentTime.time
-            getHintVM.printDifferenceDateForHours(different)
-        } else {
-            if (!binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = true
-            getHintVM.printDifferenceDateForHours(0L)
-        }
-    }
-
-    private fun startNewTimer() {
-        getHintVM.startNewTimer()
-
-        if (binding.btnPositive.isEnabled) binding.btnPositive.isEnabled = false
-        // Нужно сохранить новое время
-        checkingTimeUntilHint(getHintVM.oldTime.value!!, getHintVM.currentTime.value!!)
-
-    }
-
-
+    /**
+     *
+     */
     override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
 
             btnPositive.id -> {
                 if (btnPositive.isEnabled) {
-                    if (getHintVM.checkQuantityOfHint()) {
-                        startNewTimer()
+                    if (getHintVM.quantityOfHint.value != 2) {
+                        getHintVM.increaseQuantityOfHint()
+                        getHintVM.startNewTimer()
                     } else {
                         Toast.makeText(
                             context, getString(R.string.hint_warning_max_hint), Toast.LENGTH_LONG
@@ -96,32 +83,37 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
                 }
             }
 
-           btnNegative.id -> {
+            btnNegative.id -> {
                 findNavController().popBackStack()
             }
 //Загрузка рекламы
             btnAdvertising.id -> {
 
-               val advertising = true
-                if (getHintVM.watchAdvertisingToday.value != 2) {
+                val advertising = true
+                if (getHintVM.watchAdvertisingToday.value != 2 && getHintVM.quantityOfHint.value != 2) {
                     if (advertising) {
                         Toast.makeText(
                             context, "Идет показ рекламы", Toast.LENGTH_LONG
                         ).show()
-                        quantityOfHint++
-                        startNewTimer()
+                        getHintVM.increaseQuantityOfHint()
+                        getHintVM.startNewTimer()
+                        getHintVM.increaseWatchAdvertisingToday()
                     } else {
                         Toast.makeText(
                             context,
-                            "Подождите несколько секунд пока реклама загрузиться",
-                            Toast.LENGTH_LONG
+                            getString(R.string.advertising_not_load), Toast.LENGTH_LONG
                         ).show()
                     }
-                    watchAdvertisingToday++
-                } else {
+                } else if (getHintVM.watchAdvertisingToday.value == 2) {
                     Toast.makeText(
                         context,
-                        "Превышен максимальный дневной лимит бесплатных пополнений",
+                        getString(R.string.maximum_limit_of_free_top_ups),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (getHintVM.quantityOfHint.value == 2) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.hint_warning_max_hint),
                         Toast.LENGTH_LONG
                     ).show()
                 }

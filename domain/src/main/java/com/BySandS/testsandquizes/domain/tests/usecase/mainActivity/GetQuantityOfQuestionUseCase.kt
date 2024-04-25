@@ -2,7 +2,7 @@ package com.BySandS.testsandquizes.domain.tests.usecase.mainActivity
 
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestionParam
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
-import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.tests.TestQuantityOfQuestionRepository
 
 
 class GetQuantityOfQuestionUseCase(private val testQuantityOfQuestionRepository: TestQuantityOfQuestionRepository) {

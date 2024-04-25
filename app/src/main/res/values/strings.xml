@@ -46,6 +46,8 @@
     <string name="from_hint">%s из 2</string>
     <string name="btn_get">Получить</string>
     <string name="hint_warning_max_hint">Достигнуто максимальное количество подсказок</string>
+    <string name="advertising_not_load">Подождите несколько секунд пока реклама загрузиться</string>
+    <string name="maximum_limit_of_free_top_ups">Превышен максимальный дневной лимит бесплатных пополнений</string>
 
 
 </resources>

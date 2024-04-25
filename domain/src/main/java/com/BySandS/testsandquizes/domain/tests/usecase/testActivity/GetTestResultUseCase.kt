@@ -2,7 +2,7 @@ package com.BySandS.testsandquizes.domain.tests.usecase.testActivity
 
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
-import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
+import com.BySandS.testsandquizes.domain.tests.repository.tests.TestResultRepository
 
 
 class GetTestResultUseCase(private val testResultRepository: TestResultRepository) {
