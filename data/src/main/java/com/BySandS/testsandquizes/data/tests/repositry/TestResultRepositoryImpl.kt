@@ -1,10 +1,10 @@
 package com.BySandS.testsandquizes.data.tests.repositry
 
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.ResultStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.models.ResultModelDb
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.models.ResultModelDb
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.ResultStorage
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetResultParam
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestResultRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
 
 class TestResultRepositoryImpl(private val resultStorage: ResultStorage) : TestResultRepository {
 

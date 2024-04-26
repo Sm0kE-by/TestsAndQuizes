@@ -13,6 +13,7 @@ import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityO
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetTestSubcategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 private const val TAG = "AAA"
 
@@ -34,6 +35,8 @@ class DifficultyFragmentViewModel(
     private var getTestSubcategoryAndStatisticParam = GetSubcategoryByIdParam(idSubcategory)
 
     init {
+
+
         completeOrder()
 //       // viewModelScope.launch(Dispatchers.IO) {
 //

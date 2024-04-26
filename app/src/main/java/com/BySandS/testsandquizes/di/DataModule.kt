@@ -1,21 +1,33 @@
 package com.BySandS.testsandquizes.di
 
+import com.BySandS.testsandquizes.data.allData.repository.AllDataAdvertisingTodayRepositoryImpl
+import com.BySandS.testsandquizes.data.allData.repository.AllDataOldTimeRepositoryImpl
+import com.BySandS.testsandquizes.data.allData.repository.AllDataQuantityOfHintRepositoryImpl
+import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.AdvertisingTodayStorageImpl
+import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.OldTimeStorageImpl
+import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.QuantityOfHintStorageImpl
+import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AdvertisingTodayStorage
+import com.BySandS.testsandquizes.data.allData.storage.storageInterface.OldTimeStorage
+import com.BySandS.testsandquizes.data.allData.storage.storageInterface.QuantityOfHintStorage
 import com.BySandS.testsandquizes.data.tests.repositry.TestQuantityOfQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.tests.repositry.TestQuestionRepositoryImpl
 import com.BySandS.testsandquizes.data.tests.repositry.TestResultRepositoryImpl
 import com.BySandS.testsandquizes.data.tests.repositry.TestSubcategoryRepositoryImpl
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.QuantityOfQuestionStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.QuestionStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.ResultStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.SubcategoryStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.dao.DaoQuantityOfQuestionStorageImpl
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.dao.DaoQuestionStorageImpl
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.dao.DaoResultStorageImpl
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.dao.DaoSubcategoryStorageImpl
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestQuantityOfQuestionRepository
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestQuestionRepository
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestResultRepository
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestSubcategoryRepository
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.storageInterfaceImpl.DaoQuantityOfQuestionStorageImpl
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.storageInterfaceImpl.DaoQuestionStorageImpl
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.storageInterfaceImpl.DaoResultStorageImpl
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.storageInterfaceImpl.DaoSubcategoryStorageImpl
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.QuantityOfQuestionStorage
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.QuestionStorage
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.ResultStorage
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.SubcategoryStorage
+import com.BySandS.testsandquizes.domain.allData.repository.AdvertisingTodayRepository
+import com.BySandS.testsandquizes.domain.allData.repository.OldTimeRepository
+import com.BySandS.testsandquizes.domain.allData.repository.QuantityOfHintRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestResultRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 import org.koin.dsl.module
 
 /**
@@ -24,6 +36,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
+    //TESTS
 // single<SubcategoryStorage> = SubcategoryStorage - интерфейс
     single<SubcategoryStorage> {
 //DaoSubcategoryStorage - имплементация
@@ -51,5 +64,26 @@ val dataModule = module {
     }
     single<TestQuestionRepository> {
         TestQuestionRepositoryImpl(questionStorage = get())
+    }
+
+    //ALLDATA
+    single<AdvertisingTodayStorage> {
+        AdvertisingTodayStorageImpl(context = get())
+    }
+    single<OldTimeStorage> {
+        OldTimeStorageImpl(context = get())
+    }
+    single<QuantityOfHintStorage> {
+        QuantityOfHintStorageImpl(context = get())
+    }
+
+    single<AdvertisingTodayRepository> {
+        AllDataAdvertisingTodayRepositoryImpl(advertisingTodayStorage =  get())
+    }
+    single<OldTimeRepository> {
+        AllDataOldTimeRepositoryImpl(oldTimeStorage =  get())
+    }
+    single<QuantityOfHintRepository> {
+        AllDataQuantityOfHintRepositoryImpl(quantityOfHintStorage =  get())
     }
 }

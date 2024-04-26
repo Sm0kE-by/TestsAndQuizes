@@ -49,7 +49,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         getHintVM.quantityOfHint.observe(viewLifecycleOwner, Observer { text ->
             text?.let {
                 binding.tvQuantity.text =
-                    getString(R.string.from_hint, getHintVM.quantityOfHint.value.toString())
+                    getString(R.string.from_hint, getHintVM.quantityOfHint.value?.quantity.toString())
             }
         })
 
@@ -71,7 +71,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
             btnPositive.id -> {
                 if (btnPositive.isEnabled) {
-                    if (getHintVM.quantityOfHint.value != 2) {
+                    if (getHintVM.quantityOfHint.value?.quantity != 2) {
                         getHintVM.increaseQuantityOfHint()
                         getHintVM.startNewTimer()
                     } else {
@@ -90,7 +90,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
             btnAdvertising.id -> {
 
                 val advertising = true
-                if (getHintVM.watchAdvertisingToday.value != 2 && getHintVM.quantityOfHint.value != 2) {
+                if (getHintVM.watchAdvertisingToday.value != 2 && getHintVM.quantityOfHint.value?.quantity != 2) {
                     if (advertising) {
                         Toast.makeText(
                             context, "Идет показ рекламы", Toast.LENGTH_LONG
@@ -110,7 +110,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
                         getString(R.string.maximum_limit_of_free_top_ups),
                         Toast.LENGTH_LONG
                     ).show()
-                } else if (getHintVM.quantityOfHint.value == 2) {
+                } else if (getHintVM.quantityOfHint.value?.quantity == 2) {
                     Toast.makeText(
                         context,
                         getString(R.string.hint_warning_max_hint),

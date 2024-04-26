@@ -33,3 +33,5 @@ quantity_of_questions_id -> quantity_of_questions
  22. SubcategoryModel слежу за двумя объектами, возможно их надо объединить в медиатор
  23. В ресурсах возможно можно поменять строки со вставкой данных через %s
  24. GetHintDialogFragment - заменить SimpleDateFormat - на DataTime
+
+ 25. allDate UseCase -> else заполнить обработку ошибки!

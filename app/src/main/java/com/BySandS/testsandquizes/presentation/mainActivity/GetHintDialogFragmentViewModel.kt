@@ -5,24 +5,39 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.BySandS.testsandquizes.domain.allData.models.OldTimeModel
+import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
 import java.util.Calendar
 import java.util.Date
 
 private const val TAG = "AAA"
-class GetHintDialogFragmentViewModel : ViewModel() {
+class GetHintDialogFragmentViewModel(
+    private val getAdvertisingTodayUseCase: GetAdvertisingTodayUseCase,
+    private val getOldTimeUseCase: GetOldTimeUseCase,
+    private val getQuantityOfHintUseCase: GetQuantityOfHintUseCase,
+    private val saveAdvertisingTodayUseCase: SaveAdvertisingTodayUseCase,
+    private val saveOldTimeUseCase: SaveOldTimeUseCase,
+    private val saveQuantityOfHintUseCase: SaveQuantityOfHintUseCase
+) : ViewModel() {
 
     private lateinit var countDownTimer: CountDownTimer
 
     private var currentTimeMutable = MutableLiveData<Date>()
-    private val quantityOfHintMutable = MutableLiveData<Int>()
-    private val oldTimeMutable = MutableLiveData<Date>()
+    private val quantityOfHintMutable = MutableLiveData<QuantityOfHintModel>()
+    private val oldTimeMutable = MutableLiveData<OldTimeModel>()
     private var watchAdvertisingTodayMutable = MutableLiveData<Int>()
     private var textTimerMutable = MutableLiveData<String>()
     private var btnPositiveIsEnabledMutable = MutableLiveData<Boolean>()
 
     private val currentTime: LiveData<Date> = currentTimeMutable
-    val quantityOfHint: LiveData<Int> = quantityOfHintMutable
-    private val oldTime: LiveData<Date> = oldTimeMutable
+    val quantityOfHint: LiveData<QuantityOfHintModel> = quantityOfHintMutable
+    private val oldTime: LiveData<OldTimeModel> = oldTimeMutable
     var watchAdvertisingToday: LiveData<Int> = watchAdvertisingTodayMutable
     var textTimer: LiveData<String> = textTimerMutable
     var btnPositiveIsEnabled: LiveData<Boolean> = btnPositiveIsEnabledMutable
@@ -30,9 +45,9 @@ class GetHintDialogFragmentViewModel : ViewModel() {
     init {
         btnPositiveIsEnabledMutable.value = false
         currentTimeMutable.value = Calendar.getInstance().time
-        Log.i(TAG, " currentTime => ${currentTimeMutable.value}")
-        quantityOfHintMutable.value = 0
-        initOldTime()
+        quantityOfHintMutable.value = getQuantityOfHintUseCase.execute()
+        oldTimeMutable.value = getOldTimeUseCase.execute()
+        Log.i(TAG, "oldTime => ${oldTime.value?.oldTime!!}")
         watchAdvertisingTodayMutable.value = 0
     }
 
@@ -67,7 +82,6 @@ class GetHintDialogFragmentViewModel : ViewModel() {
             }
 
             override fun onFinish() {
-                // textTimerMutable.value = "00 : 00 : 00"
                 buttonPositiveIsEnabledTrue()
             }
         }.start()
@@ -78,8 +92,10 @@ class GetHintDialogFragmentViewModel : ViewModel() {
      * берем полученную разницу и запускаем отображение таймера
      */
     fun checkingTimeUntilHint() {
-        if (oldTime.value?.time!! > currentTime.value?.time!!) {
-            val different = oldTime.value?.time!! - currentTime.value?.time!!
+        Log.i(TAG, "oldTime => ${oldTime.value?.oldTime!!}")
+        Log.i(TAG, "currentTime => ${currentTime.value?.time!!}")
+        if (oldTime.value?.oldTime!! > currentTime.value?.time!!) {
+            val different = oldTime.value?.oldTime!! - currentTime.value?.time!!
             printDifferenceDateForHours(different)
         }
     }
@@ -97,27 +113,16 @@ class GetHintDialogFragmentViewModel : ViewModel() {
         cal.time = date
         cal.add(Calendar.MINUTE, 1)
         currentTimeMutable.value = Calendar.getInstance().time
-        oldTimeMutable.value = cal.time
+        oldTimeMutable.value?.oldTime = cal.timeInMillis
 
         buttonPositiveIsEnabledFalse()
         // Нужно сохранить новое время
         checkingTimeUntilHint()
     }
 
-    //deleted
-    private fun initOldTime() {
-        val date = Date()
-        val cal = Calendar.getInstance()
-        cal.time = date
-        cal.add(Calendar.MINUTE, 1)
-        oldTimeMutable.value = cal.time
-        //milliseconds
-        // var different = datePlus12Hours.time - currentTime.time
-    }
-
     fun increaseQuantityOfHint() {
-        if (quantityOfHint.value != 2) {
-            quantityOfHintMutable.value = quantityOfHintMutable.value?.plus(1)
+        if (quantityOfHint.value?.quantity != 2) {
+            quantityOfHintMutable.value?.quantity = quantityOfHintMutable.value?.quantity!!.plus(1)
         }
     }
 

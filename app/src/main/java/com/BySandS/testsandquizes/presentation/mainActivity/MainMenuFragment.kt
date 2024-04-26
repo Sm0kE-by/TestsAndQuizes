@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
+import java.util.Calendar
 
 class MainMenuFragment : Fragment(), View.OnClickListener {
 
@@ -33,6 +35,8 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         bHelpDev.setOnClickListener(this@MainMenuFragment)
         bSettings.setOnClickListener(this@MainMenuFragment)
         bExit.setOnClickListener(this@MainMenuFragment)
+
+
     }
 
     companion object {

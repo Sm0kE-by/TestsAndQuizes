@@ -1,14 +1,14 @@
 package com.BySandS.testsandquizes.data.tests.repositry
 
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.entity.SubcategoryDbEntity
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.SubcategoryStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.models.SubcategoryModelDb
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.models.SubcategoryModelForSubcategoryFragmentDb
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.entity.SubcategoryDbEntity
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.models.SubcategoryModelDb
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.models.SubcategoryModelForSubcategoryFragmentDb
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.SubcategoryStorage
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModelForSubcategoryFragment
 import com.BySandS.testsandquizes.domain.tests.models.param.GetListSubcategoryParam
 import com.BySandS.testsandquizes.domain.tests.models.param.GetSubcategoryByIdParam
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestSubcategoryRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestSubcategoryRepository
 
 /**
  * Вместо маперов лучше сделать Extantion

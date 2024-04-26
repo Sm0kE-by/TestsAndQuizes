@@ -1,10 +1,10 @@
 package com.BySandS.testsandquizes.data.tests.repositry
 
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.QuestionStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.models.QuestionModelDb
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.models.QuestionModelDb
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.QuestionStorage
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuestionListParam
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuestionRepository
 
 class TestQuestionRepositoryImpl(private val questionStorage: QuestionStorage) :
     TestQuestionRepository {

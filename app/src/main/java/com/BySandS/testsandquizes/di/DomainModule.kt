@@ -1,5 +1,11 @@
 package com.BySandS.testsandquizes.di
 
+import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase
@@ -15,6 +21,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
+    //TESTS
     factory<GetListSubcategoryUseCase> {
         GetListSubcategoryUseCase(
             testSubcategoryRepository = get()
@@ -50,4 +57,37 @@ val domainModule = module {
             testResultRepository = get()
         )
     }
+
+    //ALLDATA
+    factory<GetAdvertisingTodayUseCase> {
+        GetAdvertisingTodayUseCase(
+            advertisingTodayRepository = get()
+        )
+    }
+    factory<GetOldTimeUseCase> {
+        GetOldTimeUseCase(
+            oldTimeRepository = get()
+        )
+    }
+    factory<GetQuantityOfHintUseCase> {
+        GetQuantityOfHintUseCase(
+            quantityOfHintRepository = get()
+        )
+    }
+    factory<SaveAdvertisingTodayUseCase> {
+        SaveAdvertisingTodayUseCase(
+            advertisingTodayRepository = get()
+        )
+    }
+    factory<SaveOldTimeUseCase> {
+        SaveOldTimeUseCase(
+            oldTimeRepository = get()
+        )
+    }
+    factory<SaveQuantityOfHintUseCase> {
+        SaveQuantityOfHintUseCase(
+            quantityOfHintRepository = get()
+        )
+    }
+
 }

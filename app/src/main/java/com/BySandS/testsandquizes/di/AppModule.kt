@@ -27,6 +27,13 @@ val appModule = module {
         )
     }
     viewModel<GetHintDialogFragmentViewModel> {
-        GetHintDialogFragmentViewModel()
+        GetHintDialogFragmentViewModel(
+            getAdvertisingTodayUseCase = get(),
+            getOldTimeUseCase = get(),
+            getQuantityOfHintUseCase = get(),
+            saveAdvertisingTodayUseCase = get(),
+            saveOldTimeUseCase = get(),
+            saveQuantityOfHintUseCase = get(),
+        )
     }
 }

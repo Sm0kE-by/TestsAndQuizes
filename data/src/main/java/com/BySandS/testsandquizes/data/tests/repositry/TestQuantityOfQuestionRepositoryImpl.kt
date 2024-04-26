@@ -1,10 +1,10 @@
 package com.BySandS.testsandquizes.data.tests.repositry
 
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.storageInterface.QuantityOfQuestionStorage
-import com.BySandS.testsandquizes.data.storage.tests.dataBase.models.QuantityOfQuestionModelDb
+import com.BySandS.testsandquizes.data.tests.storage.dataBase.models.QuantityOfQuestionModelDb
+import com.BySandS.testsandquizes.data.tests.storage.storageInterface.QuantityOfQuestionStorage
 import com.BySandS.testsandquizes.domain.tests.models.QuantityOfQuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.param.GetQuantityOfQuestionParam
-import com.BySandS.testsandquizes.domain.tests.repository.tests.TestQuantityOfQuestionRepository
+import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
 
 class TestQuantityOfQuestionRepositoryImpl(private val quantityOfQuestionStorage: QuantityOfQuestionStorage) :
     TestQuantityOfQuestionRepository {
