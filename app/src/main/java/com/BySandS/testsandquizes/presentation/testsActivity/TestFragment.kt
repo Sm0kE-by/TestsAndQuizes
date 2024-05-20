@@ -1,20 +1,20 @@
 package com.BySandS.testsandquizes.presentation.testsActivity
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.TestFragmentBinding
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
+import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.GetHintDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val TAG = "AAA"
@@ -32,6 +32,16 @@ class TestFragment : Fragment(), View.OnClickListener {
         idSubcategory = requireArguments().getLong(ID_SUBCATEGORY_AND_STATISTIC)
         idDifficultyLevel = requireArguments().getLong(ID_DIFFICULTY_LEVEL)
         quantityOfQuestion = requireArguments().getInt(QUANTITY_OF_QUESTION)
+
+//        val companyFlowResult = findNavController().currentBackStackEntry
+//            ?.savedStateHandle
+//            ?.remove<Boolean>(GetHintDialogFragment.COMPANY_FLOW_RESULT_FLAG)
+//        if (companyFlowResult == true) {
+//            Log.i(TAG, "companyFlowResult => $companyFlowResult")
+//        }
+//        Log.i(TAG, "companyFlowResult => $companyFlowResult")
+
+
         Log.i(TAG, "idSubcategory => $idSubcategory")
         Log.i(TAG, "idDifficultyLevel => $idDifficultyLevel")
         Log.i(TAG, "quantityOfQuestion => $quantityOfQuestion")
@@ -49,28 +59,36 @@ class TestFragment : Fragment(), View.OnClickListener {
         testVM.quantityOfHint.observe(
             viewLifecycleOwner, Observer { it ->
                 it?.let {
-                    testVM.question.observe(viewLifecycleOwner, Observer { question ->
-                        Log.i(
-                            TAG,
-                            "questionListMutable2 ->>> ${testVM.questionList.value.toString()}"
-                        )
-                        Log.i(TAG, "question ->>> ${question.toString()}")
-                        question?.let {
-                            if (binding.constLayoutTestFragment.background == null) setBackground()
-                            showQuestion(
-                                question = question
-                            )
-                        }
-                    })
+                    val quantityOfHints = getString(
+                        R.string.quantity_of_hint_TF,
+                        testVM.quantityOfHint.value?.quantity.toString()
+                    )
+                    tvHintNumber.text = quantityOfHints
                 }
-            }
-        )
+            })
+
+        testVM.question.observe(
+            viewLifecycleOwner, Observer { question ->
+                question?.let {
+                    if (binding.constLayoutTestFragment.background == null) setBackground()
+                    showQuestion(question = question)
+                }
+            })
+
         parentFragmentManager.setFragmentResultListener(
             TestResultDialogFragment.REQUEST_CODE,
             viewLifecycleOwner
         ) { _, data ->
             val clickResult = data.getInt(TestResultDialogFragment.BUTTON_RESULT)
             processingResultOfDialogFragment(clickResult = clickResult)
+        }
+        parentFragmentManager.setFragmentResultListener(
+            GetHintDialogFragment.REQUEST_CODE,
+            viewLifecycleOwner
+        ) { _, data ->
+            val clickResult = data.getInt(GetHintDialogFragment.BUTTON_CANCEL_POP_BACK_STACK)
+            if (clickResult == 5) testVM.refreshQuantityOfHint()
+            Log.i(TAG, "clickResult =============> $clickResult")
         }
 
     }
@@ -98,15 +116,14 @@ class TestFragment : Fragment(), View.OnClickListener {
         if (!btAnswer3.isEnabled) btAnswer3.isEnabled = true
         if (!btAnswer4.isEnabled) btAnswer4.isEnabled = true
 
-        val quantityOfHints =
-            getString(R.string.quantity_of_hint_TF, testVM.quantityOfHint.value.toString())
+
         val questionsNumbers =
             getString(
                 R.string.number_of_question_TF,
                 (testVM.numberOfQuestion.value!! + 1).toString(),
                 testVM.questionList.value!!.size.toString()
             )
-        tvHintNumber.text = quantityOfHints
+
         tvQuestion.text = question.questionText
         tvQuestionsNumbers.text = questionsNumbers
 
@@ -168,38 +185,73 @@ class TestFragment : Fragment(), View.OnClickListener {
      * Проверяем текст на кнопках с первым и вторым неправильными ответами,
      *      и если есть совпадение делаем кнопку некликабельной     *
      */
-    private fun getHelp() {
-        var answer = arrayListOf(
-            testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer1,
-            testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer2,
-            testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer3
-        ).shuffled()
+    private fun getHelp() = with(binding) {
+        if (btAnswer1.isEnabled && btAnswer2.isEnabled && btAnswer3.isEnabled && btAnswer4.isEnabled) {
+            var answer = arrayListOf(
+                testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer1,
+                testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer2,
+                testVM.questionList.value!![testVM.numberOfQuestion.value!!].incorrectAnswer3
+            ).shuffled()
 
-        if (binding.btAnswer1.text == answer[0] || binding.btAnswer1.text == answer[1]) binding.btAnswer1.isEnabled =
-            false
-        if (binding.btAnswer2.text == answer[0] || binding.btAnswer2.text == answer[1]) binding.btAnswer2.isEnabled =
-            false
-        if (binding.btAnswer3.text == answer[0] || binding.btAnswer3.text == answer[1]) binding.btAnswer3.isEnabled =
-            false
-        if (binding.btAnswer4.text == answer[0] || binding.btAnswer4.text == answer[1]) binding.btAnswer4.isEnabled =
-            false
+            if (btAnswer1.text == answer[0] || btAnswer1.text == answer[1]) btAnswer1.isEnabled =
+                false
+            if (btAnswer2.text == answer[0] || btAnswer2.text == answer[1]) btAnswer2.isEnabled =
+                false
+            if (btAnswer3.text == answer[0] || btAnswer3.text == answer[1]) btAnswer3.isEnabled =
+                false
+            if (btAnswer4.text == answer[0] || btAnswer4.text == answer[1]) btAnswer4.isEnabled =
+                false
+            testVM.minusQuantityOfHint()
+        } else {
+            Toast.makeText(
+                context,
+                getString(R.string.hint_has_already_been_used),
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     private fun setBackground() {
         when (testVM.subcategoryModel?.linkToBackground) {
-            "space_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.space_background)
-            "school_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.school_background)
-            "nature_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.nature_background)
+            "space_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.space_background
+            )
+
+            "school_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.school_background
+            )
+
+            "nature_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.nature_background
+            )
+
             "erudition_and_intelligence_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
                 R.drawable.erudition_and_intelligence_background
             )
 
-            "movie_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.movie_background)
-            "music_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.music_background)
-            "leisure_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.leisure_background)
-            "technologies_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.technologies_background)
-            "sport_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.sport_background)
-            "health_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(R.drawable.health_background)
+            "movie_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.movie_background
+            )
+
+            "music_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.music_background
+            )
+
+            "leisure_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.leisure_background
+            )
+
+            "technologies_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.technologies_background
+            )
+
+            "sport_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.sport_background
+            )
+
+            "health_background.jpg" -> binding.constLayoutTestFragment.setBackgroundResource(
+                R.drawable.health_background
+            )
         }
     }
 
@@ -228,11 +280,12 @@ class TestFragment : Fragment(), View.OnClickListener {
     }
 
     private fun helpAlertDialog() {
-
-        if (testVM.quantityOfHint.value != 0) {
+        if (testVM.quantityOfHint.value?.quantity != 0) {
             val listener = DialogInterface.OnClickListener { _, which ->
                 when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> getHelp()
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        getHelp()
+                    }
                 }
             }
 

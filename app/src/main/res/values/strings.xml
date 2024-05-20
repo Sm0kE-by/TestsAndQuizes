@@ -2,13 +2,19 @@
     <string name="app_name">Tests and Quizzes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Button -->
     <string name="yes">Да</string>
     <string name="no">Нет</string>
-    <string name="main_tests">TESTS</string>
-    <string name="main_quizzes">QUIZZES</string>
-    <string name="main_phrase_of_the_day">PHRASE OF THE DAY</string>
-    <string name="main_help_developer">HELP DEVELOPER</string>
-    <string name="main_settings">SETTINGS</string>
+    <string name="done">Готово</string>
+
+    <!-- Main Menu -->
+    <string name="main_tests">Тесты</string>
+    <string name="main_quizzes">Викторины</string>
+    <string name="main_survival_mode">Режим на выживание</string>
+    <string name="main_prestige">Престиж</string>
+    <string name="main_mini_tests">Мини-тесты</string>
+    <string name="main_shop">Магазин</string>
     <string name="main_exit">EXIT</string>
 
     <!-- Categories and Difficulties -->
@@ -30,7 +36,7 @@
 
     <string name="result_desc">Вы правильно ответили на %s вопросов из %s \n
         Статистика правильных ответов составила %s%%\n %s</string>
-    <string name="quantity_of_hint_TF">%1$s из 3</string>
+    <string name="quantity_of_hint_TF">%1$s из 2</string>
     <string name="number_of_question_TF">%1$s из %2$s</string>
     <string name="exite_from_test">Выход из теста</string>
     <string name="test_exit_confirmation">Вы действительно хотите закончить прохождение теста и вернуться назад?</string>
@@ -48,6 +54,11 @@
     <string name="hint_warning_max_hint">Достигнуто максимальное количество подсказок</string>
     <string name="advertising_not_load">Подождите несколько секунд пока реклама загрузиться</string>
     <string name="maximum_limit_of_free_top_ups">Превышен максимальный дневной лимит бесплатных пополнений</string>
+    <string name="hint_has_already_been_used">Подсказка уже была использована</string>
 
+    <!-- Avatar Dialog Fragment -->
+    <string name="avatar_info">Получайте аватарки в награду за призовые места в событиях или премиум пропуске,
+        а также покупайте в магазине</string>
+    <string name="avatar_logo">Аватарки</string>
 
 </resources>

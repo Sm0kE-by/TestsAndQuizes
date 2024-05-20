@@ -1,8 +1,9 @@
 package com.BySandS.testsandquizes.di
 
 import com.BySandS.testsandquizes.presentation.mainActivity.DifficultyFragmentViewModel
-import com.BySandS.testsandquizes.presentation.mainActivity.GetHintDialogFragmentViewModel
+import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.GetHintDialogFragmentViewModel
 import com.BySandS.testsandquizes.presentation.mainActivity.SubcategoriesViewModel
+import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.AvatarDialogFragmentViewModel
 import com.BySandS.testsandquizes.presentation.testsActivity.TestFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,7 +24,9 @@ val appModule = module {
             getTestResultUseCase = get(),
             getQuestionListUseCase = get(),
             getTestSubcategoryByIdUseCase = get(),
-            updateTestSubcategoryUseCase = get()
+            updateTestSubcategoryUseCase = get(),
+            getQuantityOfHintUseCase = get(),
+            saveQuantityOfHintUseCase = get(),
         )
     }
     viewModel<GetHintDialogFragmentViewModel> {
@@ -34,6 +37,10 @@ val appModule = module {
             saveAdvertisingTodayUseCase = get(),
             saveOldTimeUseCase = get(),
             saveQuantityOfHintUseCase = get(),
+        )
+    }
+    viewModel<AvatarDialogFragmentViewModel> {
+        AvatarDialogFragmentViewModel(
         )
     }
 }

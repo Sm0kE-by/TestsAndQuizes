@@ -7,6 +7,14 @@ import java.util.Calendar
 
 class GetAdvertisingTodayUseCase(private val advertisingTodayRepository: AdvertisingTodayRepository) {
 
+    /**
+     * Надо перепроверить метод
+     * загружаю "показов рекламы" из хранилища
+     * загружаю текущее время и сохраненное
+     * сравниваю сохраненное время в ДНЯХ с текущим временем в ДНЯХ
+     * если они равны - проверяю количество показов сегодня и если их меньше 2 - то возвращаю объект
+     * иначе (дни не равны) создаю новый объект с показами = 0 и текущим временем, сохраняю его в память устройства и возвращаю из метода
+     */
     fun execute(): AdvertisingTodayModel {
 
         var advertisingToday = advertisingTodayRepository.get()
@@ -32,7 +40,14 @@ class GetAdvertisingTodayUseCase(private val advertisingTodayRepository: Adverti
                 throw Exception("Invalid value ${advertisingToday.quantity}")
             }
         } else {
-            return AdvertisingTodayModel(quantity = 0, date = currentTime.timeInMillis)
+            advertisingToday = AdvertisingTodayModel(quantity = 0, date = currentTime.timeInMillis)
+            advertisingTodayRepository.save(
+                param = SaveAdvertisingParam(
+                    quantity = advertisingToday.quantity,
+                    date = advertisingToday.date
+                )
+            )
+            return advertisingToday
         }
         return advertisingToday
     }

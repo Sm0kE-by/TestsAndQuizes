@@ -1,12 +1,16 @@
-package com.BySandS.testsandquizes.presentation.mainActivity
+package com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments
 
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.BySandS.testsandquizes.domain.allData.models.AdvertisingTodayModel
 import com.BySandS.testsandquizes.domain.allData.models.OldTimeModel
 import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.models.param.SaveAdvertisingParam
+import com.BySandS.testsandquizes.domain.allData.models.param.SaveOldTimeParam
+import com.BySandS.testsandquizes.domain.allData.models.param.SaveQuantityOfHintParam
 import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
@@ -17,6 +21,7 @@ import java.util.Calendar
 import java.util.Date
 
 private const val TAG = "AAA"
+
 class GetHintDialogFragmentViewModel(
     private val getAdvertisingTodayUseCase: GetAdvertisingTodayUseCase,
     private val getOldTimeUseCase: GetOldTimeUseCase,
@@ -31,24 +36,24 @@ class GetHintDialogFragmentViewModel(
     private var currentTimeMutable = MutableLiveData<Date>()
     private val quantityOfHintMutable = MutableLiveData<QuantityOfHintModel>()
     private val oldTimeMutable = MutableLiveData<OldTimeModel>()
-    private var watchAdvertisingTodayMutable = MutableLiveData<Int>()
+    private var watchAdvertisingTodayMutable = MutableLiveData<AdvertisingTodayModel>()
     private var textTimerMutable = MutableLiveData<String>()
     private var btnPositiveIsEnabledMutable = MutableLiveData<Boolean>()
 
     private val currentTime: LiveData<Date> = currentTimeMutable
     val quantityOfHint: LiveData<QuantityOfHintModel> = quantityOfHintMutable
     private val oldTime: LiveData<OldTimeModel> = oldTimeMutable
-    var watchAdvertisingToday: LiveData<Int> = watchAdvertisingTodayMutable
+    var watchAdvertisingToday: LiveData<AdvertisingTodayModel> = watchAdvertisingTodayMutable
     var textTimer: LiveData<String> = textTimerMutable
     var btnPositiveIsEnabled: LiveData<Boolean> = btnPositiveIsEnabledMutable
 
     init {
         btnPositiveIsEnabledMutable.value = false
         currentTimeMutable.value = Calendar.getInstance().time
-        quantityOfHintMutable.value = getQuantityOfHintUseCase.execute()
+        refreshQuantityOfHint()
         oldTimeMutable.value = getOldTimeUseCase.execute()
         Log.i(TAG, "oldTime => ${oldTime.value?.oldTime!!}")
-        watchAdvertisingTodayMutable.value = 0
+        watchAdvertisingTodayMutable.value = getAdvertisingTodayUseCase.execute()
     }
 
     /**
@@ -82,7 +87,8 @@ class GetHintDialogFragmentViewModel(
             }
 
             override fun onFinish() {
-                buttonPositiveIsEnabledTrue()
+                textTimerMutable.value = "00 : 00 : 00"
+                buttonPositiveIsEnabled(true)
             }
         }.start()
     }
@@ -97,6 +103,8 @@ class GetHintDialogFragmentViewModel(
         if (oldTime.value?.oldTime!! > currentTime.value?.time!!) {
             val different = oldTime.value?.oldTime!! - currentTime.value?.time!!
             printDifferenceDateForHours(different)
+        } else {
+            printDifferenceDateForHours(0L)
         }
     }
 
@@ -111,32 +119,54 @@ class GetHintDialogFragmentViewModel(
         val date = Date()
         val cal = Calendar.getInstance()
         cal.time = date
-        cal.add(Calendar.MINUTE, 1)
+        cal.add(Calendar.SECOND, 10)
         currentTimeMutable.value = Calendar.getInstance().time
         oldTimeMutable.value?.oldTime = cal.timeInMillis
 
-        buttonPositiveIsEnabledFalse()
-        // Нужно сохранить новое время
+        buttonPositiveIsEnabled(false)
+        val saveOldTimeParam = SaveOldTimeParam(time = oldTime.value!!.oldTime)
+        saveOldTimeUseCase.execute(saveOldTimeParam = saveOldTimeParam)
         checkingTimeUntilHint()
     }
 
     fun increaseQuantityOfHint() {
         if (quantityOfHint.value?.quantity != 2) {
-            quantityOfHintMutable.value?.quantity = quantityOfHintMutable.value?.quantity!!.plus(1)
+            saveQuantityOfHintUseCase.execute(
+                saveQuantityOfHintParam = SaveQuantityOfHintParam(
+                    quantity = quantityOfHintMutable.value!!.quantity.plus(1)
+                )
+            )
+            refreshQuantityOfHint()
+            startNewTimer()
         }
     }
 
     fun increaseWatchAdvertisingToday() {
-        if (watchAdvertisingToday.value != 2) {
-            watchAdvertisingTodayMutable.value = watchAdvertisingTodayMutable.value?.plus(1)
+        if (watchAdvertisingToday.value?.quantity != 2) {
+            saveAdvertisingTodayUseCase.execute(
+                saveAdvertisingParam = SaveAdvertisingParam(
+                    quantity = watchAdvertisingTodayMutable.value!!.quantity.plus(1),
+                    date = Calendar.getInstance().timeInMillis
+                )
+            )
+           refreshAdvertisingToday()
         }
     }
 
-    private fun buttonPositiveIsEnabledTrue() {
-        if (!btnPositiveIsEnabled.value!!) btnPositiveIsEnabledMutable.value = true
+    /**
+     * Проверить на несовпадение вкл кнопок
+     */
+    private fun buttonPositiveIsEnabled(isEnabled: Boolean) {
+        if (isEnabled && !btnPositiveIsEnabled.value!!) btnPositiveIsEnabledMutable.value = true
+        else if (!isEnabled && btnPositiveIsEnabled.value!!) btnPositiveIsEnabledMutable.value =
+            false
     }
 
-    private fun buttonPositiveIsEnabledFalse() {
-        if (btnPositiveIsEnabled.value!!) btnPositiveIsEnabledMutable.value = false
+    private fun refreshAdvertisingToday() {
+        watchAdvertisingTodayMutable.value = getAdvertisingTodayUseCase.execute()
+    }
+
+    private fun refreshQuantityOfHint() {
+        quantityOfHintMutable.value = getQuantityOfHintUseCase.execute()
     }
 }

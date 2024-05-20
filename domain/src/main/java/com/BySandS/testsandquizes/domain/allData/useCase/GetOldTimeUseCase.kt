@@ -12,15 +12,12 @@ class GetOldTimeUseCase(private val oldTimeRepository: OldTimeRepository) {
 
         if (oldTime.oldTime !=11L) return oldTime
         else if (oldTime.oldTime == 11L) {
-            if (oldTimeRepository.save(param = SaveOldTimeParam(Calendar.getInstance().timeInMillis)))
+            if (oldTimeRepository.save(param = SaveOldTimeParam(time = Calendar.getInstance().timeInMillis)))
                 oldTime = oldTimeRepository.get()
-            else{
+            return oldTime
 
-            }
         } else {
             throw Exception("Invalid value ${oldTime.oldTime}")
         }
-        return oldTime
     }
-
 }

@@ -35,3 +35,4 @@ quantity_of_questions_id -> quantity_of_questions
  24. GetHintDialogFragment - заменить SimpleDateFormat - на DataTime
 
  25. allDate UseCase -> else заполнить обработку ошибки!
+ 26. Загрузка аватарок в RCV надо чтоб грузило не весь список!

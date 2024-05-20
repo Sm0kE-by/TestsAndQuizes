@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="296dp"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.12" />
 
         <Button
             android:id="@+id/bTests"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.18" />
+            app:layout_constraintGuide_percent="0.24" />
 
         <Button
             android:id="@+id/bQuizzes"
@@ -55,13 +55,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.31" />
+            app:layout_constraintGuide_percent="0.36" />
 
         <Button
-            android:id="@+id/bPhrase"
+            android:id="@+id/bSurvival"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/main_phrase_of_the_day"
+            android:text="@string/main_survival_mode"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="@+id/bQuizzes"
             app:layout_constraintStart_toStartOf="@+id/bQuizzes"
@@ -73,16 +73,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.44" />
+            app:layout_constraintGuide_percent="0.48" />
 
         <Button
-            android:id="@+id/bHelpDev"
+            android:id="@+id/bPrestige"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/main_help_developer"
+            android:text="@string/main_prestige"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            app:layout_constraintEnd_toEndOf="@+id/bPhrase"
-            app:layout_constraintStart_toStartOf="@+id/bPhrase"
+            app:layout_constraintEnd_toEndOf="@+id/bSurvival"
+            app:layout_constraintStart_toStartOf="@+id/bSurvival"
             app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -91,16 +91,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.57" />
+            app:layout_constraintGuide_percent="0.6" />
 
         <Button
-            android:id="@+id/bSettings"
+            android:id="@+id/bMiniTests"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/main_settings"
+            android:text="@string/main_mini_tests"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
-            app:layout_constraintEnd_toEndOf="@+id/bHelpDev"
-            app:layout_constraintStart_toStartOf="@+id/bHelpDev"
+            app:layout_constraintEnd_toEndOf="@+id/bPrestige"
+            app:layout_constraintStart_toStartOf="@+id/bPrestige"
             app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -109,25 +109,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.7" />
+            app:layout_constraintGuide_percent="0.72" />
 
         <Button
-            android:id="@+id/bExit"
+            android:id="@+id/bShop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/main_exit"
-            app:layout_constraintBottom_toTopOf="@+id/guideline8"
-            app:layout_constraintEnd_toEndOf="@+id/bSettings"
-            app:layout_constraintStart_toStartOf="@+id/bSettings"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.95" />
+            android:text="@string/main_shop"
+            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            app:layout_constraintEnd_toEndOf="@+id/bMiniTests"
+            app:layout_constraintStart_toStartOf="@+id/bMiniTests"
+            app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"
@@ -135,6 +127,226 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="424dp"
-            app:layout_constraintGuide_percent="0.82" />
+            app:layout_constraintGuide_percent="0.84" />
+
+        <Button
+            android:id="@+id/bExit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_exit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bMiniTests"
+            app:layout_constraintStart_toStartOf="@+id/bMiniTests"
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/avatarConstLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gemsConstraintLayout">
+
+                <ImageView
+                    android:id="@+id/avatarIV"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/avatar_10" />
+
+                <TextView
+                    android:id="@+id/playerNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="player name"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarIV"
+                    app:layout_constraintStart_toEndOf="@+id/avatarIV"
+                    app:layout_constraintTop_toTopOf="@+id/avatarIV" />
+
+                <ImageButton
+                    android:id="@+id/settingsImageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_manage" />
+
+                <TextView
+                    android:id="@+id/gameCompletionPercentageTV"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey"
+                    android:gravity="right|center_vertical"
+                    android:text="32%"
+                    app:layout_constraintBottom_toBottomOf="@+id/settingsImageButton"
+                    app:layout_constraintEnd_toStartOf="@+id/settingsImageButton"
+                    app:layout_constraintTop_toTopOf="@+id/settingsImageButton" />
+
+                <ImageView
+                    android:id="@+id/gameCompletionPercentageImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_assignment_late_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/gameCompletionPercentageTV"
+                    app:layout_constraintEnd_toStartOf="@+id/gameCompletionPercentageTV"
+                    app:layout_constraintTop_toTopOf="@+id/gameCompletionPercentageTV"
+                    app:layout_constraintVertical_bias="0.6" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gemsConstraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@id/guidelineAvatar1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/gemsImageView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/avatar_money_24" />
+
+                    <TextView
+                        android:id="@+id/gemsTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_weight="15"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:text="115" />
+
+                    <ImageButton
+                        android:id="@+id/gemsIButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@null"
+                        android:src="@android:drawable/ic_input_add" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineAvatar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="137dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/guidelineAvatar2"
+                    app:layout_constraintStart_toStartOf="@id/guidelineAvatar1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/hintImageView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/baseline_local_hospital_24" />
+
+                    <TextView
+                        android:id="@+id/hintTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_weight="15"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:text="1 из 2" />
+
+                    <ImageButton
+                        android:id="@+id/hintIButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@null"
+                        android:src="@android:drawable/ic_input_add" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineAvatar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.666" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guidelineAvatar2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/prestigeImageView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/baseline_ac_unit_24" />
+
+                    <TextView
+                        android:id="@+id/prestigeTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_weight="15"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:text="1150" />
+
+                    <ImageButton
+                        android:id="@+id/prestigeIButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@null"
+                        android:src="@android:drawable/ic_input_add" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

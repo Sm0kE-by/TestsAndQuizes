@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.presentation.mainActivity
+package com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -55,6 +56,12 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
     }
 
+    companion object{
+
+        const val BUTTON_CANCEL_POP_BACK_STACK = "BUTTON_CANCEL_POP_BACK_STACK"
+        const val REQUEST_CODE = "KEY_REQUEST_CODE"
+
+    }
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
@@ -73,7 +80,6 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
                 if (btnPositive.isEnabled) {
                     if (getHintVM.quantityOfHint.value?.quantity != 2) {
                         getHintVM.increaseQuantityOfHint()
-                        getHintVM.startNewTimer()
                     } else {
                         Toast.makeText(
                             context, getString(R.string.hint_warning_max_hint), Toast.LENGTH_LONG
@@ -84,19 +90,24 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
             }
 
             btnNegative.id -> {
+                val num = 5
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_CODE, bundleOf(
+                        BUTTON_CANCEL_POP_BACK_STACK to num)
+                )
                 findNavController().popBackStack()
             }
+
 //Загрузка рекламы
             btnAdvertising.id -> {
 
                 val advertising = true
-                if (getHintVM.watchAdvertisingToday.value != 2 && getHintVM.quantityOfHint.value?.quantity != 2) {
+                if (getHintVM.watchAdvertisingToday.value?.quantity != 2 && getHintVM.quantityOfHint.value?.quantity != 2) {
                     if (advertising) {
                         Toast.makeText(
                             context, "Идет показ рекламы", Toast.LENGTH_LONG
                         ).show()
                         getHintVM.increaseQuantityOfHint()
-                        getHintVM.startNewTimer()
                         getHintVM.increaseWatchAdvertisingToday()
                     } else {
                         Toast.makeText(
@@ -104,7 +115,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
                             getString(R.string.advertising_not_load), Toast.LENGTH_LONG
                         ).show()
                     }
-                } else if (getHintVM.watchAdvertisingToday.value == 2) {
+                } else if (getHintVM.watchAdvertisingToday.value?.quantity == 2) {
                     Toast.makeText(
                         context,
                         getString(R.string.maximum_limit_of_free_top_ups),

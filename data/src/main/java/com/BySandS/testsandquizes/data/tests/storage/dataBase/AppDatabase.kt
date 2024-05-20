@@ -6,6 +6,9 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.entity.AvatarDbEntity
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.entity.AvatarTypeDbEntity
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.intefaceDao.DaoAvatar
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoQuantityOfQuestion
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoQuestionRu
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoResult
@@ -28,10 +31,12 @@ private const val TAG = "AAA"
         QuestionDbEntity::class,
         ResultDbEntity::class,
         SubcategoryDbEntity::class,
-        SubcategoryDifficultyLevel::class
-    ], version = 3, exportSchema = true,
+        SubcategoryDifficultyLevel::class,
+        AvatarDbEntity::class,
+        AvatarTypeDbEntity::class,
+    ], version = 4, exportSchema = true,
     autoMigrations = [
- AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
 //       // AutoMigration(from = 3, to = 4),
 //        AutoMigration(from = 2, to = 7, spec = AutoMigrationSpecFrom4To7::class),
 //      //   AutoMigration(from = 5, to = 6),
@@ -45,6 +50,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun questionDao(): DaoQuestionRu
     abstract fun quantityOfQuestionDao(): DaoQuantityOfQuestion
     abstract fun resultDao(): DaoResult
+    abstract fun avatarDao(): DaoAvatar
 
 
     companion object {

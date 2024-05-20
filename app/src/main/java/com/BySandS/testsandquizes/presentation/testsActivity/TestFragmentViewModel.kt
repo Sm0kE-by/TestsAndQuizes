@@ -6,6 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.models.param.SaveQuantityOfHintParam
+import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel
@@ -25,24 +29,25 @@ class TestFragmentViewModel(
     private val getTestResultUseCase: GetTestResultUseCase,
     private val getQuestionListUseCase: GetQuestionListUseCase,
     private val getTestSubcategoryByIdUseCase: GetTestSubcategoryByIdUseCase,
-    private val updateTestSubcategoryUseCase: UpdateTestSubcategoryUseCase
+    private val updateTestSubcategoryUseCase: UpdateTestSubcategoryUseCase,
+    private val getQuantityOfHintUseCase: GetQuantityOfHintUseCase,
+    private val saveQuantityOfHintUseCase: SaveQuantityOfHintUseCase
 ) : ViewModel() {
 
     private val idSubcategory = TestFragment.idSubcategory
     private val idDifficultyLevel = TestFragment.idDifficultyLevel
     private val quantityOfQuestionMax = TestFragment.quantityOfQuestion
 
-
     private val questionListMutable = MutableLiveData<List<QuestionModel>>()
     private var numberOfQuestionMutable = MutableLiveData<Int>(0)
     private var questionMutable = MutableLiveData<QuestionModel>()
-    private val quantityOfHintMutable = MutableLiveData<Int>()
+    private val quantityOfHintMutable = MutableLiveData<QuantityOfHintModel>()
     private val resultMutable = MutableLiveData<ResultTestModel>()
 
     val questionList: LiveData<List<QuestionModel>> = questionListMutable
     var numberOfQuestion: LiveData<Int> = numberOfQuestionMutable
     var question: LiveData<QuestionModel> = questionMutable
-    val quantityOfHint: LiveData<Int> = quantityOfHintMutable
+    val quantityOfHint: LiveData<QuantityOfHintModel> = quantityOfHintMutable
     private val result: LiveData<ResultTestModel> = resultMutable
 
     private var quantityCorrectAnswer = 0
@@ -60,7 +65,6 @@ class TestFragmentViewModel(
                 getTestSubcategoryByIdUseCase.execute(param = getSubcategoryByIdParam)
 
             subcategoryModel.let {
-
                 val getResultParam =
                     GetResultParam(
                         subcategoryId = subcategoryModel!!.id,
@@ -68,7 +72,7 @@ class TestFragmentViewModel(
                     )
                 questionListMutable.postValue(getQuestionListUseCase.execute(getQuestionListParam))
 
-                quantityOfHintMutable.postValue(0)
+                quantityOfHintMutable.postValue( getQuantityOfHintUseCase.execute())
                 while (questionList.value == null) {
                     Thread.sleep(10L)
                 }
@@ -186,4 +190,16 @@ class TestFragmentViewModel(
         questionMutable.postValue(randomAnswerOfQuestion(questionList.value!![numberOfQuestion.value!!]))
     }
 
+    fun minusQuantityOfHint() {
+        saveQuantityOfHintUseCase.execute(
+            saveQuantityOfHintParam = SaveQuantityOfHintParam(
+                quantity = quantityOfHintMutable.value?.quantity!!.minus(1)
+            )
+        )
+        quantityOfHintMutable.postValue( getQuantityOfHintUseCase.execute())
+    }
+
+    fun refreshQuantityOfHint(){
+        quantityOfHintMutable.postValue( getQuantityOfHintUseCase.execute())
+    }
 }
