@@ -4,6 +4,7 @@ import android.app.Application
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.AppDatabase
 import com.BySandS.testsandquizes.di.appModule
 import com.BySandS.testsandquizes.di.dataModule
+import com.BySandS.testsandquizes.di.databaseModule
 import com.BySandS.testsandquizes.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,8 +24,8 @@ class App : Application() {
             androidLogger(Level.ERROR)
             //добавляем Контекс
             androidContext(this@App)
-            modules(listOf(appModule, dataModule, domainModule))
+            modules(listOf(appModule, dataModule, domainModule, databaseModule))
         }
-        AppDatabase.getInstance(this)
+       // AppDatabase.getInstance(this)
     }
 }

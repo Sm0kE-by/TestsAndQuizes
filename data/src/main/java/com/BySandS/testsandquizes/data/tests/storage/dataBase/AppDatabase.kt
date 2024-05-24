@@ -1,7 +1,8 @@
+@file:OptIn(InternalCoroutinesApi::class)
+
 package com.BySandS.testsandquizes.data.tests.storage.dataBase
 
 import android.content.Context
-import android.util.Log
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
@@ -20,8 +21,9 @@ import com.BySandS.testsandquizes.data.tests.storage.dataBase.entity.QuestionDbE
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.entity.ResultDbEntity
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.entity.SubcategoryDbEntity
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.entity.SubcategoryDifficultyLevel
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.internal.synchronized
 
-private const val TAG = "AAA"
 
 @Database(
     entities = [
@@ -34,10 +36,13 @@ private const val TAG = "AAA"
         SubcategoryDifficultyLevel::class,
         AvatarDbEntity::class,
         AvatarTypeDbEntity::class,
-    ], version = 4, exportSchema = true,
+    ], version = 5, exportSchema = true,
     autoMigrations = [
+        AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
-//       // AutoMigration(from = 3, to = 4),
+        AutoMigration(from = 4, to = 5),
+
+
 //        AutoMigration(from = 2, to = 7, spec = AutoMigrationSpecFrom4To7::class),
 //      //   AutoMigration(from = 5, to = 6),
 //      //   AutoMigration(from = 6, to = 7),
@@ -54,26 +59,27 @@ abstract class AppDatabase : RoomDatabase() {
 
 
     companion object {
-        private const val DATABASE_NAME = "tests-database.db"
+        private const val DATABASE_NAME = "tests-database1"
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-            var instance = INSTANCE
+            synchronized(this) {
+                var instance = INSTANCE
 
-            if (instance == null) {
-                instance = Room.databaseBuilder(
-                    context,
-                    AppDatabase::class.java,
-                    DATABASE_NAME
-                ).createFromAsset("database/tests-database.db")
-                    //.fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                Log.i(TAG, "ID_Category = $instance")
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        context,
+                        AppDatabase::class.java,
+                        DATABASE_NAME
+                    ).createFromAsset("database/tests-database.db")
+                        //.fallbackToDestructiveMigration()
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
             }
-            return instance
         }
     }
 }

@@ -6,5 +6,6 @@ class AvatarModelSP(
     val name: String,
     val type: String,
     val description: String,
-    val open: Boolean
+    val open: Boolean,
+    val avatarIcon: String,
 )

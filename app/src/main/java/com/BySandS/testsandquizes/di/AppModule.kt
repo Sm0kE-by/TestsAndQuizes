@@ -41,6 +41,9 @@ val appModule = module {
     }
     viewModel<AvatarDialogFragmentViewModel> {
         AvatarDialogFragmentViewModel(
+            getAvatarByIdUseCase = get(),
+            getListAvatarsUseCase = get(),
+            saveAvatarSPUseCase = get(),
         )
     }
 }

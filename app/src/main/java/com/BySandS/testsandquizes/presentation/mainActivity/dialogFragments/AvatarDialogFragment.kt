@@ -15,7 +15,9 @@ import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.AvatarDialogFragmentBinding
 import com.BySandS.testsandquizes.databinding.AvatarItemDialogFragmentBinding
 import com.BySandS.testsandquizes.domain.allData.models.AvatarModel
+import com.BySandS.testsandquizes.domain.allData.models.param.SaveAvatarSharedPrefParam
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.properties.Delegates
 
 private const val TAG = "AAA"
 
@@ -24,6 +26,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     private val avatarVM by viewModel<AvatarDialogFragmentViewModel>()
     private lateinit var binding: AvatarDialogFragmentBinding
     private var adapter = AvatarAdapter(emptyList())
+    private var avatarId by Delegates.notNull<Long>()
 
     /**
      * Надуваем Фрагмент
@@ -37,7 +40,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     ): View? {
         binding = AvatarDialogFragmentBinding.inflate(inflater, container, false)
         init()
-        // idCategory = requireArguments().getLong(ARG_NAME)
+        avatarId = requireArguments().getLong(ID_AVATAR)
         return binding.root
     }
 
@@ -54,13 +57,20 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
         binding.bDone.setOnClickListener(this)
         binding.bClose.setOnClickListener(this)
 
-        updateUI(avatarVM.listAvatars)
+        avatarVM.setAvatarById(avatarId)
 
         avatarVM.avatarIcon.observe(
             viewLifecycleOwner,
             Observer { avatar ->
                 avatar?.let {
                     setAvatarLogo(avatar)
+                }
+            })
+        avatarVM.listAvatars.observe(
+            viewLifecycleOwner,
+            Observer { avatars ->
+                avatars?.let {
+                    updateUI(avatars)
                 }
             })
         avatarVM.buttonDonIsEnable.observe(
@@ -85,7 +95,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
      * Подключаем текст описания сложности из VM
      * Подключаем адаптер к RV
      */
-    fun updateUI(avatars: List<AvatarModel>) {
+    private fun updateUI(avatars: List<AvatarModel>) {
         adapter = AvatarAdapter(avatars)
         binding.avatarRecyclerView.adapter = adapter
     }
@@ -93,6 +103,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     companion object {
         const val AVATAR_BUTTON_DONE = "AVATAR_BUTTON_DONE"
         const val AVATAR_REQUEST_CODE = "AVATAR_REQUEST_CODE"
+        const val ID_AVATAR = "ID_AVATAR"
     }
 
     private inner class AvatarHolder(item: View) : RecyclerView.ViewHolder(item),
@@ -109,7 +120,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
         ) = with(binding) {
             avatar = avatarModel
 
-            when (avatar.name) {
+            when (avatar.avatarIcon) {
                 "avatar_1.png" -> avatarIV.setImageResource(R.drawable.avatar_1)
                 "avatar_2.png" -> avatarIV.setImageResource(R.drawable.avatar_2)
                 "avatar_3.png" -> avatarIV.setImageResource(R.drawable.avatar_3)
@@ -158,12 +169,13 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
             bDone.id -> {
-                val icon = avatarVM.avatarIcon.value?.name
+                val icon = avatarVM.avatarIcon.value?.avatarIcon
                 parentFragmentManager.setFragmentResult(
                     AVATAR_REQUEST_CODE, bundleOf(
                         AVATAR_BUTTON_DONE to icon
                     )
                 )
+                avatarVM.saveAvatarSharedPref()
                 findNavController().popBackStack()
             }
 
@@ -172,7 +184,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun setAvatarLogo(avatar: AvatarModel) = with(binding) {
-        when (avatar.name) {
+        when (avatar.avatarIcon) {
             "avatar_1.png" -> avatarIcon.setImageResource(R.drawable.avatar_1)
             "avatar_2.png" -> avatarIcon.setImageResource(R.drawable.avatar_2)
             "avatar_3.png" -> avatarIcon.setImageResource(R.drawable.avatar_3)

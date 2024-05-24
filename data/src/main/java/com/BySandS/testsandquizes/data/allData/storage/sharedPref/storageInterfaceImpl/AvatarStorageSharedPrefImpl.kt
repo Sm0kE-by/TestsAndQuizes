@@ -16,12 +16,12 @@ class AvatarStorageSharedPrefImpl(context: Context): AvatarStorageSharedPref {
         // 11 - default
         return AvatarModelSPForMainMenu(
             id = sharedPreferences.getLong(KEY_AVATAR_ID,11),
-            name = sharedPreferences.getString(KEY_AVATAR_NAME,"11")!!,
+            avatarIcon = sharedPreferences.getString(KEY_AVATAR_NAME,"11")!!,
         )
     }
 
     override fun saveAvatarSharedPref(avatarModelSp: AvatarModelSPForMainMenu) {
        sharedPreferences.edit().putLong(KEY_AVATAR_ID, avatarModelSp.id).apply()
-       sharedPreferences.edit().putString(KEY_AVATAR_NAME, avatarModelSp.name).apply()
+       sharedPreferences.edit().putString(KEY_AVATAR_NAME, avatarModelSp.avatarIcon).apply()
     }
 }

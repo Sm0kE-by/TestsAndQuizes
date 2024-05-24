@@ -1,9 +1,13 @@
 package com.BySandS.testsandquizes.di
 
 import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarForMainMenuUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetListAvatarsUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.SaveAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveOpenAvatarDbUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.SaveAvatarSPUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.SaveOldTimeUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
@@ -74,6 +78,17 @@ val domainModule = module {
             quantityOfHintRepository = get()
         )
     }
+    factory<GetAvatarForMainMenuUseCase> {
+        GetAvatarForMainMenuUseCase(
+            avatarRepository = get()
+        )
+    }
+    factory<GetListAvatarsUseCase> {
+        GetListAvatarsUseCase(
+            avatarRepository = get()
+        )
+    }
+
     factory<SaveAdvertisingTodayUseCase> {
         SaveAdvertisingTodayUseCase(
             advertisingTodayRepository = get()
@@ -87,6 +102,16 @@ val domainModule = module {
     factory<SaveQuantityOfHintUseCase> {
         SaveQuantityOfHintUseCase(
             quantityOfHintRepository = get()
+        )
+    }
+    factory<SaveOpenAvatarDbUseCase> {
+        SaveOpenAvatarDbUseCase(
+            avatarRepository = get()
+        )
+    }
+    factory<SaveAvatarSPUseCase> {
+        SaveAvatarSPUseCase(
+            avatarRepository = get()
         )
     }
 

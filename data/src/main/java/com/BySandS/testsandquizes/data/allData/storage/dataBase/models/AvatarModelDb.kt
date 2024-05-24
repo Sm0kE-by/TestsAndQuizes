@@ -8,5 +8,6 @@ data class AvatarModelDb (
     val name: String,
     val type: String,
     @ColumnInfo(name = "description")val description: String,
-    @ColumnInfo(name = "open")val open: Boolean
+    @ColumnInfo(name = "open")val open: Boolean,
+    @ColumnInfo(name = "avatar_icon")val avatarIcon: String
 )

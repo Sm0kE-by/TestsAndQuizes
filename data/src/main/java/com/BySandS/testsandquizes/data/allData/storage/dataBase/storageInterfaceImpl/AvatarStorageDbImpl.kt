@@ -12,6 +12,10 @@ class AvatarStorageDbImpl(context: Context): AvatarStorageDb {
         return avatarDao.getListAvatars()
     }
 
+    override fun getAvatarById(id: Long): AvatarModelDb {
+       return avatarDao.getAvatarById(id = id)
+    }
+
     override fun saveOpenAvatar(id: Long, open: Boolean) {
        avatarDao.saveOpenAvatar(id = id, open = open)
     }

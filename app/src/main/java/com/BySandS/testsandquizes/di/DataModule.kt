@@ -3,10 +3,15 @@ package com.BySandS.testsandquizes.di
 import com.BySandS.testsandquizes.data.allData.repository.AllDataAdvertisingTodayRepositoryImpl
 import com.BySandS.testsandquizes.data.allData.repository.AllDataOldTimeRepositoryImpl
 import com.BySandS.testsandquizes.data.allData.repository.AllDataQuantityOfHintRepositoryImpl
+import com.BySandS.testsandquizes.data.allData.repository.AllDateAvatarRepositoryImpl
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.storageInterfaceImpl.AvatarStorageDbImpl
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.AdvertisingTodayStorageImpl
+import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.AvatarStorageSharedPrefImpl
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.OldTimeStorageImpl
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.storageInterfaceImpl.QuantityOfHintStorageImpl
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AdvertisingTodayStorage
+import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AvatarStorageDb
+import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AvatarStorageSharedPref
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.OldTimeStorage
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.QuantityOfHintStorage
 import com.BySandS.testsandquizes.data.tests.repositry.TestQuantityOfQuestionRepositoryImpl
@@ -22,6 +27,7 @@ import com.BySandS.testsandquizes.data.tests.storage.storageInterface.QuestionSt
 import com.BySandS.testsandquizes.data.tests.storage.storageInterface.ResultStorage
 import com.BySandS.testsandquizes.data.tests.storage.storageInterface.SubcategoryStorage
 import com.BySandS.testsandquizes.domain.allData.repository.AdvertisingTodayRepository
+import com.BySandS.testsandquizes.domain.allData.repository.AvatarRepository
 import com.BySandS.testsandquizes.domain.allData.repository.OldTimeRepository
 import com.BySandS.testsandquizes.domain.allData.repository.QuantityOfHintRepository
 import com.BySandS.testsandquizes.domain.tests.repository.TestQuantityOfQuestionRepository
@@ -76,14 +82,23 @@ val dataModule = module {
     single<QuantityOfHintStorage> {
         QuantityOfHintStorageImpl(context = get())
     }
+    single<AvatarStorageDb> {
+        AvatarStorageDbImpl(context = get())
+    }
+    single<AvatarStorageSharedPref> {
+        AvatarStorageSharedPrefImpl(context = get())
+    }
 
     single<AdvertisingTodayRepository> {
-        AllDataAdvertisingTodayRepositoryImpl(advertisingTodayStorage =  get())
+        AllDataAdvertisingTodayRepositoryImpl(advertisingTodayStorage = get())
     }
     single<OldTimeRepository> {
-        AllDataOldTimeRepositoryImpl(oldTimeStorage =  get())
+        AllDataOldTimeRepositoryImpl(oldTimeStorage = get())
     }
     single<QuantityOfHintRepository> {
-        AllDataQuantityOfHintRepositoryImpl(quantityOfHintStorage =  get())
+        AllDataQuantityOfHintRepositoryImpl(quantityOfHintStorage = get())
+    }
+    single<AvatarRepository> {
+        AllDateAvatarRepositoryImpl(avatarStorageDb = get(), avatarStorageSharedPref = get())
     }
 }

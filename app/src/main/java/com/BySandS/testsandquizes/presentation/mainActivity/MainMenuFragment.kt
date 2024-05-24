@@ -1,18 +1,16 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.AvatarDialogFragment
-import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.GetHintDialogFragment
 
 class MainMenuFragment : Fragment(), View.OnClickListener {
 
@@ -94,7 +92,13 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
                 .show()
 
 
-            avatarIV.id -> findNavController().navigate(R.id.action_mainMenuFragment_to_avatarDialogFragment)
+            avatarIV.id -> {
+                val avatarId = 1L
+                findNavController().navigate(R.id.action_mainMenuFragment_to_avatarDialogFragment,
+                    bundleOf(AvatarDialogFragment.ID_AVATAR to avatarId)
+                )
+            }
+
             gemsIButton.id -> Toast.makeText(
                 activity?.applicationContext,
                 "Exit",

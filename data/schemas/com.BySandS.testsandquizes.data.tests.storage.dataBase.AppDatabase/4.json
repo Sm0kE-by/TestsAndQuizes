@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "05a15b0b80c4bf8cea3fea75ea3f00df",
+    "identityHash": "a2cc5c248a0855b3fb94f40ea055a862",
     "entities": [
       {
         "tableName": "categories",
@@ -490,7 +490,7 @@
       },
       {
         "tableName": "avatar",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name_ru` TEXT NOT NULL, `name_eng` TEXT NOT NULL, `avatar_type_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `open` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`avatar_type_id`) REFERENCES `avatar_type`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name_ru` TEXT NOT NULL, `name_eng` TEXT NOT NULL, `avatar_type_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `open` INTEGER NOT NULL, `avatar_icon` TEXT NOT NULL DEFAULT ' ', PRIMARY KEY(`id`), FOREIGN KEY(`avatar_type_id`) REFERENCES `avatar_type`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -527,6 +527,13 @@
             "columnName": "open",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "avatarIcon",
+            "columnName": "avatar_icon",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "' '"
           }
         ],
         "primaryKey": {
@@ -586,7 +593,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '05a15b0b80c4bf8cea3fea75ea3f00df')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a2cc5c248a0855b3fb94f40ea055a862')"
     ]
   }
 }
