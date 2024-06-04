@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.AvatarDialogFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainMenuFragment : Fragment(), View.OnClickListener {
 
+    private val mainMenuVM by viewModel<MainMenuViewModel>()
     private lateinit var binding: MainMenuFragmentBinding
 
     override fun onCreateView(
@@ -43,6 +46,47 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         bShop.setOnClickListener(this@MainMenuFragment)
         bExit.setOnClickListener(this@MainMenuFragment)
 
+        mainMenuVM.gems.observe(viewLifecycleOwner, Observer { gems ->
+            gems?.let {
+                binding.gemsTV.text = gems.gems.toString()
+                //binding.gemsTV.text = mainMenuVM.gems.value?.gems.toString()
+            }
+        })
+        mainMenuVM.quantityOfHint.observe(viewLifecycleOwner, Observer { hint ->
+            hint?.let {
+                binding.hintTV.text = getString(R.string.from_hint,hint.quantity.toString())
+            }
+        })
+        mainMenuVM.prestige.observe(viewLifecycleOwner, Observer { prestige ->
+            prestige?.let {
+                binding.prestigeTV.text = prestige.quantity.toString()
+            }
+        })
+        mainMenuVM.gameCompletionPercentage.observe(viewLifecycleOwner, Observer { gameCompletionPercentage ->
+            gameCompletionPercentage?.let {
+                binding.gameCompletionPercentageTV.text = gameCompletionPercentage.percentGameCompletion.toString()
+            }
+        })
+        mainMenuVM.playerName.observe(viewLifecycleOwner, Observer { playerName ->
+            playerName?.let {
+                binding.playerNameTV.text = playerName.playerName
+            }
+        })
+        mainMenuVM.avatarIcon.observe(viewLifecycleOwner, Observer { avatarIcon ->
+            avatarIcon?.let {
+                setAvatar(avatarIcon.avatarIcon.toString())
+            }
+        })
+
+
+        parentFragmentManager.setFragmentResultListener(
+            AvatarDialogFragment.AVATAR_REQUEST_CODE,
+            viewLifecycleOwner
+        ) { _, data ->
+            val clickDone = data.getString(AvatarDialogFragment.AVATAR_BUTTON_DONE)
+            setAvatar(clickDone!!)
+        }
+      //  TODO("Принять количество подсказок")
         parentFragmentManager.setFragmentResultListener(
             AvatarDialogFragment.AVATAR_REQUEST_CODE,
             viewLifecycleOwner
@@ -52,6 +96,15 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    //Не отрисовывает фрагмент заново
+    override fun onResume() {
+        super.onResume()
+        mainMenuVM.quantityOfHint.observe(viewLifecycleOwner, Observer { hint ->
+            hint?.let {
+                binding.hintTV.text = getString(R.string.from_hint,hint.quantity.toString())
+            }
+        })
+    }
     companion object {
         @JvmStatic
         fun newInstance() = MainMenuFragment()

@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.di
 
 import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarByIdUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarForMainMenuUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetListAvatarsUseCase
 import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
@@ -85,6 +86,11 @@ val domainModule = module {
     }
     factory<GetListAvatarsUseCase> {
         GetListAvatarsUseCase(
+            avatarRepository = get()
+        )
+    }
+    factory<GetAvatarByIdUseCase> {
+        GetAvatarByIdUseCase(
             avatarRepository = get()
         )
     }

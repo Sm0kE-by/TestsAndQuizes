@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.di
 
 import com.BySandS.testsandquizes.presentation.mainActivity.DifficultyFragmentViewModel
+import com.BySandS.testsandquizes.presentation.mainActivity.MainMenuViewModel
 import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.GetHintDialogFragmentViewModel
 import com.BySandS.testsandquizes.presentation.mainActivity.SubcategoriesViewModel
 import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.AvatarDialogFragmentViewModel
@@ -16,8 +17,10 @@ val appModule = module {
 
 
     viewModel<DifficultyFragmentViewModel> {
-        DifficultyFragmentViewModel(getQuantityOfQuestionUseCase = get(),
-            getTestSubcategoryUseCase = get())
+        DifficultyFragmentViewModel(
+            getQuantityOfQuestionUseCase = get(),
+            getTestSubcategoryUseCase = get()
+        )
     }
     viewModel<TestFragmentViewModel> {
         TestFragmentViewModel(
@@ -44,6 +47,11 @@ val appModule = module {
             getAvatarByIdUseCase = get(),
             getListAvatarsUseCase = get(),
             saveAvatarSPUseCase = get(),
+        )
+    }
+    viewModel<MainMenuViewModel> {
+        MainMenuViewModel(
+            getQuantityOfHintUseCase = get(),
         )
     }
 }

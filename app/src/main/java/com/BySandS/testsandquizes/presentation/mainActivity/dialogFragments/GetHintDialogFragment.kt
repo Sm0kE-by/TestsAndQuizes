@@ -39,7 +39,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
 
         getHintVM.textTimer.observe(viewLifecycleOwner, Observer { text ->
             text?.let {
-                binding.tvTimer.text = getHintVM.textTimer.value.toString()
+                binding.tvTimer.text = text.toString()
             }
         })
         getHintVM.btnPositiveIsEnabled.observe(viewLifecycleOwner, Observer { btn ->
@@ -50,7 +50,7 @@ class GetHintDialogFragment : DialogFragment(), View.OnClickListener {
         getHintVM.quantityOfHint.observe(viewLifecycleOwner, Observer { text ->
             text?.let {
                 binding.tvQuantity.text =
-                    getString(R.string.from_hint, getHintVM.quantityOfHint.value?.quantity.toString())
+                    getString(R.string.from_hint, text.quantity.toString())
             }
         })
 
