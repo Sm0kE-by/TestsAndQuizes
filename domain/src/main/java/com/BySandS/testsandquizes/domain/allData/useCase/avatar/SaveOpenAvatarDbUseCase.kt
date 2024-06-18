@@ -1,6 +1,6 @@
-package com.BySandS.testsandquizes.domain.allData.useCase
+package com.BySandS.testsandquizes.domain.allData.useCase.avatar
 
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveOpenAvatarParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.SaveOpenAvatarParam
 import com.BySandS.testsandquizes.domain.allData.repository.AvatarRepository
 
 class SaveOpenAvatarDbUseCase(private val avatarRepository: AvatarRepository) {

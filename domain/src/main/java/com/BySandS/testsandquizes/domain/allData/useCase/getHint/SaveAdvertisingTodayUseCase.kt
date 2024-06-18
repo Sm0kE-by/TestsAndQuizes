@@ -1,6 +1,6 @@
-package com.BySandS.testsandquizes.domain.allData.useCase
+package com.BySandS.testsandquizes.domain.allData.useCase.getHint
 
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAdvertisingParam
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveAdvertisingParam
 import com.BySandS.testsandquizes.domain.allData.repository.AdvertisingTodayRepository
 
 class SaveAdvertisingTodayUseCase (private val advertisingTodayRepository: AdvertisingTodayRepository){

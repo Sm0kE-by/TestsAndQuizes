@@ -1,16 +1,16 @@
 package com.BySandS.testsandquizes.di
 
-import com.BySandS.testsandquizes.domain.allData.useCase.GetAdvertisingTodayUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarByIdUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarForMainMenuUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetListAvatarsUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetOldTimeUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveAdvertisingTodayUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveOpenAvatarDbUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveAvatarSPUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveOldTimeUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.GetAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.GetAvatarByIdUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.GetAvatarForMainMenuUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.GetListAvatarsUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.GetOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.GetQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.SaveAdvertisingTodayUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.SaveOpenAvatarDbUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.SaveAvatarSPUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.SaveOldTimeUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.SaveQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.mainActivity.GetQuantityOfQuestionUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetQuestionListUseCase
 import com.BySandS.testsandquizes.domain.tests.usecase.testActivity.GetTestResultUseCase

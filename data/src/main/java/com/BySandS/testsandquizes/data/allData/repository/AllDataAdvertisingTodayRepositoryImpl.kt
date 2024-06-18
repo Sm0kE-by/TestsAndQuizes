@@ -1,11 +1,9 @@
 package com.BySandS.testsandquizes.data.allData.repository
 
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.models.AdvertisingTodayModelSP
-import com.BySandS.testsandquizes.data.allData.storage.sharedPref.models.OldTimeModelSP
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AdvertisingTodayStorage
-import com.BySandS.testsandquizes.domain.allData.models.AdvertisingTodayModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAdvertisingParam
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveOldTimeParam
+import com.BySandS.testsandquizes.domain.allData.models.getHint.AdvertisingTodayModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveAdvertisingParam
 import com.BySandS.testsandquizes.domain.allData.repository.AdvertisingTodayRepository
 
 class AllDataAdvertisingTodayRepositoryImpl(private val advertisingTodayStorage: AdvertisingTodayStorage) :

@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.AvatarDialogFragmentBinding
 import com.BySandS.testsandquizes.databinding.AvatarItemDialogFragmentBinding
-import com.BySandS.testsandquizes.domain.allData.models.AvatarModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAvatarSharedPrefParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
@@ -169,13 +169,13 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     override fun onClick(v: View?): Unit = with(binding) {
         when (v?.id) {
             bDone.id -> {
-                val icon = avatarVM.avatarIcon.value?.avatarIcon
+                avatarVM.saveAvatarSharedPref()
+                val button = true
                 parentFragmentManager.setFragmentResult(
                     AVATAR_REQUEST_CODE, bundleOf(
-                        AVATAR_BUTTON_DONE to icon
+                        AVATAR_BUTTON_DONE to button
                     )
                 )
-                avatarVM.saveAvatarSharedPref()
                 findNavController().popBackStack()
             }
 
@@ -184,6 +184,7 @@ class AvatarDialogFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun setAvatarLogo(avatar: AvatarModel) = with(binding) {
+        Log.i(TAG, "setAvatarLogo DF => ${avatar.avatarIcon}")
         when (avatar.avatarIcon) {
             "avatar_1.png" -> avatarIcon.setImageResource(R.drawable.avatar_1)
             "avatar_2.png" -> avatarIcon.setImageResource(R.drawable.avatar_2)

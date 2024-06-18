@@ -1,7 +1,7 @@
 package com.BySandS.testsandquizes.domain.allData.repository
 
-import com.BySandS.testsandquizes.domain.allData.models.OldTimeModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveOldTimeParam
+import com.BySandS.testsandquizes.domain.allData.models.getHint.OldTimeModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveOldTimeParam
 
 interface OldTimeRepository {
 

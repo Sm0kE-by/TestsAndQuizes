@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.domain.allData.models.param
+package com.BySandS.testsandquizes.domain.allData.models.getHint.param
 
 class SaveAdvertisingParam (
     val quantity: Int,

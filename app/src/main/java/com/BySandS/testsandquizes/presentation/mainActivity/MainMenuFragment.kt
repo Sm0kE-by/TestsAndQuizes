@@ -1,6 +1,7 @@
 package com.BySandS.testsandquizes.presentation.mainActivity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.BySandS.testsandquizes.R
 import com.BySandS.testsandquizes.databinding.MainMenuFragmentBinding
 import com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments.AvatarDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val TAG = "AAA"
 
 class MainMenuFragment : Fragment(), View.OnClickListener {
 
@@ -54,7 +57,7 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         })
         mainMenuVM.quantityOfHint.observe(viewLifecycleOwner, Observer { hint ->
             hint?.let {
-                binding.hintTV.text = getString(R.string.from_hint,hint.quantity.toString())
+                binding.hintTV.text = getString(R.string.from_hint, hint.quantity.toString())
             }
         })
         mainMenuVM.prestige.observe(viewLifecycleOwner, Observer { prestige ->
@@ -62,11 +65,14 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
                 binding.prestigeTV.text = prestige.quantity.toString()
             }
         })
-        mainMenuVM.gameCompletionPercentage.observe(viewLifecycleOwner, Observer { gameCompletionPercentage ->
-            gameCompletionPercentage?.let {
-                binding.gameCompletionPercentageTV.text = gameCompletionPercentage.percentGameCompletion.toString()
-            }
-        })
+        mainMenuVM.gameCompletionPercentage.observe(
+            viewLifecycleOwner,
+            Observer { gameCompletionPercentage ->
+                gameCompletionPercentage?.let {
+                    binding.gameCompletionPercentageTV.text =
+                        gameCompletionPercentage.percentGameCompletion.toString()
+                }
+            })
         mainMenuVM.playerName.observe(viewLifecycleOwner, Observer { playerName ->
             playerName?.let {
                 binding.playerNameTV.text = playerName.playerName
@@ -83,16 +89,19 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
             AvatarDialogFragment.AVATAR_REQUEST_CODE,
             viewLifecycleOwner
         ) { _, data ->
-            val clickDone = data.getString(AvatarDialogFragment.AVATAR_BUTTON_DONE)
-            setAvatar(clickDone!!)
-        }
-      //  TODO("Принять количество подсказок")
-        parentFragmentManager.setFragmentResultListener(
-            AvatarDialogFragment.AVATAR_REQUEST_CODE,
-            viewLifecycleOwner
-        ) { _, data ->
-            val clickDone = data.getString(AvatarDialogFragment.AVATAR_BUTTON_DONE)
-            setAvatar(clickDone!!)
+            if (data.getBoolean(AvatarDialogFragment.AVATAR_BUTTON_DONE)) mainMenuVM.loadAvatarFromSP()
+            // val clickDone = data.getBoolean(AvatarDialogFragment.AVATAR_BUTTON_DONE)
+            // надо не заменять аватар, а менять его во вьюмоделе
+            //setAvatar(clickDone!!)
+
+
+            //  TODO("Принять количество подсказок")
+//        parentFragmentManager.setFragmentResultListener(
+//            AvatarDialogFragment.AVATAR_REQUEST_CODE,
+//            viewLifecycleOwner
+//        ) { _, data ->
+//            val clickDone = data.getString(AvatarDialogFragment.AVATAR_BUTTON_DONE)
+//            setAvatar(clickDone!!)
         }
     }
 
@@ -101,10 +110,11 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
         super.onResume()
         mainMenuVM.quantityOfHint.observe(viewLifecycleOwner, Observer { hint ->
             hint?.let {
-                binding.hintTV.text = getString(R.string.from_hint,hint.quantity.toString())
+                binding.hintTV.text = getString(R.string.from_hint, hint.quantity.toString())
             }
         })
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = MainMenuFragment()
@@ -147,7 +157,8 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
 
             avatarIV.id -> {
                 val avatarId = 1L
-                findNavController().navigate(R.id.action_mainMenuFragment_to_avatarDialogFragment,
+                findNavController().navigate(
+                    R.id.action_mainMenuFragment_to_avatarDialogFragment,
                     bundleOf(AvatarDialogFragment.ID_AVATAR to avatarId)
                 )
             }
@@ -180,6 +191,7 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setAvatar(nameIcon: String) = with(binding) {
+        Log.i(TAG, "SET AVATAR =>  ICON = ${nameIcon}")
         when (nameIcon) {
             "avatar_1.png" -> avatarIV.setImageResource(R.drawable.avatar_1)
             "avatar_2.png" -> avatarIV.setImageResource(R.drawable.avatar_2)

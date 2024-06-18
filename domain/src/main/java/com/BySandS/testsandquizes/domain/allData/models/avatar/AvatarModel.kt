@@ -1,4 +1,4 @@
-package com.BySandS.testsandquizes.domain.allData.models
+package com.BySandS.testsandquizes.domain.allData.models.avatar
 
 class AvatarModel(
     val id: Long,

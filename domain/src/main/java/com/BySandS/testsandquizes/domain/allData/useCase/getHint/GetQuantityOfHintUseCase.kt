@@ -1,7 +1,7 @@
-package com.BySandS.testsandquizes.domain.allData.useCase
+package com.BySandS.testsandquizes.domain.allData.useCase.getHint
 
-import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveQuantityOfHintParam
+import com.BySandS.testsandquizes.domain.allData.models.mainMenu.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveQuantityOfHintParam
 import com.BySandS.testsandquizes.domain.allData.repository.QuantityOfHintRepository
 
 class GetQuantityOfHintUseCase(private val quantityOfHintRepository: QuantityOfHintRepository) {

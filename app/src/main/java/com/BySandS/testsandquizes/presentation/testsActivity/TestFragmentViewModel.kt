@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveQuantityOfHintParam
-import com.BySandS.testsandquizes.domain.allData.useCase.GetQuantityOfHintUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.models.mainMenu.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveQuantityOfHintParam
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.GetQuantityOfHintUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.getHint.SaveQuantityOfHintUseCase
 import com.BySandS.testsandquizes.domain.tests.models.QuestionModel
 import com.BySandS.testsandquizes.domain.tests.models.ResultTestModel
 import com.BySandS.testsandquizes.domain.tests.models.SubcategoryModel

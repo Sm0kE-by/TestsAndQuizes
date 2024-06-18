@@ -52,6 +52,7 @@ val appModule = module {
     viewModel<MainMenuViewModel> {
         MainMenuViewModel(
             getQuantityOfHintUseCase = get(),
+            getAvatarForMainMenuUseCase = get(),
         )
     }
 }

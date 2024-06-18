@@ -4,11 +4,11 @@ import com.BySandS.testsandquizes.data.allData.storage.dataBase.models.AvatarMod
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.models.AvatarModelSPForMainMenu
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AvatarStorageDb
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.AvatarStorageSharedPref
-import com.BySandS.testsandquizes.domain.allData.models.AvatarModel
-import com.BySandS.testsandquizes.domain.allData.models.AvatarModelForMainMenu
-import com.BySandS.testsandquizes.domain.allData.models.param.GetAvatarByIdParam
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAvatarSharedPrefParam
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveOpenAvatarParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModel
+import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModelForMainMenu
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.GetAvatarByIdParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.SaveAvatarSharedPrefParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.SaveOpenAvatarParam
 import com.BySandS.testsandquizes.domain.allData.repository.AvatarRepository
 
 class AllDateAvatarRepositoryImpl(
@@ -74,7 +74,7 @@ class AllDateAvatarRepositoryImpl(
     private fun mapToDataAvatarSP(saveAvatarSharedPrefParam: SaveAvatarSharedPrefParam): AvatarModelSPForMainMenu {
         return AvatarModelSPForMainMenu(
             id = saveAvatarSharedPrefParam.id,
-            avatarIcon = saveAvatarSharedPrefParam.nameAvatar
+            avatarIcon = saveAvatarSharedPrefParam.avatarIcon
         )
     }
 }

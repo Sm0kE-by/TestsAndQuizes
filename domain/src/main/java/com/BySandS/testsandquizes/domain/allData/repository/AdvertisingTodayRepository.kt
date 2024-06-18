@@ -1,7 +1,7 @@
 package com.BySandS.testsandquizes.domain.allData.repository
 
-import com.BySandS.testsandquizes.domain.allData.models.AdvertisingTodayModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAdvertisingParam
+import com.BySandS.testsandquizes.domain.allData.models.getHint.AdvertisingTodayModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveAdvertisingParam
 
 interface AdvertisingTodayRepository {
 

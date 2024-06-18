@@ -1,13 +1,13 @@
-package com.BySandS.testsandquizes.domain.allData.useCase
+package com.BySandS.testsandquizes.domain.allData.useCase.getHint
 
-import com.BySandS.testsandquizes.domain.allData.models.OldTimeModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveOldTimeParam
+import com.BySandS.testsandquizes.domain.allData.models.getHint.OldTimeModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveOldTimeParam
 import com.BySandS.testsandquizes.domain.allData.repository.OldTimeRepository
 import java.util.Calendar
 
 class GetOldTimeUseCase(private val oldTimeRepository: OldTimeRepository) {
 
-    fun execute(): OldTimeModel{
+    fun execute(): OldTimeModel {
         var oldTime = oldTimeRepository.get()
 
         if (oldTime.oldTime !=11L) return oldTime

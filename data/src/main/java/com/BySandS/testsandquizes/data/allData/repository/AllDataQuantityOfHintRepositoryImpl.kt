@@ -2,8 +2,8 @@ package com.BySandS.testsandquizes.data.allData.repository
 
 import com.BySandS.testsandquizes.data.allData.storage.sharedPref.models.QuantityOfHintModelSP
 import com.BySandS.testsandquizes.data.allData.storage.storageInterface.QuantityOfHintStorage
-import com.BySandS.testsandquizes.domain.allData.models.QuantityOfHintModel
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveQuantityOfHintParam
+import com.BySandS.testsandquizes.domain.allData.models.mainMenu.QuantityOfHintModel
+import com.BySandS.testsandquizes.domain.allData.models.getHint.param.SaveQuantityOfHintParam
 import com.BySandS.testsandquizes.domain.allData.repository.QuantityOfHintRepository
 
 class AllDataQuantityOfHintRepositoryImpl(private val quantityOfHintStorage: QuantityOfHintStorage): QuantityOfHintRepository {
@@ -15,7 +15,7 @@ class AllDataQuantityOfHintRepositoryImpl(private val quantityOfHintStorage: Qua
         return quantityOfHintStorage.save(mapToStorage(param = param))
     }
 
-    private fun mapToDomain(quantityOfHintModelSP: QuantityOfHintModelSP): QuantityOfHintModel{
+    private fun mapToDomain(quantityOfHintModelSP: QuantityOfHintModelSP): QuantityOfHintModel {
         return QuantityOfHintModel(quantity = quantityOfHintModelSP.quantity)
     }
 

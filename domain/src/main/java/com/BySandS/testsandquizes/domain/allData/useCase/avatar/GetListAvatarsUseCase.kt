@@ -1,6 +1,6 @@
-package com.BySandS.testsandquizes.domain.allData.useCase
+package com.BySandS.testsandquizes.domain.allData.useCase.avatar
 
-import com.BySandS.testsandquizes.domain.allData.models.AvatarModel
+import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModel
 import com.BySandS.testsandquizes.domain.allData.repository.AvatarRepository
 
 class GetListAvatarsUseCase(private val avatarRepository: AvatarRepository) {

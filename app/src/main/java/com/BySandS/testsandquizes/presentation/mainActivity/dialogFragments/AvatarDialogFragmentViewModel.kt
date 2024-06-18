@@ -1,18 +1,20 @@
 package com.BySandS.testsandquizes.presentation.mainActivity.dialogFragments
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.BySandS.testsandquizes.domain.allData.models.AvatarModel
-import com.BySandS.testsandquizes.domain.allData.models.param.GetAvatarByIdParam
-import com.BySandS.testsandquizes.domain.allData.models.param.SaveAvatarSharedPrefParam
-import com.BySandS.testsandquizes.domain.allData.useCase.GetAvatarByIdUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.GetListAvatarsUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveOpenAvatarDbUseCase
-import com.BySandS.testsandquizes.domain.allData.useCase.SaveAvatarSPUseCase
+import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModel
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.GetAvatarByIdParam
+import com.BySandS.testsandquizes.domain.allData.models.avatar.param.SaveAvatarSharedPrefParam
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.GetAvatarByIdUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.GetListAvatarsUseCase
+import com.BySandS.testsandquizes.domain.allData.useCase.avatar.SaveAvatarSPUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+private const val TAG = "AAA"
 
 class AvatarDialogFragmentViewModel(
     private val getListAvatarsUseCase: GetListAvatarsUseCase,
@@ -43,8 +45,11 @@ class AvatarDialogFragmentViewModel(
     }
 
     fun saveAvatarSharedPref(){
-        val param = SaveAvatarSharedPrefParam(avatarIcon.value!!.id, avatarIcon.value!!.name)
+        Log.i(TAG, "SAVE AVATAR 1111 => id = ${avatarIcon.value!!.id} ICON = ${avatarIcon.value!!.avatarIcon}")
+        val param = SaveAvatarSharedPrefParam(id = avatarIcon.value!!.id, avatarIcon = avatarIcon.value!!.avatarIcon)
         saveAvatarSPUseCase.execute(saveAvatarSharedPrefParam = param)
+        Log.i(TAG, "saveAvatarSharedPref 1111 => saveAvatarSharedPref")
+
     }
 
     fun setAvatar(avatar: AvatarModel) {
