@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.BySandS.testsandquizes.domain.allData.models.avatar.AvatarModelForMainMenu
 import com.BySandS.testsandquizes.domain.allData.models.mainMenu.GameCompletionPercentageModel
-import com.BySandS.testsandquizes.domain.allData.models.mainMenu.PlayerNameModel
+import com.BySandS.testsandquizes.domain.allData.models.mainMenu.UserNameModel
 import com.BySandS.testsandquizes.domain.allData.models.mainMenu.PrestigeModel
 import com.BySandS.testsandquizes.domain.allData.models.mainMenu.QuantityOfGemsModel
 import com.BySandS.testsandquizes.domain.allData.models.mainMenu.QuantityOfHintModel
@@ -27,7 +27,7 @@ class MainMenuViewModel(
     private val quantityOfHintMutable = MutableLiveData<QuantityOfHintModel>()
     private val prestigeMutable = MutableLiveData<PrestigeModel>()
     private val gameCompletionPercentageMutable = MutableLiveData<GameCompletionPercentageModel>()
-    private val playerNameMutable = MutableLiveData<PlayerNameModel>()
+    private val playerNameMutable = MutableLiveData<UserNameModel>()
     private val avatarIconMutable = MutableLiveData<AvatarModelForMainMenu>()
 
     val gems: LiveData<QuantityOfGemsModel> = gemsMutable
@@ -35,7 +35,7 @@ class MainMenuViewModel(
     val prestige: LiveData<PrestigeModel> = prestigeMutable
     val gameCompletionPercentage: LiveData<GameCompletionPercentageModel> =
         gameCompletionPercentageMutable
-    val playerName: LiveData<PlayerNameModel> = playerNameMutable
+    val playerName: LiveData<UserNameModel> = playerNameMutable
     val avatarIcon: LiveData<AvatarModelForMainMenu> = avatarIconMutable
 
     init {
@@ -43,9 +43,9 @@ class MainMenuViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             gemsMutable.postValue(QuantityOfGemsModel(110))
             prestigeMutable.postValue(PrestigeModel(1100))
-            gameCompletionPercentageMutable.postValue(GameCompletionPercentageModel(25))
+            gameCompletionPercentageMutable.postValue(GameCompletionPercentageModel(25.5))
 
-            playerNameMutable.postValue(PlayerNameModel("Smoke.by"))
+            playerNameMutable.postValue(UserNameModel("Smoke.by"))
 
             quantityOfHintMutable.postValue(getQuantityOfHintUseCase.execute())
             loadAvatarFromSP()

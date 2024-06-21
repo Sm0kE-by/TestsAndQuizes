@@ -17,6 +17,7 @@ interface DaoAvatar {
         "WHERE avatar_type_id = avatar_type.id AND avatar.id = :id")
     fun getAvatarById(id: Long): AvatarModelDb
 
+    //сохранить статус нового, открытого автара
     @Query("UPDATE avatar SET open=:open WHERE id=:id")
     fun saveOpenAvatar(id: Long, open: Boolean)
 }

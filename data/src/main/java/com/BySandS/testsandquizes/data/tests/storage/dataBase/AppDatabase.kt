@@ -9,7 +9,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.BySandS.testsandquizes.data.allData.storage.dataBase.entity.AvatarDbEntity
 import com.BySandS.testsandquizes.data.allData.storage.dataBase.entity.AvatarTypeDbEntity
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.entity.UserStatisticDbEntity
 import com.BySandS.testsandquizes.data.allData.storage.dataBase.intefaceDao.DaoAvatar
+import com.BySandS.testsandquizes.data.allData.storage.dataBase.intefaceDao.DaoUserStatistic
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoQuantityOfQuestion
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoQuestionRu
 import com.BySandS.testsandquizes.data.tests.storage.dataBase.dao.interfaceDao.DaoResult
@@ -36,11 +38,13 @@ import kotlinx.coroutines.internal.synchronized
         SubcategoryDifficultyLevel::class,
         AvatarDbEntity::class,
         AvatarTypeDbEntity::class,
-    ], version = 5, exportSchema = true,
+        UserStatisticDbEntity::class,
+    ], version = 6, exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),
+        AutoMigration(from = 5, to = 6),
 
 
 //        AutoMigration(from = 2, to = 7, spec = AutoMigrationSpecFrom4To7::class),
@@ -56,6 +60,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun quantityOfQuestionDao(): DaoQuantityOfQuestion
     abstract fun resultDao(): DaoResult
     abstract fun avatarDao(): DaoAvatar
+    abstract fun userStatisticDao(): DaoUserStatistic
 
 
     companion object {

@@ -75,7 +75,7 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
             })
         mainMenuVM.playerName.observe(viewLifecycleOwner, Observer { playerName ->
             playerName?.let {
-                binding.playerNameTV.text = playerName.playerName
+                binding.playerNameTV.text = playerName.userName
             }
         })
         mainMenuVM.avatarIcon.observe(viewLifecycleOwner, Observer { avatarIcon ->
